@@ -10,12 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Change to Backend Directory') {
-            steps {
-                sh 'cd project2-back'
-            }
-        }
-
         stage('Inject Application Properties') {
             steps {
                 dir('project2-back'){
