@@ -7,6 +7,8 @@ pipeline {
         DB_PASSWORD = credentials('DB_PASSWORD')
         HCAPTCHA = credentials('HCAPTCHA')
         JWT_SECRET = credentials('JWT_SECRET')
+        S3_DEPLOY_BUCKET = credentials('S3_DEPLOYMENT_BUCKET')
+        S3_BUCKET = credentials('S3_BUCKET')
     }
 
     stages {
@@ -19,6 +21,7 @@ pipeline {
                         echo "spring.datasource.password=${DB_PASSWORD}" >> src/main/resources/application.properties
                         echo "hcaptcha.secret=${HCAPTCHA}" >> src/main/resources/application.properties
                         echo "jwt.secret=${JWT_SECRET}" >> src/main/resources/application.properties
+                        echo "s3.bucket${S3_BUCKET}" >> src/main/resources/application.properties
                     """
                 }
             }
@@ -51,13 +54,13 @@ pipeline {
                     /usr/bin/docker save project2 > project2.tar
 
                     # Use a temp directory in S3
-                    aws s3 cp project2.tar s3://project2-deployments-bucket--use2-az1--x-s3/temp/project2.tar
+                    aws s3 cp project2.tar s3://${S3_BUCKET}/temp/project2.tar
 
                     aws ssm send-command \
                         --instance-ids "{your-instance-id}" \
                         --document-name "AWS-RunShellScript" \
                         --parameters commands=[\
-                            "aws s3 cp s3://project2-deployments-bucket--use2-az1--x-s3/temp/project2.tar .",\
+                            "aws s3 cp s3://${S3_BUCKET}/temp/project2.tar .",\
                             "/usr/bin/docker load < project2.tar",\
                             "/usr/bin/docker stop project2 || true",\
                             "/usr/bin/docker rm project2 || true",\
@@ -67,7 +70,7 @@ pipeline {
 
                     # Clean up both locally and in S3
                     rm project2.tar
-                    aws s3 rm s3://project2-deployments-bucket--use2-az1--x-s3/temp/project2.tar
+                    aws s3 rm s3://${S3_BUCKET}/temp/project2.tar
                 '''
             }
         }
