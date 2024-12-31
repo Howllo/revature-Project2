@@ -49,19 +49,23 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sh '''
+                    set -x
+                    echo "Debugging deployment stage"
+                    echo "S3 Bucket: ${S3_DEPLOY_BUCKET}"
+
                     cd project2-back
-
-                    echo "Debugging Instance ID"
-                    aws ec2 describe-instances --instance-ids "${INSTANCE_ID}"
-
-                    # Verify SSM connectivity
-                    aws ssm describe-instance-information --filters "Key=InstanceIds,Values=${INSTANCE_ID}"
 
                     # Save the docker image to a tar file
                     /usr/bin/docker save project2 > project2.tar
 
                     # Use a temp directory in S3
-                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
+                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar . || echo "S3 copy failed"
+
+                    # List S3 contents
+                    aws s3 ls s3://${S3_DEPLOY_BUCKET}/temp/
+
+                    # Verify local file
+                    ls -l project2.tar || echo "project2.tar does not exist"
 
                     aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
