@@ -18,13 +18,16 @@ pipeline {
 
         stage('Inject Application Properties') {
             steps {
-                sh """
+                dir('project2-back'){
+                    sh """
+                        cd project2-back
                         echo "spring.datasource.url=${DB_URL}" >> src/main/resources/application.properties
                         echo "spring.datasource.username=${DB_USERNAME}" >> src/main/resources/application.properties
                         echo "spring.datasource.password=${DB_PASSWORD}" >> src/main/resources/application.properties
                         echo "hcaptcha.secret=${HCAPTCHA}" >> src/main/resources/application.properties
                         echo "jwt.secret=${JWT_SECRET}" >> src/main/resources/application.properties
                     """
+                }
             }
         }
 
