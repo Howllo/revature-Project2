@@ -37,16 +37,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh '''
-                    cd project2-back
-                    /usr/bin/docker build -t project2 .
-                '''
-            }
-        }
-
-        stage('Build Docker Image') {
+        stage('Build Docker Image ') {
             steps {
                 sh '''
                     cd project2-back
