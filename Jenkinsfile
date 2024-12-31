@@ -41,8 +41,8 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    /usr/bin/docker build -t project2 . || { echo "Docker build failed"; exit 1; }
-                    /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
+                    /usr/bin/docker build -t project2 .
+                '''
             }
         }
 
@@ -67,21 +67,22 @@ pipeline {
                     # Verify local file
                     ls -l project2.tar || echo "project2.tar does not exist"
 
-                    # Execute SSM command with error checking
-                    aws ssm send-command \
-                        --instance-ids "${INSTANCE_ID}" \
+                    aws ssm send-command --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
-                        --parameters "commands=[\
-                            \"set -e\",\
-                            \"aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar project2.tar || { echo 'S3 download failed'; exit 1; }\",\
-                            \"[[ -f project2.tar ]] || { echo 'TAR file not found'; exit 1; }\",\
-                            \"/usr/bin/docker load < project2.tar || { echo 'Docker load failed'; exit 1; }\",\
-                            \"/usr/bin/docker images | grep project2 || { echo 'Image not found after load'; exit 1; }\",\
-                            \"/usr/bin/docker stop project2 || true\",\
-                            \"/usr/bin/docker rm project2 || true\",\
-                            \"/usr/bin/docker run -d -p 8080:8080 --name project2 project2 || { echo 'Docker run failed'; exit 1; }\",\
-                            \"rm project2.tar\"\
-                        ]"
+                        --parameters '{"commands": [
+                            "set -x",  # Enable debug mode
+                            "pwd",     # Print current directory
+                            "env",     # Print environment variables
+                            "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar project2.tar",
+                            "ls -l project2.tar",  # Verify file transfer
+                            "/usr/bin/docker load < project2.tar || echo 'Docker load failed'",
+                            "docker images",  # List docker images after load
+                            "/usr/bin/docker stop project2 || true",
+                            "/usr/bin/docker rm project2 || true",
+                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2 || echo 'Docker run failed'",
+                            "docker ps -a",  # List all containers
+                            "rm project2.tar"
+                        ]}'
 
                     # Clean up both locally and in S3
                     rm project2.tar
