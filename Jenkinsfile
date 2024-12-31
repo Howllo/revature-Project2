@@ -7,7 +7,8 @@ pipeline {
         DB_PASSWORD = credentials('DB_PASSWORD')
         HCAPTCHA = credentials('HCAPTCHA')
         JWT_SECRET = credentials('JWT_SECRET')
-        S3_DEPLOY_BUCKET = credentials('S3_DEPLOYMENT_BUCKET')
+        INSTANCE_ID = credentials('INSTANCE_ID')
+        S3_DEPLOY_BUCKET = credentials('S3_DEPLOY_BUCKET')
         S3_BUCKET = credentials('S3_BUCKET')
     }
 
@@ -57,7 +58,7 @@ pipeline {
                     aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
 
                     aws ssm send-command \
-                        --instance-ids "{your-instance-id}" \
+                        --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --parameters commands=[\
                             "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar .",\
