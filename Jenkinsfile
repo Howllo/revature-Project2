@@ -67,15 +67,20 @@ pipeline {
                     # Verify local file
                     ls -l project2.tar || echo "project2.tar does not exist"
 
-                    aws ssm send-command \
-                        --instance-ids "${INSTANCE_ID}" \
+                    aws ssm send-command --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --parameters '{"commands": [
+                            "set -x",  # Enable debug mode
+                            "pwd",     # Print current directory
+                            "env",     # Print environment variables
                             "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar project2.tar",
-                            "/usr/bin/docker load < project2.tar",
+                            "ls -l project2.tar",  # Verify file transfer
+                            "/usr/bin/docker load < project2.tar || echo 'Docker load failed'",
+                            "docker images",  # List docker images after load
                             "/usr/bin/docker stop project2 || true",
                             "/usr/bin/docker rm project2 || true",
-                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2",
+                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2 || echo 'Docker run failed'",
+                            "docker ps -a",  # List all containers
                             "rm project2.tar"
                         ]}'
 
