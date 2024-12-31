@@ -60,14 +60,14 @@ pipeline {
                     aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
-                        --parameters commands=[\
-                            "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar .",\
-                            "/usr/bin/docker load < project2.tar",\
-                            "/usr/bin/docker stop project2 || true",\
-                            "/usr/bin/docker rm project2 || true",\
-                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2",\
-                            "rm project2.tar"\
-                        ]
+                        --parameters '{"commands": [
+                            "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar .",
+                            "/usr/bin/docker load < project2.tar",
+                            "/usr/bin/docker stop project2 || true",
+                            "/usr/bin/docker rm project2 || true",
+                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2",
+                            "rm project2.tar"
+                        ]}'
 
                     # Clean up both locally and in S3
                     rm project2.tar
