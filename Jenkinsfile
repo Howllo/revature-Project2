@@ -51,6 +51,12 @@ pipeline {
                 sh '''
                     cd project2-back
 
+                    echo "Debugging Instance ID"
+                    aws ec2 describe-instances --instance-ids "${INSTANCE_ID}"
+
+                    # Verify SSM connectivity
+                    aws ssm describe-instance-information --filters "Key=InstanceIds,Values=${INSTANCE_ID}"
+
                     # Save the docker image to a tar file
                     /usr/bin/docker save project2 > project2.tar
 
