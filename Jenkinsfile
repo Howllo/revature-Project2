@@ -58,8 +58,8 @@ pipeline {
                     # Save the docker image to a tar file
                     /usr/bin/docker save project2 > project2.tar
 
-                    # Use a temp directory in S3
-                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar . || echo "S3 copy failed"
+                    # Upload to S3
+                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar || echo "S3 upload failed"
 
                     # List S3 contents
                     aws s3 ls s3://${S3_DEPLOY_BUCKET}/temp/
@@ -71,7 +71,7 @@ pipeline {
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --parameters '{"commands": [
-                            "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar .",
+                            "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar project2.tar",
                             "/usr/bin/docker load < project2.tar",
                             "/usr/bin/docker stop project2 || true",
                             "/usr/bin/docker rm project2 || true",
