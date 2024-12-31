@@ -37,13 +37,12 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image ') {
+        stage('Build Docker Image') {
             steps {
                 sh '''
                     cd project2-back
                     /usr/bin/docker build -t project2 . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
-                '''
             }
         }
 
@@ -52,24 +51,21 @@ pipeline {
                 sh '''
                     set -x
                     echo "Debugging deployment stage"
+                    echo "S3 Bucket: ${S3_DEPLOY_BUCKET}"
 
                     cd project2-back
 
-                    # Check Docker image exists
-                    /usr/bin/docker images | grep project2 || echo "Docker image not found"
-
-                    # Save the docker image with size verification
+                    # Save the docker image to a tar file
                     /usr/bin/docker save project2 > project2.tar
-                    ls -lh project2.tar || echo "Failed to create tar file"
 
-                    # Upload to S3 with detailed error
-                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar --debug || {
-                        echo "S3 upload failed with status $?"
-                        exit 1
-                    }
+                    # Upload to S3
+                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar || echo "S3 upload failed"
 
-                    # Verify S3 upload
-                    aws s3 ls s3://${S3_DEPLOY_BUCKET}/temp/project2.tar --debug || echo "File not found in S3"
+                    # List S3 contents
+                    aws s3 ls s3://${S3_DEPLOY_BUCKET}/temp/
+
+                    # Verify local file
+                    ls -l project2.tar || echo "project2.tar does not exist"
 
                     # Execute SSM command with error checking
                     aws ssm send-command \
@@ -87,8 +83,8 @@ pipeline {
                             \"rm project2.tar\"\
                         ]"
 
-                    # Cleanup
-                    rm -f project2.tar
+                    # Clean up both locally and in S3
+                    rm project2.tar
                     aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
                 '''
             }
