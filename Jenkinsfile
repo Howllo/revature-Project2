@@ -71,23 +71,21 @@ pipeline {
                     # Verify S3 upload
                     aws s3 ls s3://${S3_DEPLOY_BUCKET}/temp/project2.tar --debug || echo "File not found in S3"
 
-                    # Modified SSM command with error checking
+                    # Execute SSM command with error checking
                     aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
-                        --parameters '{
-                            "commands": [
-                                "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar project2.tar || { echo \"S3 download failed\"; exit 1; }",
-                                "[ -f project2.tar ] && echo \"TAR file exists\" || { echo \"TAR file not found\"; exit 1; }",
-                                "/usr/bin/docker load < project2.tar || { echo \"Docker load failed\"; exit 1; }",
-                                "/usr/bin/docker images | grep project2 || { echo \"Image not found after load\"; exit 1; }",
-                                "/usr/bin/docker stop project2 || true",
-                                "/usr/bin/docker rm project2 || true",
-                                "/usr/bin/docker run -d -p 8080:8080 --name project2 project2 || { echo \"Docker run failed\"; exit 1; }",
-                                "rm project2.tar"
-                            ]
-                        }' \
-                        --output text
+                        --parameters "commands=[\
+                            \"set -e\",\
+                            \"aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar project2.tar || { echo 'S3 download failed'; exit 1; }\",\
+                            \"[[ -f project2.tar ]] || { echo 'TAR file not found'; exit 1; }\",\
+                            \"/usr/bin/docker load < project2.tar || { echo 'Docker load failed'; exit 1; }\",\
+                            \"/usr/bin/docker images | grep project2 || { echo 'Image not found after load'; exit 1; }\",\
+                            \"/usr/bin/docker stop project2 || true\",\
+                            \"/usr/bin/docker rm project2 || true\",\
+                            \"/usr/bin/docker run -d -p 8080:8080 --name project2 project2 || { echo 'Docker run failed'; exit 1; }\",\
+                            \"rm project2.tar\"\
+                        ]"
 
                     # Cleanup
                     rm -f project2.tar
