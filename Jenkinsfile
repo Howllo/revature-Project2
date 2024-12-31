@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    mvn clean install
+                    /opt/maven/bin/mvn clean install
                 '''
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    docker build -t project2 .
+                    /usr/bin/docker build -t project2 .
                 '''
             }
         }
@@ -48,7 +48,7 @@ pipeline {
                     cd project2-back
 
                     # Save the docker image to a tar file
-                    docker save project2 > project2.tar
+                    /usr/bin/docker save project2 > project2.tar
 
                     # Use a temp directory in S3
                     aws s3 cp project2.tar s3://project2-deployments-bucket--use2-az1--x-s3/temp/project2.tar
@@ -58,10 +58,10 @@ pipeline {
                         --document-name "AWS-RunShellScript" \
                         --parameters commands=[\
                             "aws s3 cp s3://project2-deployments-bucket--use2-az1--x-s3/temp/project2.tar .",\
-                            "docker load < project2.tar",\
-                            "docker stop project2 || true",\
-                            "docker rm project2 || true",\
-                            "docker run -d -p 8080:8080 --name project2 project2",\
+                            "/usr/bin/docker load < project2.tar",\
+                            "/usr/bin/docker stop project2 || true",\
+                            "/usr/bin/docker rm project2 || true",\
+                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2",\
                             "rm project2.tar"\
                         ]
 
