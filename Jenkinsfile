@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    mvn clean install'
+                    mvn clean install
                 '''
             }
         }
