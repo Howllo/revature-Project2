@@ -54,13 +54,13 @@ pipeline {
                     /usr/bin/docker save project2 > project2.tar
 
                     # Use a temp directory in S3
-                    aws s3 cp project2.tar s3://${S3_BUCKET}/temp/project2.tar
+                    aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
 
                     aws ssm send-command \
                         --instance-ids "{your-instance-id}" \
                         --document-name "AWS-RunShellScript" \
                         --parameters commands=[\
-                            "aws s3 cp s3://${S3_BUCKET}/temp/project2.tar .",\
+                            "aws s3 cp s3://${S3_DEPLOY_BUCKET}/temp/project2.tar .",\
                             "/usr/bin/docker load < project2.tar",\
                             "/usr/bin/docker stop project2 || true",\
                             "/usr/bin/docker rm project2 || true",\
@@ -70,7 +70,7 @@ pipeline {
 
                     # Clean up both locally and in S3
                     rm project2.tar
-                    aws s3 rm s3://${S3_BUCKET}/temp/project2.tar
+                    aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
                 '''
             }
         }
