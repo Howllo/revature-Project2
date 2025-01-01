@@ -47,7 +47,7 @@ pipeline {
             }
         }
 
-        stage('Upload File'){
+        stage('Upload File to S3'){
             steps {
                 sh '''
                     cd project2-back
@@ -59,7 +59,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Deploy to EC2 Docker') {
             steps {
                 sh '''
                     # Capture the command ID
@@ -82,11 +82,9 @@ pipeline {
             }
         }
 
-        stage('Remove S3 Tar'){
+        stage('Cleaning up the S3'){
             steps {
                 sh '''
-                    # Cleanup Jenkins workspace
-                    rm project2.tar
                     aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
                 '''
             }
