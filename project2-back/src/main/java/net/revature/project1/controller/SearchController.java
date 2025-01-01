@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = {
-        "https://devature.dev",
-        "https://www.devature.dev",
-        "http://localhost:5173"
-})
 @RestController
 @RequestMapping("api/v1/search")
 public class SearchController {
