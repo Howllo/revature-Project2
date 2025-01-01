@@ -15,7 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:5173/")
+@CrossOrigin(origins = {
+        "https://devature.dev",
+        "https://www.devature.dev",
+        "http://localhost:5173"
+        })
 @RestController
 @RequestMapping("api/v1/auth")
 public class AuthController {
