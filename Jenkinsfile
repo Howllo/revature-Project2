@@ -67,11 +67,19 @@ pipeline {
                             "docker stop project2 || true",
                             "docker rm project2 || true",
                             "docker run -d -p 8080:8080 --name project2 project2"
-                        ]}'
+                        ]}' \
+                          --query "Command.CommandId")
 
+                        # Wait for SSM command to complete
+                        aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
+                '''
+            }
+
+            steps {
+                sh '''
                     # Cleanup Jenkins workspace
                     rm project2.tar
-                    aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
+                    aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.ta
                 '''
             }
         }
