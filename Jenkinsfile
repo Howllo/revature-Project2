@@ -94,6 +94,12 @@ pipeline {
     post {
         always {
             cleanWs()
+
+            sh '''
+                docker system prune -af
+                docker volume prune -f
+                docker builder prune -af
+            '''
         }
     }
 }
