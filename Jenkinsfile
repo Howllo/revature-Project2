@@ -47,7 +47,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Upload File'){
             steps {
                 sh '''
                     cd project2-back
@@ -55,9 +55,15 @@ pipeline {
                     # Save and upload Docker image
                     docker save project2 > project2.tar
                     aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
+                  '''
+            }
+        }
 
-                    # Fixed SSM command with proper escaping
-                    aws ssm send-command \
+        stage('Deploy to EC2') {
+            steps {
+                sh '''
+                    # Capture the command ID
+                    COMMAND_ID=$(aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --output text \
@@ -68,18 +74,20 @@ pipeline {
                             "docker rm project2 || true",
                             "docker run -d -p 8080:8080 --name project2 project2"
                         ]}' \
-                          --query "Command.CommandId")
+                        --query "Command.CommandId")
 
-                        # Wait for SSM command to complete
-                        aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
+                    # Wait for SSM command to complete
+                    aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
                 '''
             }
+        }
 
+        stage('Remove S3 Tar'){
             steps {
                 sh '''
                     # Cleanup Jenkins workspace
                     rm project2.tar
-                    aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.ta
+                    aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
                 '''
             }
         }
