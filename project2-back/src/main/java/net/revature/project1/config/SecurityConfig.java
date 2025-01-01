@@ -75,6 +75,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/verify-captcha").permitAll()
                         .requestMatchers("/api/v1/auth/verify-token").permitAll()
                         .requestMatchers("/api/v1/users/**").hasRole("USER")
+                        .requestMatchers("/api/v1/post/**").hasRole("USER")
                         .requestMatchers("/api/v1/user/check/username/{username}").permitAll()
                         .requestMatchers("/api/v1/user/check/email").permitAll()
                         .requestMatchers("/api/v1/post/all").permitAll()
