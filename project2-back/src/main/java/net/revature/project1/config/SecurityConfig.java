@@ -79,7 +79,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/user/check/email").permitAll()
                         .requestMatchers("/api/v1/post/all").permitAll()
                         .requestMatchers("/api/v1/search/**").permitAll()
-                        .requestMatchers("/image/**","/files/**", "/video/**","/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
