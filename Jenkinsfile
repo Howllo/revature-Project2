@@ -63,7 +63,7 @@ pipeline {
                         --output text \
                         --parameters '{"commands":[
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "sleep 5",  # Give time for file to be fully written
+                            "sleep 5",
                             "docker load < project2.tar && sleep 5",
                             "docker stop project2 || true",
                             "docker rm project2 || true",
