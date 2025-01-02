@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "https://www.devature.dev")
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
