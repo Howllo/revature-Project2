@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "https://www.devature.dev")
 @RequestMapping("api/v1/post")
 public class PostController {
     final private PostService postService;
