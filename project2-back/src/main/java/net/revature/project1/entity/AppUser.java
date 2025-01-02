@@ -73,6 +73,16 @@ public class AppUser {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
+    public AppUser(Long id, String email, String displayName, String profilePic, String username, String bannerPic, String biography) {
+        this.id = id;
+        this.email = email;
+        this.displayName = displayName;
+        this.profilePic = profilePic;
+        this.username = username;
+        this.bannerPic = bannerPic;
+        this.biography = biography;
+    }
+
     public Long getId() {
         return id;
     }
