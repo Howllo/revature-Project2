@@ -15,9 +15,6 @@ import java.util.Collections;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Value("${cors.allowed-origins}")
-    private String[] allowedOrigins;
-
     @Value("${app.resource.path}")
     private String resourcePath;
 
