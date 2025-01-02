@@ -20,6 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:" + resourcePath);
     }
 
+    @PostConstruct
+    public void init() {
+        System.out.println("Allowed Origins: " + Arrays.toString(allowedOrigins));
+    }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
