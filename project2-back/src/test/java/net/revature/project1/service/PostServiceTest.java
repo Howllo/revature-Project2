@@ -1,11 +1,12 @@
 package net.revature.project1.service;
 
-import net.revature.project1.dto.PostFeedRequest;
-import net.revature.project1.dto.PostFeedResponse;
-import net.revature.project1.dto.PostResponseDto;
-import net.revature.project1.dto.PostSmallResponseDto;
+import net.revature.project1.dto.*;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.entity.Post;
+import net.revature.project1.enumerator.PostEnum;
+import net.revature.project1.result.PostResult;
+import net.revature.project1.security.JwtTokenUtil;
+import org.hibernate.service.spi.InjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +16,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import net.revature.project1.repository.PostRepo;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,10 +30,19 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 public class PostServiceTest {
 
     @InjectMocks
-     private PostService service;
+    private PostService postService;
 
     @Mock
-    private PostRepo dao;
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Mock
+    private PostRepo postRepo;
+
+    @Mock
+    private UserService userService;
+
+    @Mock
+    FileService fileService;
 
     @BeforeEach
     public void init() {
@@ -57,11 +69,11 @@ public class PostServiceTest {
 
         List<Post> listOfPosts = Arrays.asList(parentPost, childPost);
 
-        when(dao.findAll()).thenReturn(listOfPosts);
-        setField(service, "postRepo", dao);
+        when(postRepo.findAll()).thenReturn(listOfPosts);
+        setField(postService, "postRepo", postRepo);
 
         // Act
-        List<PostResponseDto> result = service.getAllPosts();
+        List<PostResponseDto> result = postService.getAllPosts();
 
         // Assert
         assertEquals(1, result.size());
@@ -80,7 +92,6 @@ public class PostServiceTest {
         assertEquals((long) parentPost.getComment().length(), dto.commentCount());
     }
 
-
     @Test
     void testGetPost_Found() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
@@ -96,12 +107,12 @@ public class PostServiceTest {
                 postAt          // postAt
         );
 
-        when(dao.getUserPost(postId)).thenReturn(Optional.of(expectedPost));
+        when(postRepo.getUserPost(postId)).thenReturn(Optional.of(expectedPost));
 
-        setField(service, "postRepo", dao);
+        setField(postService, "postRepo", postRepo);
 
         // Act
-        PostSmallResponseDto actualPost = service.getPost(postId);
+        PostSmallResponseDto actualPost = postService.getPost(postId);
 
         // Assert
         assertEquals(expectedPost, actualPost, "The returned post should match the expected post.");
@@ -112,10 +123,10 @@ public class PostServiceTest {
         // Arrange
         Long postId = 2L;
 
-        lenient().when(dao.getUserPost(postId)).thenReturn(Optional.empty());
+        lenient().when(postRepo.getUserPost(postId)).thenReturn(Optional.empty());
 
         // Act
-        PostSmallResponseDto actualPost = service.getPost(postId);
+        PostSmallResponseDto actualPost = postService.getPost(postId);
 
         // Assert
         assertNull(actualPost, "The returned post should be null when not found.");
@@ -141,16 +152,16 @@ public class PostServiceTest {
         List<Post> posts = Arrays.asList(post1, post2, post3);
 
         // Mocking repository call to return the list of posts
-        when(dao.getFollowingPostsChunk(userId, lastPostId, chunkSize)).thenReturn(posts);
+        when(postRepo.getFollowingPostsChunk(userId, lastPostId, chunkSize)).thenReturn(posts);
 
-        setField(service, "postRepo", dao);
+        setField(postService, "postRepo", postRepo);
 
         // Creating PostFeedRequest
         List<Long> seenPostId = new ArrayList<>();
         PostFeedRequest request = new PostFeedRequest(userId, seenPostId, lastPostId);
 
         // Act
-        PostFeedResponse response = service.getUserFeed(request, chunkSize);
+        PostFeedResponse response = postService.getUserFeed(request, chunkSize);
 
         // Assert
         assertNotNull(response, "Response should not be null");
@@ -165,7 +176,7 @@ public class PostServiceTest {
         assertFalse(seenPostIds.contains(3L), "Seen post ID list should not contain post 3 ID");
 
         // Verify the repository method was called with correct parameters
-        verify(dao, times(1)).getFollowingPostsChunk(userId, lastPostId, chunkSize);
+        verify(postRepo, times(1)).getFollowingPostsChunk(userId, lastPostId, chunkSize);
     }
 
     // Helper method to set the field via reflection (for private fields)
@@ -175,9 +186,164 @@ public class PostServiceTest {
         field.set(target, value);
     }
 
-    // createPost
+    @Test
+    public void testCreatePost_InvalidPost_NoCommentOrMedia() {
+        // Arrange
+        Post invalidPost = new Post(); // No comment or media set
+        String token = "validToken";
 
-    // updatePost
+        // Act
+        PostResult result = postService.createPost(invalidPost, token);
+
+        // Assert
+        assertNotNull(result, "Result should not be null");
+        assertEquals(PostEnum.INVALID_POST, result.postEnum(), "PostEnum should be INVALID_POST");
+        assertEquals("Post must have a comment, image, or video.", result.message(), "Error message should match");
+        assertNull(result.post(), "PostResponseDto should be null for an invalid post");
+    }
+
+    @Test
+    public void testCreatePost_InvalidComment_TooLong() {
+        // Arrange
+        Post invalidPost = new Post();
+        invalidPost.setComment("a".repeat(256)); // A comment with 256 characters
+        String token = "validToken";
+
+        // Act
+        PostResult result = postService.createPost(invalidPost, token);
+
+        // Assert
+        assertNotNull(result, "Result should not be null");
+        assertEquals(PostEnum.INVALID_COMMENT, result.postEnum(), "PostEnum should be INVALID_COMMENT");
+        assertEquals("Comment is too long.", result.message(), "Error message should match");
+        assertNull(result.post(), "PostResponseDto should be null for an invalid comment");
+    }
+
+    @Test
+    public void testCreatePost_InvalidToken_UserMismatch() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        Post post = new Post();
+        AppUser user = new AppUser("email", "username", "password");
+        setField(user, "id", 1L);
+        setField(post, "user", user);
+        setField(post, "comment", "sample comment");
+
+
+        String token = "invalidToken";
+
+        // Mock behavior of jwtTokenUtil to return a username
+        lenient().when(jwtTokenUtil.getUsernameFromToken(token)).thenReturn("differentUser");
+
+        // Mock behavior of userService to return a different user
+        lenient().when(userService.findByUsername("differentUser")).thenReturn(Optional.of(new AppUser("email2", "differentUser", "pass1")));
+
+        // Act
+        PostResult result = postService.createPost(post, token);
+
+        // Assert
+        assertNotNull(result, "Result should not be null");
+        assertEquals(PostEnum.INVALID_POST, result.postEnum(), "PostEnum should be INVALID_POST");
+        assertEquals("User and post are not the same", result.message(), "Error message should match");
+        assertNull(result.post(), "PostResponseDto should be null for an invalid token");
+    }
+
+//    @Test
+//    public void testCreatePost_FileCreationIOException() throws IOException, NoSuchFieldException, IllegalAccessException {
+//        // Arrange
+//        Post post = new Post();
+//        post.setMedia("sampleMediaString"); // Non-YouTube media
+//        post.setComment(null);
+//
+//        AppUser user = new AppUser("email", "username", "password");
+//        setField(post, "user", user);
+//
+//        String token = "validToken";
+//
+//        // Mock valid token behavior
+//        when(jwtTokenUtil.getUsernameFromToken(token)).thenReturn("username");
+//        when(userService.findByUsername("username")).thenReturn(Optional.of(user));
+//
+//        // Mock isValidToken to return true
+//        doReturn(true).when(postService).isValidToken(token, post);
+//
+//        // Mock fileService to throw IOException
+//        doThrow(new IOException("File creation error")).when(fileService).createFile(post);
+//
+//        // Act
+//        PostResult result = postService.createPost(post, token);
+//
+//        // Assert
+//        assertNotNull(result, "Result should not be null");
+//        assertEquals(PostEnum.INVALID_POST, result.postEnum(), "PostEnum should be INVALID_POST");
+//        assertEquals("File could not be created.", result.message(), "Error message should match");
+//        assertNull(result.post(), "PostResponseDto should be null for file creation error");
+//    }
+
+//    @Test
+//    public void testCreatePost_Success() throws NoSuchFieldException, IllegalAccessException, IOException {
+//        // Arrange
+//        Post post = new Post();
+//        setField(post, "media", "sampleMediaString");
+//        setField(post, "comment", "This is a valid comment");
+//
+//        AppUser user = new AppUser("email", "username", "password");
+//        setField(post, "user", user);
+//
+//        String token = "validToken";
+//
+//        PostResponseDto mockResponseDto = new PostResponseDto(1L, 1L, 1L, "user_name", "display",
+//                "This is a comment", "sample media", false, Timestamp.valueOf("2023-01-01 00:00:00"), 2, 2L);
+//
+//        // Mock token behavior
+//        when(jwtTokenUtil.getUsernameFromToken(token)).thenReturn("username");
+//        when(userService.findByUsername("username")).thenReturn(Optional.of(user));
+//        doReturn(true).when(postService).isValidToken(token, post);
+//
+//        // Mock fileService and postRepo behavior
+//        doNothing().when(fileService).createFile(post);
+//        when(postRepo.save(post)).thenAnswer(invocation -> {
+//            Post savedPost = invocation.getArgument(0);
+//            setField(savedPost, "id", 1L); // Simulate the database setting an ID
+//            return savedPost;
+//        });
+//
+//        // Mock getPostResponseDto
+//        when(postService.getPostResponseDto(post)).thenReturn(mockResponseDto);
+//
+//        setField(postService, "postRepo", postRepo);
+//
+//        System.out.println("post = " + post);
+//
+//        // Act
+//        PostResult result = postService.createPost(post, token);
+//
+//        // Assert
+//        assertNotNull(result, "Result should not be null");
+//        assertEquals(PostEnum.SUCCESS, result.postEnum(), "PostEnum should be SUCCESS");
+//        assertNull(result.message(), "Message should be null for successful post");
+//        assertNotNull(result.post(), "PostResponseDto should not be null");
+//        assertEquals(mockResponseDto, result.post(), "PostResponseDto should match the mock");
+//
+//        // Verify interactions
+//        verify(postRepo).save(post);
+//    }
+
+    @Test
+    void testUpdatePost_PostDoesNotExist() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        Long postId = 1L;
+        when(postRepo.findById(postId)).thenReturn(Optional.empty());
+        setField(postService, "postRepo", postRepo);
+
+        PostUpdateDto postUpdateDto = new PostUpdateDto(1, "This is a comment", Timestamp.valueOf("2023-01-01 00:00:00"));
+
+        // Act
+        PostResult result = postService.updatePost(postId, postUpdateDto, "token");
+
+        // Assert
+        assertEquals(PostEnum.INVALID_POST, result.postEnum());
+        assertEquals("Post does not exist.", result.message());
+    }
 
     // deletePost
 
@@ -194,4 +360,6 @@ public class PostServiceTest {
     // isValidToken
 
     // getUser
+
+
 }
