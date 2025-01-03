@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 
 const SearchResult = ({user, setSearchTerm}) => {
     const [userData] = useState(user);
+    
+    const handleProfileClick = () => {
+        setSearchTerm("");
+        console.log(user)
+    }
 
     return (
         <Link to={`/${user.username.toLowerCase()}`} state={{ userObj: user }} style={{ textDecoration: 'none' }}>
             <Button
                 disableRipple={true}
 
-                onClick={() => {setSearchTerm("")}}
+                onClick={handleProfileClick}
 
                 sx={{
                     width: '100%',
