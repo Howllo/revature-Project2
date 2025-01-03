@@ -10,13 +10,22 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import useNav from "./NavContext/UseNav.jsx";
 import {Link} from "react-router-dom";
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CreatePost from "../Post/CreatePost/CreatePost.jsx";
-
+import Cookies from "js-cookie";
 
 const Navbar = () => {
-    const {currentNav, setCurrentNav} = useNav();
+    const {currentNav, setCurrentNav, getUser} = useNav();
     const [openPostPopup, setOpenPostPopup] = useState()
+    const [username] = useState(Cookies.get('username'))
+    const [user, setUser] = useState()
+
+    useEffect(() =>{
+        getUser().then(data =>{
+            setUser(data)
+        })
+    },[])
+    
 
     const handleHomeClick = () => {
         setCurrentNav('home');
@@ -69,7 +78,7 @@ const Navbar = () => {
                         : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Notification</Typography>}
                 </Button>
             </Link>
-            <Link to={'/profile'}>
+            <Link to={`/${username.toLowerCase()}`} state={{ userObj: user}}>
                 <Button onClick={handleProfileClick} variant="text">
                     {currentNav === 'profile' ? <AccountCircleIcon/> : <AccountCircleOutlinedIcon/>}
                     {currentNav === 'profile' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Profile</Typography>
