@@ -2,6 +2,7 @@
 import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 
 const UserDisplay = ({user}) => {
+    console.log(user)
     return (
         <Box>
             <Box>
