@@ -112,7 +112,7 @@ function Search() {
                         {
                             searchResults.map((result) => (
                                 <SearchResult key={result.id} user={result} setSearchTerm={setSearchTerm}/>
-                            ))
+                            ))      
                         }/> : null
                 }
             </Box>

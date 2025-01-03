@@ -1,6 +1,6 @@
 ﻿import {Box, Typography} from "@mui/material";
 
-const ProfileBiography = () => {
+const ProfileBiography = (user) => {
   return (
       <Box
         sx={{
@@ -16,12 +16,7 @@ const ProfileBiography = () => {
                           color: "rgb(11, 15, 20)",
                       }}
           >
-              They used to call me The Drift King back in college.
-              RTGame Feed: bsky.app/profile/rtga...
-
-              Twitch: twitch.tv/rtgame
-              YouTube: youtube.com/rtgame
-              Insta: www.instagram.com/rtgamecrowd
+              {user.ProfileBiography}
           </Typography>
       </Box>
   )

@@ -6,7 +6,8 @@ const UserDisplay = ({user}) => {
         <Box>
             <Box>
                 <img
-                    src={'https://picsum.photos/1500/500'}
+                    //src={'https://picsum.photos/1500/500'}
+                    src={user.bannerPic}
                     alt="Post Image"
                     loading={"lazy"}
                     style={{
@@ -22,7 +23,7 @@ const UserDisplay = ({user}) => {
                         marginLeft: '12px',
                     }}
                 >
-                    <UserAvatar username={user.username} width={64} height={64}/>
+                    <UserAvatar username={user.username} image={user.profilePic} width={64} height={64}/>
                 </Box>
             </Box>
         </Box>
