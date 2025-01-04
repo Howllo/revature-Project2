@@ -94,6 +94,11 @@ public class AuthService {
      * @return {@code AuthResult} of status of the auth service layer.
      */
     public AuthResult login(AuthRequestDto user){
+        logger.warn("DB configuration during login: ");
+        logger.warn("dbUrl: {}", dbUrl);
+        logger.warn("dbUsername: {}", dbUsername);
+        logger.warn("dbPassword: {}", dbPassword);
+
         if(user.email().isEmpty() || user.password().isEmpty()){
             return new AuthResult(AuthEnum.INVALID_CREDENTIALS, user, null, null);
         }
@@ -101,12 +106,6 @@ public class AuthService {
         if(!RegisterRequirementsUtils.isValidEmail(user.email())){
             return new AuthResult(AuthEnum.INVALID_CREDENTIALS, user, null, null);
         }
-
-
-        logger.info("DB configuration: ");
-        logger.info("dbUrl: {}", dbUrl);
-        logger.info("dbUsername: {}", dbUsername);
-        logger.info("dbPassword: {}", dbPassword);
 
         Optional<AppUser> optionalAppUser = userService.findAppUserByEmail(user.email());
         if(optionalAppUser.isEmpty()){
