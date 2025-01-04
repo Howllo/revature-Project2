@@ -1,6 +1,5 @@
 package net.revature.project1.service;
 
-import io.jsonwebtoken.Claims;
 import net.revature.project1.dto.*;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.entity.Post;
@@ -8,6 +7,8 @@ import net.revature.project1.enumerator.PostEnum;
 import net.revature.project1.repository.PostRepo;
 import net.revature.project1.result.PostResult;
 import net.revature.project1.security.JwtTokenUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PostService {
+    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
     final private PostRepo postRepo;
     final private UserService userService;
     final private FileService fileService;
@@ -126,7 +128,7 @@ public class PostService {
         if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
             try{
                 post.setMedia(fileService.createFile(post.getMedia()));
-                System.out.println("The Media Link is: " + post.getMedia());
+                logger.info("The link is {}", post.getMedia());
             } catch (IOException e) {
                 return new PostResult(PostEnum.INVALID_POST, "File could not be created.", null);
             }
