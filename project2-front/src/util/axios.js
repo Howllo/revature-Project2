@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export const projectApi = axios.create({
     baseURL: import.meta.env.VITE_API_URL  || 'https://api.devature.dev/api/v1',
-    withCredentials: false,
+    withCredentials: true,
 });
 
 projectApi.interceptors.request.use(
