@@ -112,7 +112,7 @@ public class FileService {
             s3Client.putObject(putOb, RequestBody.fromFile(fromPath));
         }
         catch (RuntimeException e) {
-            logger.error(e.getMessage());
+            logger.error("Error while uploading file: ", e);
         }
 
         String url = "https://" + s3Bucket + ".s3." + "us-east-2" + ".amazonaws.com/" + pathBucketKey;
@@ -125,6 +125,8 @@ public class FileService {
      * @throws IOException If it fails to create a file it throws the exception.
      */
     public String createFile(String post) throws IOException {
+        logger.info("Creating file: {}", post);
+
         String[] parts = post.split(",");
         String imageType = parts[0].split(";")[0].split(":")[1];
         byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
