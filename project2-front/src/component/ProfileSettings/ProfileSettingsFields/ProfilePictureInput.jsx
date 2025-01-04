@@ -1,14 +1,20 @@
 import { Avatar, Box, IconButton, Input } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 // import { useSettings } from "../Context/useSettings";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import SettingsContext from "../Context/SettingsProvider";
+import { display, margin } from "@mui/system";
 
 const ProfilePictureInput = ({ width = 42, height = 42 }) => {
   let { setProfilePic } = useContext(SettingsContext);
+  const inputRef = useRef(null);
+  const handleClick = () => {
+    inputRef.current.click();
+    console.log("I got clicked");
+  };
 
   return (
-    <Box>
+    <Box style={{ display: "flex", marginBottom: "10px" }}>
       <Avatar
         alt="Profile Picture"
         src={"https://www.w3schools.com/howto/img_avatar.png"}
@@ -20,15 +26,17 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
           height: { height },
         }}
       />
-      <IconButton>
+      <IconButton onClick={handleClick}>
         <PhotoCameraIcon />
-        <Input
-          type="file"
-          inputProps={{ accept: "images/*" }}
-          sx={{ display: "none" }}
-          onAbort={setProfilePic}
-        />
       </IconButton>
+      <input
+        type="file"
+        // inputProps={{ accept: "images/*" }}
+        style={{ display: "none" }}
+        onChange={setProfilePic}
+        ref={inputRef}
+        accept="image/*"
+      />
     </Box>
   );
 };
