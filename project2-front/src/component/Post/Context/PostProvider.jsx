@@ -88,8 +88,6 @@ export const PostProvider = ({ children }) => {
                 mediaString = postData.previewUrl;
             }
 
-            console.log(parentPost);
-
             const postPayload = {
                 postParent: parentPost || null,
                 user: {
