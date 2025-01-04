@@ -99,7 +99,7 @@ public class AuthService {
         logger.warn("dbUsername: {}", dbUsername);
         logger.warn("dbPassword: {}", dbPassword);
 
-        if(user.email().isEmpty() || user.password().isEmpty()){
+/*        if(user.email().isEmpty() || user.password().isEmpty()){
             return new AuthResult(AuthEnum.INVALID_CREDENTIALS, user, null, null);
         }
 
@@ -132,6 +132,7 @@ public class AuthService {
         claims.put("username", checkUser.getUsername());
         var token = jwtTokenUtil.generateToken(checkUser.getUsername(), claims);
 
-        return new AuthResult(AuthEnum.SUCCESS, user, token, checkUser);
+        return new AuthResult(AuthEnum.SUCCESS, user, token, checkUser);*/
+        return new AuthResult(AuthEnum.INVALID_CREDENTIALS, null, null, null);
     }
 }
