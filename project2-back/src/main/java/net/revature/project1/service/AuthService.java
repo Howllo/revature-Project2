@@ -7,8 +7,10 @@ import net.revature.project1.repository.AuthRepo;
 import net.revature.project1.result.AuthResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,24 +21,31 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
     final private AuthRepo authRepo;
     final private UserService userService;
     final private PasswordEncoder passwordEncoder;
     final private JwtTokenUtil jwtTokenUtil;
-    private final AuthenticationManager authenticationManager;
+
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
 
     @Autowired
     public AuthService(AuthRepo authRepo,
                        PasswordEncoder passwordEncoder,
                        UserService userService,
-                       JwtTokenUtil jwtTokenUtil,
-                       AuthenticationManager authenticationManager
+                       JwtTokenUtil jwtTokenUtil
     ){
         this.authRepo = authRepo;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
-        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -92,6 +101,12 @@ public class AuthService {
         if(!RegisterRequirementsUtils.isValidEmail(user.email())){
             return new AuthResult(AuthEnum.INVALID_CREDENTIALS, user, null, null);
         }
+
+
+        logger.info("DB configuration: ");
+        logger.info("dbUrl: {}", dbUrl);
+        logger.info("dbUsername: {}", dbUsername);
+        logger.info("dbPassword: {}", dbPassword);
 
         Optional<AppUser> optionalAppUser = userService.findAppUserByEmail(user.email());
         if(optionalAppUser.isEmpty()){
