@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DB_URL = credentials('DB_URL')
-        DB_USERNAME = credentials('DB_USERNAME')
         DB_PASSWORD = credentials('DB_PASSWORD')
         HCAPTCHA = credentials('HCAPTCHA')
         JWT_SECRET = credentials('JWT_SECRET')
