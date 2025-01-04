@@ -91,22 +91,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/auth/verify-captcha").permitAll()
-                        .requestMatchers("/api/v1/auth/verify-token").permitAll()
-                        .requestMatchers("/api/v1/users/**").hasRole("USER")
-                        .requestMatchers("/api/v1/post/**").hasRole("USER")
-                        .requestMatchers("/api/v1/user/check/username/{username}").permitAll()
-                        .requestMatchers("/api/v1/user/check/email").permitAll()
-                        .requestMatchers("/api/v1/post/all").permitAll()
-                        .requestMatchers("/api/v1/search/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/auth/verify-captcha").permitAll()
+                .requestMatchers("/api/v1/auth/verify-token").permitAll()
+                .requestMatchers("/api/v1/users/**").hasRole("USER")
+                .requestMatchers("/api/v1/post/**").hasRole("USER")
+                .requestMatchers("/api/v1/user/check/username/{username}").permitAll()
+                .requestMatchers("/api/v1/user/check/email").permitAll()
+                .requestMatchers("/api/v1/post/all").permitAll()
+                .requestMatchers("/api/v1/search/**").permitAll()
+                .anyRequest().authenticated()
+
+        );
         return http.build();
     }
 
