@@ -28,6 +28,17 @@ pipeline {
             }
         }
 
+        stage('Verify Properties Injection') {
+            steps {
+                dir('project2-back') {
+                    sh '''
+                        echo "Verifying application.properties contents:"
+                        cat src/main/resources/application.properties
+                    '''
+                }
+            }
+        }
+
         stage('Build Jar'){
             steps {
                 sh '''
