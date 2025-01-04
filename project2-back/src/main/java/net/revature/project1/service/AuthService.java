@@ -22,10 +22,10 @@ import java.util.Optional;
 @Service
 public class AuthService {
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
-    final private AuthRepo authRepo;
+/*    final private AuthRepo authRepo;
     final private UserService userService;
     final private PasswordEncoder passwordEncoder;
-    final private JwtTokenUtil jwtTokenUtil;
+    final private JwtTokenUtil jwtTokenUtil;*/
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
@@ -36,7 +36,11 @@ public class AuthService {
     @Value("${spring.datasource.password}")
     private String dbPassword;
 
-    @Autowired
+    public AuthService(){
+        logger.error("AuthService constructor called");
+    }
+
+/*    @Autowired
     public AuthService(AuthRepo authRepo,
                        PasswordEncoder passwordEncoder,
                        UserService userService,
@@ -46,7 +50,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
-    }
+    }*/
 
     /**
      * Create a new account for the user.
@@ -55,7 +59,7 @@ public class AuthService {
      */
     @Transactional
     public AuthResult registration(AuthRequestDto user){
-        if(user.email() == null|| user.password() == null || user.username() == null){
+/*        if(user.email() == null|| user.password() == null || user.username() == null){
             return new AuthResult(AuthEnum.INVALID, null, null, null);
         }
 
@@ -85,7 +89,8 @@ public class AuthService {
         claims.put("username", returnUser.getUsername());
         var token = jwtTokenUtil.generateToken(returnUser.getUsername(), claims);
 
-        return new AuthResult(AuthEnum.CREATED, user, token, returnUser);
+        return new AuthResult(AuthEnum.CREATED, user, token, returnUser);*/
+        return  new AuthResult(AuthEnum.INVALID_CREDENTIALS, null, null, null);
     }
 
     /**
