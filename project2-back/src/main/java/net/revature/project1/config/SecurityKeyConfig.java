@@ -37,6 +37,11 @@ public class SecurityKeyConfig {
 
     @PostConstruct
     public void init() {
+        System.out.println("=== PostConstruct ===");
+        System.out.println("DB URL: " + dbUrl);
+        System.out.println("DB Username: " + dbUsername);
+        System.out.println("DB Password length: " + (dbPassword != null ? dbPassword.length() : "null"));
+
         logger.error("DB configuration during login: ");
         logger.error("dbUrl: {}", dbUrl);
         logger.error("dbUsername: {}", dbUsername);
