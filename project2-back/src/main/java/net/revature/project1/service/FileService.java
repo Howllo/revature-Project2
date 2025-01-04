@@ -1,12 +1,11 @@
 package net.revature.project1.service;
 
-import net.revature.project1.entity.Post;
 import net.revature.project1.enumerator.FileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -102,7 +101,7 @@ public class FileService {
 
         try (S3Client s3Client = S3Client.builder()
                 .region(Region.US_EAST_2)
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .credentialsProvider(DefaultCredentialsProvider.create())
                 .build())
         {
             PutObjectRequest putOb = PutObjectRequest.builder()
