@@ -13,12 +13,12 @@ import {
   DialogActions,
 } from "@mui/material";
 import { useUserProfile } from "../UserProfile/Context/UseUserProfile";
-// import SubmitButton from "./ProfileSettingsFields/SubmitButton";
-// import CancelButton from "./SettingsFields/CancelButton";
+import SubmitButton from "./ProfileSettingsFields/SubmitButton";
+import CancelButton from "./ProfileSettingsFields/CancelButton";
 
 const SettingsContainer = () => {
   // console.log(Cookies.get("displayName"));
-  const { isOpenDialogBox } = useUserProfile();
+  const { isOpenDialogBox, handleCloseDialogBox } = useUserProfile();
   console.log(isOpenDialogBox);
 
   return (
@@ -27,15 +27,15 @@ const SettingsContainer = () => {
         open={isOpenDialogBox}
         sx={{
           "& .MuiPaper-root": {
-            width: { xs: "90%", sm: "400px" },
+            width: { xs: "90%", sm: "500px" },
             height: { xs: "300px", sm: "500px" },
+            borderRadius: "50px",
           },
         }}
+        onClose={handleCloseDialogBox}
       >
-        <DialogTitle>
-          <h3 style={{ textAlign: "center" }} className="header">
-            Edit Your Profile
-          </h3>
+        <DialogTitle sx={{ textAlign: "center" }}>
+          Edit Your Profile
         </DialogTitle>
         <DialogContent>
           <Banner />
@@ -43,10 +43,12 @@ const SettingsContainer = () => {
           <DisplayNameField />
           <BioTextField />
         </DialogContent>
-        {/* <DialogActions>
-            <SubmitButton />
-            <CancelButton />
-          </DialogActions> */}
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <SubmitButton />
+        </DialogActions>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <CancelButton />
+        </DialogActions>
       </Dialog>
     </SettingsProvider>
   );
