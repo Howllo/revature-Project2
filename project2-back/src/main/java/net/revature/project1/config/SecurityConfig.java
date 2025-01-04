@@ -71,11 +71,6 @@ public class SecurityConfig {
         if (memory <= 0 || iterations <= 0 || saltLength <= 0 || hashLength <= 0 || parallelism <= 0) {
             throw new IllegalArgumentException("All values must be a positive value.");
         }
-
-        logger.info("Validating configuration: ");
-        logger.info("\tdbUrl: {}", dbUrl);
-        logger.info("\tdbUsername: {}", dbUsername);
-        logger.info("\tdbPassword: {}", dbPassword);
     }
 
     @Bean
@@ -100,6 +95,11 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
+
+        logger.info("Validating configuration: ");
+        logger.info("\tdbUrl: {}", dbUrl);
+        logger.info("\tdbUsername: {}", dbUsername);
+        logger.info("\tdbPassword: {}", dbPassword);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
