@@ -126,7 +126,7 @@ public class PostService {
         if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
             try{
                 post.setMedia(fileService.createFile(post.getMedia()));
-                System.out.println(post.getMedia());
+                System.out.println("The Media Link is: " + post.getMedia());
             } catch (IOException e) {
                 return new PostResult(PostEnum.INVALID_POST, "File could not be created.", null);
             }
