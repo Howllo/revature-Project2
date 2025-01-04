@@ -24,4 +24,6 @@ jobs:
         env:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: mvn -B test
+        run: |
+          cd project2-back
+          mvn -B test
