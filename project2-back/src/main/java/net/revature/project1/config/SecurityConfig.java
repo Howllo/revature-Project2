@@ -3,6 +3,8 @@ package net.revature.project1.config;
 import jakarta.annotation.PostConstruct;
 import net.revature.project1.security.JwtAuthenticationFilter;
 import net.revature.project1.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,12 +29,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
     @Value("${argon2.saltLength}")
     private int saltLength;
 
@@ -48,6 +51,15 @@ public class SecurityConfig {
     @Value("${argon2.iterations}")
     private int iterations;
 
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+
+    @Value("${spring.datasource.username}")
+    private String dbUsername;
+
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
+
     private final UserService userService;
 
     public SecurityConfig(UserService userService) {
@@ -59,6 +71,11 @@ public class SecurityConfig {
         if (memory <= 0 || iterations <= 0 || saltLength <= 0 || hashLength <= 0 || parallelism <= 0) {
             throw new IllegalArgumentException("All values must be a positive value.");
         }
+
+        logger.info("Validating configuration: ");
+        logger.info("\tdbUrl: {}", dbUrl);
+        logger.info("\tdbUsername: {}", dbUsername);
+        logger.info("\tdbPassword: {}", dbPassword);
     }
 
     @Bean
