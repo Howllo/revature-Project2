@@ -4,7 +4,7 @@ import {usePost} from "../Context/UsePost.jsx";
 export const PostTextField = () => {
     const {setComment} = usePost();
 
-    const handleEmailChange = (e) => {
+    const handleCommentChange = (e) => {
         setComment(e.target.value);
     }
 
@@ -14,7 +14,7 @@ export const PostTextField = () => {
                 multiline={true}
                 type="text"
                 className="text"
-                onChange={(e) => handleEmailChange(e)}
+                onChange={(e) => handleCommentChange(e)}
                 placeholder="What's up?"
                 sx={{
                     mt: '-5px',

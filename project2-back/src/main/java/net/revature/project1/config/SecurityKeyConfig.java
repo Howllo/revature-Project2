@@ -13,7 +13,6 @@ public class SecurityKeyConfig {
     @Value("${jwt.secret:defaultSecretKey12345678901234567890}")
     private String jwtSecret;
 
-
     /**
      * Builds the secret key to be used for signing and verifying JWT tokens.
      * @return A {@code SecretKey} to be used for signing and verifying JWT tokens.

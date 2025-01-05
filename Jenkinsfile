@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DB_URL = credentials('DB_URL')
-        DB_USERNAME = credentials('DB_USERNAME')
         DB_PASSWORD = credentials('DB_PASSWORD')
         HCAPTCHA = credentials('HCAPTCHA')
         JWT_SECRET = credentials('JWT_SECRET')
@@ -17,8 +15,7 @@ pipeline {
             steps {
                 dir('project2-back'){
                     sh """
-                        echo "spring.datasource.url=${DB_URL}" >> src/main/resources/application.properties
-                        echo "spring.datasource.username=${DB_USERNAME}" >> src/main/resources/application.properties
+                        echo "" >> src/main/resources/application.properties
                         echo "spring.datasource.password=${DB_PASSWORD}" >> src/main/resources/application.properties
                         echo "hcaptcha.secret=${HCAPTCHA}" >> src/main/resources/application.properties
                         echo "jwt.secret=${JWT_SECRET}" >> src/main/resources/application.properties
@@ -41,7 +38,7 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    /usr/bin/docker build -t project2 . || { echo "Docker build failed"; exit 1; }
+                    /usr/bin/docker build --no-cache -t project2 . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
                 '''
             }
@@ -69,10 +66,8 @@ pipeline {
                         --output text \
                         --parameters '{"commands":[
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "docker load < project2.tar",
-                            "docker stop project2 || true",
-                            "docker rm project2 || true",
-                            "docker run -d -p 8080:8080 --name project2 project2"
+                            "docker image prune -f",
+                            "sudo rm -f /usr/bin/project2.tar || true"
                         ]}' \
                         --query "Command.CommandId")
 

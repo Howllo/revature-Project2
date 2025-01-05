@@ -8,7 +8,6 @@ import net.revature.project1.result.AuthResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,20 +22,17 @@ public class AuthService {
     final private UserService userService;
     final private PasswordEncoder passwordEncoder;
     final private JwtTokenUtil jwtTokenUtil;
-    private final AuthenticationManager authenticationManager;
 
     @Autowired
     public AuthService(AuthRepo authRepo,
                        PasswordEncoder passwordEncoder,
                        UserService userService,
-                       JwtTokenUtil jwtTokenUtil,
-                       AuthenticationManager authenticationManager
+                       JwtTokenUtil jwtTokenUtil
     ){
         this.authRepo = authRepo;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
-        this.authenticationManager = authenticationManager;
     }
 
     /**

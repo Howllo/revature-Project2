@@ -2,6 +2,7 @@
 import EmailIcon from "@mui/icons-material/Email";
 import {useState} from "react";
 import {projectApi} from "../util/axios.js";
+import LogOut from "../component/LogOut/logOut.jsx";
 
 const SettingsPage = () => {
     const [displayName, setDisplayName] = useState()
@@ -67,6 +68,8 @@ const SettingsPage = () => {
             >
                 Change Name
             </Button>
+            <br/>
+            <LogOut/>
         </Box>
     )
 }

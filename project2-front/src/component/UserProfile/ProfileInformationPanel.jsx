@@ -51,7 +51,7 @@ const ProfileInformationPanel = ({user}) => {
                                     color: "rgb(66, 87, 108)",
                                 }}
                     >
-                        67.5k
+                        {user.followerCount}
                     </Typography>
 
                     <Typography variant="h6" color="secondary"
@@ -82,7 +82,7 @@ const ProfileInformationPanel = ({user}) => {
                                     color: "rgb(66, 87, 108)",
                                 }}
                     >
-                        166
+                        {user.followingCount}
                     </Typography>
 
                     <Typography variant="h6" color="secondary"

@@ -10,7 +10,7 @@ export const UserProfileProvider = ({ children }) => {
 
     const setFollow = async (follower_id, following_id) => {
         try {
-            const response = await projectApi.post(`/${follower_id}/follow/${following_id}`)
+            const response = await projectApi.post(`/user/${follower_id}/follow/${following_id}`)
             return response.status === 200;
         } catch (e) {
             console.error(`Error Status: ${e.status}`);
