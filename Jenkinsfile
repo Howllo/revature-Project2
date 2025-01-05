@@ -38,9 +38,8 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    /usr/bin/docker -t project2:latest . || { echo "Docker build failed"; exit 1; }
+                    /usr/bin/docker -t project2 . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
-                    /usr/bin/docker tag $IMAGE_TAG project2:latest
                 '''
             }
         }
