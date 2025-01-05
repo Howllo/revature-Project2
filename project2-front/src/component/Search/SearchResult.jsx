@@ -1,18 +1,27 @@
 ﻿import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 import {Box, Button, Typography} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import useSelectedData from "./Context/UseSelectedData.jsx";
 
 const SearchResult = ({user, setSearchTerm}) => {
     const [userData] = useState(user);
-    
+    const {getUser} = useSelectedData();
+    const [selectedUser, setSelectedUser] = useState();
+
+    useEffect(() =>{
+            getUser(user.id).then(data =>{
+                setSelectedUser(data)
+            })
+        },[])
+
     const handleProfileClick = () => {
         setSearchTerm("");
         console.log(user)
     }
 
     return (
-        <Link to={`/${user.username.toLowerCase()}`} state={{ userObj: user }} style={{ textDecoration: 'none' }}>
+        <Link to={`/${user.username.toLowerCase()}`} state={{ userObj: selectedUser }} style={{ textDecoration: 'none' }}>
             <Button
                 disableRipple={true}
 
