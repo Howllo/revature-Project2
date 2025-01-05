@@ -125,8 +125,6 @@ public class FileService {
      * @throws IOException If it fails to create a file it throws the exception.
      */
     public String createFile(String post) throws IOException {
-        logger.info("Creating file: {}", post);
-
         String[] parts = post.split(",");
         String imageType = parts[0].split(";")[0].split(":")[1];
         byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
