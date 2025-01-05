@@ -71,7 +71,8 @@ pipeline {
                             "sudo rm -f ./project2.tar || true",
                             "docker stop project2 || true",
                             "docker rmi project2:latest || true",
-                            "docker load < project2.tar"
+                            "docker load < project2.tar",
+                            "docker run -d -p 8080:8080 --name project2 project2"
                         ]}' \
                         --query "Command.CommandId")
 
