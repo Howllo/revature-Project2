@@ -73,7 +73,8 @@ pipeline {
                             "docker image prune -a -f || true",
                             "docker stop project2 || true",
                             "docker rmi project2:latest || true",
-                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar"
+                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
+                            "docker load < project2.tar"
                         ]}' \
                         --query "Command.CommandId")
 
