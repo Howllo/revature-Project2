@@ -70,12 +70,10 @@ pipeline {
                         --parameters '{"commands":[
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
-                            "docker image prune -f",
+                            "docker image prune -a -f || true",
                             "docker stop project2 || true",
                             "docker rmi project2:latest || true",
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "docker load < project2.tar",
-                            "docker run -d -p 8080:8080 --name project2 project2"
                         ]}' \
                         --query "Command.CommandId")
 
