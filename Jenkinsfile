@@ -67,8 +67,6 @@ pipeline {
                         --parameters '{"commands":[
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
                             "docker image prune -f",
-                            "sudo rm -f /usr/bin/project2.tar || true",
-                            "sudo rm -f ./project2.tar || true",
                             "docker stop project2 || true",
                             "docker rm project2 || true",
                             "docker rmi project2:latest",
