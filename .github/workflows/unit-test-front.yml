@@ -1,4 +1,4 @@
-name: Unit Test Action
+name: Unit Test Action Front
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-unit-tests:
+  backend-unit-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,3 +27,24 @@ jobs:
         run: |
           cd project2-back
           mvn -B test
+
+  frontend-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Adjust Node.js version if needed
+
+      - name: Install dependencies
+        run: |
+          cd project2-front
+          npm install
+
+      - name: Run unit tests
+        run: |
+          cd project2-front
+          npm test
