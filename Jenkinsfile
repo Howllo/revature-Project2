@@ -25,17 +25,6 @@ pipeline {
             }
         }
 
-        stage('Verify Properties Injection') {
-            steps {
-                dir('project2-back') {
-                    sh '''
-                        echo "Verifying application.properties contents:"
-                        cat src/main/resources/application.properties
-                    '''
-                }
-            }
-        }
-
         stage('Build Jar'){
             steps {
                 sh '''
@@ -49,8 +38,9 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    /usr/bin/docker build -t project2 . || { echo "Docker build failed"; exit 1; }
+                    /usr/bin/docker --no-cache -t project2:latest . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
+                    /usr/bin/docker tag $IMAGE_TAG project2:latest
                 '''
             }
         }
@@ -77,9 +67,11 @@ pipeline {
                         --output text \
                         --parameters '{"commands":[
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "docker load < project2.tar",
+                            "docker image prune -f",
                             "docker stop project2 || true",
                             "docker rm project2 || true",
+                            "docker rmi project2:latest",
+                            "docker load < project2.tar",
                             "docker run -d -p 8080:8080 --name project2 project2"
                         ]}' \
                         --query "Command.CommandId")
