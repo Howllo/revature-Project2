@@ -64,12 +64,14 @@ const InteractionBar = ({ post, setPost }) => {
                             color: 'rgb(66, 87, 108)'
                         }}
                     />
+                </Button>
+                {post.commentsNum > 0 && (
                     <Typography
                         variant="body1"
                         fontFamily="Inter, sans-serif"
                         sx={{
-                            paddingLeft: '5px',
-                            paddingTop: '2px',
+                            paddingLeft: '2px',
+                            paddingTop: '8px',
                             flexDirection: 'row',
                             fontSize: '13.125px',
                             fontWeight: 400,
@@ -78,7 +80,7 @@ const InteractionBar = ({ post, setPost }) => {
                     >
                         {post.commentsNum}
                     </Typography>
-                </Button>
+                )}
             </Box>
 
             <Box
