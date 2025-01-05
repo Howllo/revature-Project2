@@ -65,13 +65,14 @@ pipeline {
                         --document-name "AWS-RunShellScript" \
                         --output text \
                         --parameters '{"commands":[
-                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "docker image prune -f",
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
+                            "docker image prune -f",
                             "docker stop project2 || true",
                             "docker rmi project2:latest || true",
-                            "docker load < project2.tar"
+                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
+                            "docker load < project2.tar",
+                            "docker run -d -p 8080:8080 --name project2 project2"
                         ]}' \
                         --query "Command.CommandId")
 
