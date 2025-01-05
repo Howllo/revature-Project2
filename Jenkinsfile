@@ -66,7 +66,7 @@ pipeline {
                         --output text \
                         --parameters '{"commands":[
                             "docker rm project2 || true",
-                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar --debug",
+                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar --debug"
                         ]}' \
                         --query "Command.CommandId")
 
