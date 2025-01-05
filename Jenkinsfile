@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+        DB_URL = credentials('DB_URL')
+        DB_USERNAME = credentials('DB_USERNAME')
         DB_PASSWORD = credentials('DB_PASSWORD')
         HCAPTCHA = credentials('HCAPTCHA')
         JWT_SECRET = credentials('JWT_SECRET')
@@ -16,7 +18,8 @@ pipeline {
                 dir('project2-back'){
                     sh """
                         echo "" >> src/main/resources/application.properties
-                        echo "spring.datasource.password=${DB_PASSWORD}" >> src/main/resources/application.properties
+                        echo "spring.datasource.url=${DB_URL}" >> src/main/resources/application.properties
+                        echo "spring.datasource.username=${DB_USERNAME}" >> src/main/resources/application.properties
                         echo "hcaptcha.secret=${HCAPTCHA}" >> src/main/resources/application.properties
                         echo "jwt.secret=${JWT_SECRET}" >> src/main/resources/application.properties
                         echo "s3.bucket=${S3_BUCKET}" >> src/main/resources/application.properties
