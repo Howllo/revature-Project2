@@ -12,6 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,17 +32,19 @@ public class SearchServiceTest {
 
     @Test
     public void getSearchUserTest(){
-//        Arrange
+
+
+
         String username = "testUser";
-        UserSearchDto userSearchDto = new UserSearchDto(1l, "testUser", "Jane Doe", "fake profile");
+        UserSearchDto userSearchDto = new UserSearchDto(1l, "testUser", "Jane Doe", "fake profile", "fake banner", "biography", 24, 45, new Timestamp(System.currentTimeMillis()));
         when(userService.getSearchUser(username)).thenReturn(Arrays.asList(userSearchDto));
 
-//        Act
+
 
         List<UserSearchDto> userSearchDtos = searchService.getSearchUser(username);
 
 
-//Assert
+//Asser
         Assertions.assertThat(userSearchDtos).isNotNull();
 
     }
