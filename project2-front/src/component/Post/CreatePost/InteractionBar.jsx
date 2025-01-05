@@ -88,6 +88,7 @@ const InteractionBar = ({ post, setPost }) => {
 
                 }}
             >
+
                 <Button
                     onClick={handleLike}
                     sx={{
@@ -110,12 +111,14 @@ const InteractionBar = ({ post, setPost }) => {
                             }}
                         />
                     }
+                </Button>
+                {post.likesNum > 0 && (
                     <Typography
                         variant="h6"
                         fontFamily="Inter, sans-serif"
                         sx={{
-                            paddingLeft: '5px',
-                            paddingTop: '2px',
+                            paddingLeft: '2px',
+                            paddingTop: '8px',
                             flexDirection: 'row',
                             fontSize: '13.125px',
                             color: 'rgb(66, 87, 108)'
@@ -123,7 +126,7 @@ const InteractionBar = ({ post, setPost }) => {
                     >
                         {post.likesNum}
                     </Typography>
-                </Button>
+                )}
 
                 {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
             </Box>
