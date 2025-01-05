@@ -69,7 +69,8 @@ pipeline {
                             "docker image prune -f",
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
-                            "docker stop project2 || true"
+                            "docker stop project2 || true",
+                            "docker rmi project2:latest || true"
                         ]}' \
                         --query "Command.CommandId")
 
