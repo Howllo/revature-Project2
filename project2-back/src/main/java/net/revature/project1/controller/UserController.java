@@ -96,6 +96,13 @@ public class UserController {
         return resultResponse(result);
     }
 
+    @GetMapping("/{id}/follow/{user}")
+    public ResponseEntity<Boolean> checkIfFollowing(@PathVariable("id") Long followerId,
+                                               @PathVariable("user") Long followingId) {
+        boolean result = userService.checkFollowing(followerId, followingId);
+        return ResponseEntity.ok(result);
+    }
+
     @PutMapping("/{id}/profile-pics")
     public ResponseEntity<String> updateProfilePictures(@PathVariable Long id,
                                                         @RequestBody UserRequestPicDto responsePicDto){
