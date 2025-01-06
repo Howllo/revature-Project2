@@ -36,7 +36,7 @@ public class SearchServiceTest {
 
 
         String username = "testUser";
-        UserSearchDto userSearchDto = new UserSearchDto(1l, "testUser", "Jane Doe", "fake profile", "fake banner", "biography", 24, 45, new Timestamp(System.currentTimeMillis()));
+        UserSearchDto userSearchDto = new UserSearchDto(1l, "testUser", "Jane Doe", "fake profile");
         when(userService.getSearchUser(username)).thenReturn(Arrays.asList(userSearchDto));
 
 
