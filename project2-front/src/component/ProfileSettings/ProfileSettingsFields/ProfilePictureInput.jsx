@@ -1,9 +1,9 @@
-import { Avatar, Box, IconButton, Input } from "@mui/material";
+import { Avatar, Box, IconButton } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 // import { useSettings } from "../Context/useSettings";
 import { useContext, useRef } from "react";
 import SettingsContext from "../Context/SettingsProvider";
-import { display, margin } from "@mui/system";
+// import { display, margin } from "@mui/system";
 
 const ProfilePictureInput = ({ width = 42, height = 42 }) => {
   let { setProfilePic } = useContext(SettingsContext);

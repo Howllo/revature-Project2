@@ -1,4 +1,4 @@
-import { Box, Input, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import SettingsContext from "../Context/SettingsProvider";
 import { useContext, useRef } from "react";

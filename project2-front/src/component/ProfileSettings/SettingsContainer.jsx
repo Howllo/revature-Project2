@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
+// import { Box } from "@mui/material";
 import { SettingsProvider } from "./Context/SettingsProvider";
 import BioTextField from "./ProfileSettingsFields/BioTextField";
 import Banner from "./ProfileSettingsFields/Banner";
 import ProfilePictureInput from "./ProfileSettingsFields/ProfilePictureInput";
 import DisplayNameField from "./ProfileSettingsFields/DisplayNameField";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { UserProfileProvider } from "../UserProfile/Context/UserProfileProvider";
 import {
   Dialog,
@@ -17,7 +17,6 @@ import SubmitButton from "./ProfileSettingsFields/SubmitButton";
 import CancelButton from "./ProfileSettingsFields/CancelButton";
 
 const SettingsContainer = () => {
-  // console.log(Cookies.get("displayName"));
   const { isOpenDialogBox, handleCloseDialogBox } = useUserProfile();
   console.log(isOpenDialogBox);
 

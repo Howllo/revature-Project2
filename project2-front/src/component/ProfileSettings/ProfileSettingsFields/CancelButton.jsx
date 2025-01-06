@@ -1,11 +1,10 @@
 import { Button } from "@mui/material";
 // import { useSettings } from "../Context/useSettings";
-import { useContext } from "react";
-import SettingsContext from "../Context/SettingsProvider";
+// import { useContext } from "react";
+// import SettingsContext from "../Context/SettingsProvider";
 import { useUserProfile } from "../../UserProfile/Context/UseUserProfile";
 
 const CancelButton = () => {
-  // const { resetSettingsData } = useContext(SettingsContext);
   const { handleCloseDialogBox } = useUserProfile();
 
   return (
