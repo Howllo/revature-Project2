@@ -14,6 +14,7 @@ export const useSignInValidation = () => {
         setIsAuthenticated(false);
         Cookies.remove('jwt');
         Cookies.remove('username');
+        Cookies.remove('user_id')
     }
 
     const handleSubmit = async (email, password) => {
@@ -83,6 +84,16 @@ export const useSignInValidation = () => {
                 secure: false,
             });
             Cookies.set('user_id', response.data.userId, {
+                expires: 7,
+                sameSite: 'strict',
+                secure: true,
+            })
+            Cookies.set('banner_pic', response.data.banner,{
+                expires: 7,
+                sameSite: 'strict',
+                secure: true,
+            })
+            Cookies.set('display_name', response.data.banner,{
                 expires: 7,
                 sameSite: 'strict',
                 secure: true,

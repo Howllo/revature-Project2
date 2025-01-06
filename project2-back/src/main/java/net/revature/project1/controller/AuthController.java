@@ -41,6 +41,7 @@ public class AuthController {
                             returnedUser.getUsername(),
                             null,
                             returnedUser.getProfilePic(),
+                            null,
                             result.getToken()
                     ));
             case EMAIL_TAKEN -> ResponseEntity.status(HttpStatus.CONFLICT)
@@ -68,6 +69,7 @@ public class AuthController {
                                 returnUser.getUsername(),
                                 returnUser.getDisplayName(),
                                 returnUser.getProfilePic(),
+                                returnUser.getBannerPic(),
                                 authResult.getToken()
                         ));
                 case INVALID, INVALID_CREDENTIALS -> ResponseEntity.status(HttpStatus.BAD_REQUEST)

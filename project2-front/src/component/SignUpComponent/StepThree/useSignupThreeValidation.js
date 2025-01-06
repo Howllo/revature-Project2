@@ -55,6 +55,16 @@ export const useSignupThreeValidation = () => {
                 sameSite: 'strict',
                 secure: true,
             })
+            Cookies.set('banner_pic', response.data.banner,{
+                expires: 7,
+                sameSite: 'strict',
+                secure: true,
+            })
+            Cookies.set('display_name', response.data.banner,{
+                expires: 7,
+                sameSite: 'strict',
+                secure: true,
+            })
 
             if(Cookies.get('user_id')){
                 setUser(Cookies.get('user_id'));
@@ -68,6 +78,7 @@ export const useSignupThreeValidation = () => {
         } catch (error) {
             Cookies.remove('jwt');
             Cookies.remove('username');
+            Cookies.remove('user_id');
             if(error.response && error.response.data.message){
                 console.log(`Status Error: ${error.status} - ${error.response.data.message}`);
             } else {
