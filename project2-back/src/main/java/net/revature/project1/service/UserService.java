@@ -209,6 +209,28 @@ public class UserService {
     }
 
     /**
+     * Used to check if a user is already following someone
+     * @param followerId
+     * @param followingId
+     * @return
+     */
+    public boolean checkFollowing(Long followerId, Long followingId){
+        Optional<AppUser> optionalFollower = userRepo.findById(followerId);
+        Optional<AppUser> optionalFollowing = userRepo.findById(followingId);
+        if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
+            return false;
+        }
+
+        AppUser follower = optionalFollower.get();
+        AppUser following = optionalFollowing.get();
+        if(follower.getFollowing().contains(following)){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Used to update the profile picture of the user.
      * @param id Take in the user id to find the user.
      * @param responsePicDto Take in the response picture DTO to get the information to update the picture.

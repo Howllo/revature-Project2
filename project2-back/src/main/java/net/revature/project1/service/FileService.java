@@ -9,6 +9,7 @@ import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
@@ -146,6 +147,34 @@ public class FileService {
         Files.deleteIfExists(tempPath);
 
         return mediaUrl;
+    }
+
+    /**
+     * Used to delete objects from the S3 Bucket.
+     * @param filePath Take in a file path to find to create an object key.
+     * @return {@Code True} if the was successful in deleting and {@Code False} if it failed to delete.
+     */
+    public boolean deleteFile(String filePath) {
+        String[] parts = filePath.split("/");
+        final int length = parts.length;
+        String objectKey = filePath.split("/")[length - 1];
+
+        try (S3Client s3Client = S3Client.builder()
+                .region(Region.US_EAST_2)
+                .credentialsProvider(DefaultCredentialsProvider.create())
+                .build())
+        {
+            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                    .bucket(s3Bucket)
+                    .key(objectKey)
+                    .build();
+            s3Client.deleteObject(deleteObjectRequest );
+        }
+        catch (RuntimeException e) {
+            logger.error("Error while deleting file: ", e);
+            return false;
+        }
+        return true;
     }
 
     private String getExtensionFromMimeType(String mimeType) {
