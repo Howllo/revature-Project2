@@ -211,12 +211,12 @@ public class UserService {
     /**
      * Used to check if a user is already following someone
      * @param followerId
-     * @param followingId
+     * @param followingUsername
      * @return
      */
-    public boolean checkFollowing(Long followerId, Long followingId){
+    public boolean checkFollowing(Long followerId, String followingUsername){
         Optional<AppUser> optionalFollower = userRepo.findById(followerId);
-        Optional<AppUser> optionalFollowing = userRepo.findById(followingId);
+        Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(followingUsername);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
             return false;
         }
