@@ -14,6 +14,7 @@ import {NavProvider} from "./component/Navbar/NavContext/NavContext.jsx";
 import ProfilePage from "./page/ProfilePage.jsx";
 import SettingPage from "./page/SettingPage.jsx";
 import {PostProvider} from "./component/Post/Context/PostProvider.jsx";
+import { SearchProvider } from './component/Search/Context/GetSelectedData.jsx';
 
 
 
@@ -26,30 +27,32 @@ function App() {
                     <SignUpProvider>
                         <SighInProvider>
                             <PostProvider>
-                                <Routes>
-                                    <Route path="/" element={
-                                        <HomePage>
-                                            <FeedPage/>
-                                        </HomePage>
-                                    }/>
-                                    <Route path="/signin" element={<SigninPage/>}/>
-                                    <Route path="/signup" element={<SignupPage/>}/>
-                                    <Route path="/notification" element={
-                                        <HomePage>
-                                            <NotificationsPage/>
-                                        </HomePage>
-                                    }/>
-                                    <Route path="/:username" element={
-                                        <HomePage>
-                                            <ProfilePage/>
-                                        </HomePage>
-                                    }/>
-                                    <Route path="/setting" element={
-                                        <HomePage>
-                                            <SettingPage/>
-                                        </HomePage>
-                                    }/>
-                                </Routes>
+                                <SearchProvider>
+                                    <Routes>
+                                        <Route path="/" element={
+                                            <HomePage>
+                                                <FeedPage/>
+                                            </HomePage>
+                                        }/>
+                                        <Route path="/signin" element={<SigninPage/>}/>
+                                        <Route path="/signup" element={<SignupPage/>}/>
+                                        <Route path="/notification" element={
+                                            <HomePage>
+                                                <NotificationsPage/>
+                                            </HomePage>
+                                        }/>
+                                        <Route path="/:username" element={
+                                            <HomePage>
+                                                <ProfilePage/>
+                                            </HomePage>
+                                        }/>
+                                        <Route path="/setting" element={
+                                            <HomePage>
+                                                <SettingPage/>
+                                            </HomePage>
+                                        }/>
+                                    </Routes>
+                                </SearchProvider>
                             </PostProvider>
                         </SighInProvider>
                     </SignUpProvider>
