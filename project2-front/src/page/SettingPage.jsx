@@ -2,7 +2,7 @@
 import EmailIcon from "@mui/icons-material/Email";
 import {useState} from "react";
 import {projectApi} from "../util/axios.js";
-import LogOut from "../component/LogOut/logOut.jsx";
+import LogOut from "../component/LogOut/LogOut.jsx";
 
 const SettingsPage = () => {
     const [displayName, setDisplayName] = useState()
