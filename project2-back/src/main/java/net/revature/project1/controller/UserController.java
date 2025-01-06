@@ -70,6 +70,7 @@ public class UserController {
 
     @PutMapping("/settings/update")
     public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
+//        Continue tomorrow
         Long userId = appUser.getId();
         Optional<AppUser> optUser = userService.findUserById(userId);
         if (!optUser.isPresent()){
@@ -78,17 +79,20 @@ public class UserController {
         AppUser user = optUser.get();
         user.setDisplayName(appUser.getDisplayName());
         user.setBiography(appUser.getBiography());
-
+        AppUser savedUser = userService.saveAppUser(user);
         try {
             String bannerUrl = fileService.createFile(appUser.getBannerPic());
+            appUser.setBannerPic(bannerUrl);
         } catch (IOException e){
             e.printStackTrace();
         }
         try {
             String profileUrl = fileService.createFile(appUser.getProfilePic());
+            appUser.setProfilePic(profileUrl);
         } catch (IOException e){
             e.printStackTrace();
         }
+        return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/username")

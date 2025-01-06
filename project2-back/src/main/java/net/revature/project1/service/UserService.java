@@ -268,7 +268,11 @@ public class UserService {
         return UserEnum.SUCCESS;
     }
 
-
+    /**
+     * Used to get check if an email already exist.
+     * @param appUser .
+     * @return An AppUser instance.
+     */
     public AppUser saveAppUser(AppUser appUser){
        return userRepo.save(appUser);
     }
