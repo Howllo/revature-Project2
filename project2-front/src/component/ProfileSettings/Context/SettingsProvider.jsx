@@ -98,7 +98,7 @@ export const SettingsProvider = ({ children }) => {
       }
       const settingsPayload = {
         // I can't seem to find the userId in Cookies.
-        id: Cookies.get("userId"),
+        id: Cookies.get("user_id"),
 
         displayName: settingsData.displayName,
         profilePic: profileMediaString,
