@@ -12,6 +12,7 @@ const DisplayNameField = () => {
       variant="outlined"
       sx={{
         marginBottom: "20px",
+
         width: "100%",
       }}
       value={settingsData.displayName}

@@ -2,7 +2,7 @@
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const ProfileButton = ({ user }) => {
   const { setFollow, handleOpenDialogBox } = useUserProfile();

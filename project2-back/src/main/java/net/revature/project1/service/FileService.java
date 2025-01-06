@@ -124,8 +124,15 @@ public class FileService {
      * @param post Take in the post to set the new media URL.
      * @throws IOException If it fails to create a file it throws the exception.
      */
+<<<<<<< HEAD
     public String createFile(String post) throws IOException {
         String[] parts = post.split(",");
+=======
+
+    public String createFile(String post) throws IOException {
+        String base64Image = post;
+        String[] parts = base64Image.split(",");
+>>>>>>> 88b0419bb40b1e476aff9954ddf137de70f91f13
         String imageType = parts[0].split(";")[0].split(":")[1];
         byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
 
@@ -137,8 +144,13 @@ public class FileService {
         FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
 
         String mediaUrl = uploadFile(fileType, tempPath.toString(), tempFileName);
+<<<<<<< HEAD
         Files.deleteIfExists(tempPath);
 
+=======
+
+        Files.deleteIfExists(tempPath);
+>>>>>>> 88b0419bb40b1e476aff9954ddf137de70f91f13
         return mediaUrl;
     }
 

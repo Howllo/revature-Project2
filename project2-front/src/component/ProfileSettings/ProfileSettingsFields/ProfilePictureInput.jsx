@@ -26,6 +26,7 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
           height: { height },
         }}
       />
+
       <IconButton onClick={handleClick}>
         <PhotoCameraIcon />
       </IconButton>

@@ -69,6 +69,7 @@ public class UserController {
     }
 
     @PutMapping("/settings/update")
+<<<<<<< HEAD
     public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
 //        Continue tomorrow
         Long userId = appUser.getId();
@@ -93,6 +94,11 @@ public class UserController {
             e.printStackTrace();
         }
         return new ResponseEntity<>(appUser, HttpStatus.OK);
+=======
+//    Continue tomorrow
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
+        return null;
+>>>>>>> 88b0419bb40b1e476aff9954ddf137de70f91f13
     }
 
     @PutMapping("/{id}/username")
