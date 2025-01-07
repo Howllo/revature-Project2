@@ -9,9 +9,9 @@ export const UserProfileProvider = ({ children }) => {
     const [listPostData, setListPostData] = useState([]);
     const [following, setFollowing] = useState()
 
-    const setFollow = async (follower_id, following_id) => {
+    const setFollow = async (follower_id, username) => {
         try {
-            const response = await projectApi.post(`/user/${follower_id}/follow/${following_id}`)
+            const response = await projectApi.post(`/user/${follower_id}/follow/${username}`)
             return response.status === 200;
         } catch (e) {
             console.error(`Error Status: ${e.status}`);
@@ -20,9 +20,9 @@ export const UserProfileProvider = ({ children }) => {
         }
     }
 
-    const removeFollow = async (follower_id, following_id) => {
+    const removeFollow = async (follower_id, username) => {
         try {
-            const response = await projectApi.delete(`/user/${follower_id}/follow/${following_id}`)
+            const response = await projectApi.delete(`/user/${follower_id}/follow/${username}`)
             return response.status === 200;
         } catch (e) {
             console.error(`Error Status: ${e.status}`);
