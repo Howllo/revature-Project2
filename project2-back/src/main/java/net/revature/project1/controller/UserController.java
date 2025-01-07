@@ -135,8 +135,8 @@ public class UserController {
 
     @GetMapping("/{id}/follow/{user}")
     public ResponseEntity<Boolean> checkIfFollowing(@PathVariable("id") Long followerId,
-                                               @PathVariable("user") Long followingId) {
-        boolean result = userService.checkFollowing(followerId, followingId);
+                                               @PathVariable("user") String followingUsername) {
+        boolean result = userService.checkFollowing(followerId, followingUsername);
         return ResponseEntity.ok(result);
     }
 
