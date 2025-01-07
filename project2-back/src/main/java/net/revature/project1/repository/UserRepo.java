@@ -25,6 +25,8 @@ public interface UserRepo extends JpaRepository<AppUser, Long> {
      */
     Optional<AppUser> findAppUserByUsername(String username);
 
+    Optional<UserSearchDto> findAppUserByUsername(String username, String useless);
+
     /**
      * Used to check if the email exist or not already.
      * @param email Take in email to check the database.
