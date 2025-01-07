@@ -18,11 +18,11 @@ const ProfileButton = ({user}) => {
     }, []);
 
     const handleFollow = async () => {
-        setFollow(Cookies.get("user_id"), user.id);
+        setFollow(Cookies.get("user_id"), user.username);
     }
 
     const handleUnfollow = async () => {
-        removeFollow(Cookies.get("user_id"), user.id);
+        removeFollow(Cookies.get("user_id"), user.username);
     }
     
 
