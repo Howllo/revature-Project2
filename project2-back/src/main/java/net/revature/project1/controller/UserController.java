@@ -84,15 +84,15 @@ public class UserController {
 
     @PostMapping("/{id}/follow/{user}")
     public ResponseEntity<String> followNewUser(@PathVariable("id") Long followerId,
-                                                @PathVariable("user") Long followingId) {
-        UserEnum result = userService.followUser(followerId, followingId);
+                                                @PathVariable("user") String username) {
+        UserEnum result = userService.followUser(followerId, username);
         return resultResponse(result);
     }
 
     @DeleteMapping("/{id}/follow/{user}")
     public ResponseEntity<String> unfollowUser(@PathVariable("id") Long followerId,
-                                               @PathVariable("user") Long followingId) {
-        UserEnum result = userService.unfollowUser(followerId, followingId);
+                                               @PathVariable("user") String username) {
+        UserEnum result = userService.unfollowUser(followerId, username);
         return resultResponse(result);
     }
 
