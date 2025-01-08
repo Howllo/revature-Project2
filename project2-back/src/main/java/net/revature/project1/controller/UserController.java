@@ -61,6 +61,12 @@ public class UserController {
         return ResponseEntity.ok("This email is available.");
     }
 
+    @PutMapping("/settings/update")
+//    Continue tomorrow
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
+        return null;
+    }
+
     @PutMapping("/{id}/username")
     public ResponseEntity<String> updateUsername(@PathVariable Long id,
                                                  @RequestBody AppUser appUser) {
