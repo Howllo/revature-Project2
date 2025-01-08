@@ -1,17 +1,10 @@
 ﻿import { Box, Button, InputAdornment, OutlinedInput } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
-<<<<<<< HEAD
-import {useState} from "react";
-import {projectApi} from "../util/axios.js";
+
 import LogOut from "../component/LogOut/LogOut.jsx";
-=======
+
 import { useState } from "react";
 import { projectApi } from "../util/axios.js";
-import SettingsContainer from "../component/ProfileSettings/SettingsContainer.jsx";
-// import Banner from "../component/Settings/SettingsFields/Banner.jsx";
-// import BioTextField from "../component/Settings/SettingsFields/BioTextField.jsx";
-// import DisplayNameField from "../component/Settings/SettingsFields/DisplayNameField.jsx";
->>>>>>> 88b0419 (userSettingFrontendImplementation)
 
 const SettingsPage = () => {
   const [displayName, setDisplayName] = useState();
@@ -50,57 +43,39 @@ const SettingsPage = () => {
   };
 
   return (
-    <>
-      {/* <Box> */}
-      {/* <OutlinedInput
-          required
-          type="text"
-          className="text"
-          value={displayName}
-          onChange={(e) => handleDisplayNameChange(e)}
-          placeholder="Enter new display name"
-          sx={{
-            maxWidth: "450px",
-            marginTop: "10px",
-            width: "100%",
-          }}
-          startAdornment={
-            <InputAdornment position="start">
-              <EmailIcon />
-            </InputAdornment>
-          }
-        /> */}
+    <Box>
+      <OutlinedInput
+        required
+        type="text"
+        className="text"
+        value={displayName}
+        onChange={(e) => handleDisplayNameChange(e)}
+        placeholder="Enter new display name"
+        sx={{
+          maxWidth: "450px",
+          marginTop: "10px",
+          width: "100%",
+        }}
+        startAdornment={
+          <InputAdornment position="start">
+            <EmailIcon />
+          </InputAdornment>
+        }
+      />
 
-      {/* <Button
-          variant="contained"
-          onClick={handleDisplayChange}
-          sx={{
-            marginTop: "10px",
-          }}
-        >
-          Change Name
-        </Button>
-      </Box> */}
-      <SettingsContainer />
-      {/* <DisplayNameField /> */}
-    </>
+      <Button
+        variant="contained"
+        onClick={handleDisplayChange}
+        sx={{
+          marginTop: "10px",
+        }}
+      >
+        Change Name
+      </Button>
+      <br />
+      <LogOut />
+    </Box>
   );
 };
 
-<<<<<<< HEAD
-                sx={{
-                    marginTop: '10px',
-                }}
-            >
-                Change Name
-            </Button>
-            <br/>
-            <LogOut/>
-        </Box>
-    )
-}
-
 export default SettingsPage;
-=======
-export default SettingsPage;
->>>>>>> 88b0419 (userSettingFrontendImplementation)

@@ -72,21 +72,22 @@ export function SignUpBackNext({ handleNav, captchaSecurity }) {
         >
           Back
         </Button>
-
-        {showButton && (
-          <Button
-            variant="contained"
-            onClick={handleNav}
-            sx={{
-              backgroundColor: "rgb(56,155,253)",
-              color: "white",
-              fontWeight: 600,
-              textTransform: "capitalize",
-            }}
-          >
-            Next
-          </Button>
-        )}
+        {/* TODO: Capture restore */}
+        <Button
+          variant="contained"
+          onClick={handleNav}
+          sx={{
+            backgroundColor: "rgb(56,155,253)",
+            color: "white",
+            fontWeight: 600,
+            textTransform: "capitalize",
+          }}
+        >
+          Next
+        </Button>
+        {/* {showButton && (
+          
+        )} */}
       </Box>
 
       <Box
