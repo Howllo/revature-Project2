@@ -18,15 +18,11 @@ const ProfileButton = ({user}) => {
     }, []);
 
     const handleFollow = async () => {
-        setFollow(Cookies.get("user_id"), user.username);
-    }
-
-    const handleUnfollow = async () => {
-        removeFollow(Cookies.get("user_id"), user.username);
+        isFollowed ? removeFollow(Cookies.get("user_id"), user.username) : setFollow(Cookies.get("user_id"), user.username);
     }
     
 
-    if(Cookies.get("username") == user.username){
+    if(Cookies.get("username") === user.username){
         return (
             <Box
                 sx={{
@@ -69,95 +65,48 @@ const ProfileButton = ({user}) => {
             </Box>
         )
     }
-    else{
-        if(isFollowed==false){
-            return (
-                <Box
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: 'column',
+                borderColor: 'gray',
+                borderWidth: '1px',
+                mt: '-20px',
+                paddingRight: '10px',
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    flexDirection: 'row',
+                    flexGrow: 1,
+                }}
+            >
+                <Button
+                    onClick={handleFollow}
+
+                    variant="contained"
+                    size="small"
                     sx={{
-                        display: "flex",
-                        flexDirection: 'column',
-                        borderColor: 'gray',
-                        borderWidth: '1px',
-                        mt: '-20px',
-                        paddingRight: '10px',
+                        borderRadius: 6,
+                        textTransform: "capitalize",
+                    }}
+                >{isFollowed ? "Unfollow" : "Follow"}</Button>
+
+                <IconButton
+                    sx={{
+                        marginLeft: '5px',
+                        backgroundColor: 'grey',
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            flexDirection: 'row',
-                            flexGrow: 1,
-                        }}
-                    >
-                        <Button
-                            onClick={handleFollow}
+                    <MoreHorizIcon/>
+                </IconButton>
+            </Box>
+        </Box>
+    )        
     
-                            variant="contained"
-                            size="small"
-                            sx={{
-                                borderRadius: 6,
-                                textTransform: "capitalize",
-                            }}
-                        >Follow</Button>
-    
-                        <IconButton
-                            sx={{
-                                marginLeft: '5px',
-                                backgroundColor: 'grey',
-                            }}
-                        >
-                            <MoreHorizIcon/>
-                        </IconButton>
-                    </Box>
-                </Box>
-            )
-        }
-        else{
-            return (
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: 'column',
-                        borderColor: 'gray',
-                        borderWidth: '1px',
-                        mt: '-20px',
-                        paddingRight: '10px',
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            flexDirection: 'row',
-                            flexGrow: 1,
-                        }}
-                    >
-                        <Button
-                            onClick={handleUnfollow}
-    
-                            variant="contained"
-                            size="small"
-                            sx={{
-                                borderRadius: 6,
-                                textTransform: "capitalize",
-                            }}
-                        >Unfollow</Button>
-    
-                        <IconButton
-                            sx={{
-                                marginLeft: '5px',
-                                backgroundColor: 'grey',
-                            }}
-                        >
-                            <MoreHorizIcon/>
-                        </IconButton>
-                    </Box>
-                </Box>
-            )
-        }
-        
-    }
 }
 
 export default ProfileButton;
