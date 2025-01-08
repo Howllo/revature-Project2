@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import net.revature.project1.Project1Application;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.service.SearchService;
@@ -47,5 +48,24 @@ public class SearchServiceTest {
 //Asser
         Assertions.assertThat(userSearchDtos).isNotNull();
 
+=======
+package unittests;
+
+import net.revature.project1.service.SearchService;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class SearchServiceTest {
+
+    @Autowired
+    SearchService searchService;
+
+    @Test
+    public void contextLoad(){
+        Assertions.assertThat(searchService).isNot(null);
+>>>>>>> a4de21a (add SearchServiceTest)
     }
 }
