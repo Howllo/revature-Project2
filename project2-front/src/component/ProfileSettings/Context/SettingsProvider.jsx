@@ -6,18 +6,18 @@ import PropTypes from "prop-types";
 const SettingsContext = createContext(null);
 
 export const SettingsProvider = ({ children }) => {
-  // We need to initialize states with the current values
-  // and test the hanlde submit function
   const [settingsData, setSettingsData] = useState({
     displayName: Cookies.get("display_name") == null || "",
     profilePic:
       Cookies.get("profile_pic") == null || "https://placehold.co/600x400",
     bannerPic:
       Cookies.get("banner_pic") == null || "https://placehold.co/600x400/png",
-    biography: Cookies.get("bioText") || "",
+    biography: Cookies.get("bio_text") || "",
   });
 
-  console.log(Cookies.get("banner_pic"));
+  let profilePreviewURL;
+  let bannerPreviewURL;
+
   const setDisplayName = (event) => {
     const displayName = event.target.value;
     setSettingsData((prev) => ({
@@ -28,22 +28,30 @@ export const SettingsProvider = ({ children }) => {
 
   const setProfilePic = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const tempURL = URL.createObjectURL(file);
+    if (file && !file.type.startsWith("video/")) {
+      if (profilePreviewURL) {
+        URL.revokeObjectURL(profilePreviewURL);
+      }
+      profilePreviewURL = URL.createObjectURL(file);
       setSettingsData((prev) => ({
         ...prev,
-        profilePic: tempURL ? tempURL : null,
+        profilePic: profilePreviewURL ? profilePreviewURL : null,
       }));
     }
   };
 
   const setBannerPic = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const tempURL = URL.createObjectURL(file);
+    if (file && !file.type.startsWith("video/")) {
+      if (bannerPreviewURL) {
+        URL.revokeObjectURL(bannerPreviewURL);
+      }
+      bannerPreviewURL = URL.createObjectURL(file);
       setSettingsData((prev) => ({
         ...prev,
-        bannerPic: tempURL ? tempURL : "https://via.placeholder.com/400",
+        bannerPic: bannerPreviewURL
+          ? bannerPreviewURL
+          : "https://via.placeholder.com/400",
       }));
     }
   };
@@ -155,6 +163,8 @@ export const SettingsProvider = ({ children }) => {
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
+      URL.revokeObjectURL(profilePreviewURL);
+      URL.revokeObjectURL(bannerPreviewURL);
     } catch (error) {
       console.error("Error submitting settings:", error);
       throw error;
