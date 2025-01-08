@@ -18,9 +18,6 @@ const ProfileButton = ({user}) => {
 
     const handleFollow = async () => {
         isFollowed ? removeFollow(Cookies.get("user_id"), user.username) : setFollow(Cookies.get("user_id"), user.username);
-    }
-
-    const btnChange = () => {
         setIsFollowed(!isFollowed)
     }
 
@@ -87,10 +84,7 @@ const ProfileButton = ({user}) => {
                 }}
             >
                 <Button
-                    onClick={() => {
-                        handleFollow();
-                        btnChange();
-                    }}
+                    onClick={handleFollow}
 
                     variant="contained"
                     size="small"
