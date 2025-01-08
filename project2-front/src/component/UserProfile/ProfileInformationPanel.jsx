@@ -33,7 +33,7 @@ const ProfileInformationPanel = ({user}) => {
             >
                 {user.displayName || user.username}
             </Typography>
-
+   
             <Typography variant="h6" color="secondary"
                         sx={{
                             fontFamily: "Inter, sans-serif",
@@ -45,6 +45,16 @@ const ProfileInformationPanel = ({user}) => {
                 {user.username}
             </Typography>
 
+            <Typography variant="h6" color="secondary"
+                        sx={{
+                            fontFamily: "Inter, sans-serif",
+                            fontWeight: "300",
+                            fontSize: "13px",
+                            color: "rgb(66, 87, 108)",
+                        }}
+            >
+                Join Date: {user.joinDate.split('T')[0]}
+            </Typography>
             <Box
                 sx={{
                     display: 'flex',
