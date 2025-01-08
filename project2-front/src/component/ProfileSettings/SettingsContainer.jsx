@@ -1,11 +1,9 @@
-// import { Box } from "@mui/material";
 import { SettingsProvider } from "./Context/SettingsProvider";
 import BioTextField from "./ProfileSettingsFields/BioTextField";
 import Banner from "./ProfileSettingsFields/Banner";
 import ProfilePictureInput from "./ProfileSettingsFields/ProfilePictureInput";
 import DisplayNameField from "./ProfileSettingsFields/DisplayNameField";
-// import Cookies from "js-cookie";
-import { UserProfileProvider } from "../UserProfile/Context/UserProfileProvider";
+
 import {
   Dialog,
   DialogTitle,

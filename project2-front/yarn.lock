@@ -255,6 +255,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@babel/runtime@^7.12.5", "@babel/runtime@^7.17.9", "@babel/runtime@^7.18.3", "@babel/runtime@^7.23.9", "@babel/runtime@^7.25.7", "@babel/runtime@^7.26.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
 =======
 "@babel/runtime@^7.12.5", "@babel/runtime@^7.17.9", "@babel/runtime@^7.18.3", "@babel/runtime@^7.25.7", "@babel/runtime@^7.26.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
@@ -265,6 +266,9 @@
 =======
 "@babel/runtime@^7.12.5", "@babel/runtime@^7.17.9", "@babel/runtime@^7.18.3", "@babel/runtime@^7.25.7", "@babel/runtime@^7.26.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
 >>>>>>> ea39f66 (connected to database)
+=======
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.17.9", "@babel/runtime@^7.18.3", "@babel/runtime@^7.23.9", "@babel/runtime@^7.25.7", "@babel/runtime@^7.26.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
   version "7.26.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.26.0.tgz#8600c2f595f277c60815256418b85356a65173c1"
   integrity sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==
@@ -601,8 +605,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@floating-ui/core@^1.6.0":
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.6.8.tgz#aa43561be075815879305965020f492cdb43da12"
@@ -631,12 +638,15 @@
   integrity sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@fontsource/inter@^5.1.0":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-5.1.1.tgz#401803b6ac4c877f5be94088aa89147ed5a2bd85"
@@ -931,8 +941,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/base@5.0.0-beta.40-0":
   version "5.0.0-beta.40-0"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-beta.40-0.tgz#4e211724d3feefa3dd1546952502b87491137e89"
@@ -952,12 +965,15 @@
   integrity sha512-xe5RwI0Q2O709Bd2Y7l1W1NIwNmln0y+xaGk5VgX3vDJbkQEqzdfTFZ73e0CkEZgJwyiWgk5HY0l8R4nysOxjw==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/core-downloads-tracker@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-6.3.0.tgz#90e9def06128c58887e4663d8fa6281f9e3a6f50"
@@ -973,8 +989,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/joy@^5.0.0-beta.51":
   version "5.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@mui/joy/-/joy-5.0.0-beta.51.tgz#98e8395d81415ad280b426c0e74a3ec7e1bf4c65"
@@ -990,12 +1009,15 @@
     prop-types "^15.8.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/material@^6.2.1":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-6.3.0.tgz#9c5a35617ad5ba8f0a738ec664a0c72dc59db093"
@@ -1017,8 +1039,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/private-theming@^5.16.13":
   version "5.16.13"
   resolved "https://registry.yarnpkg.com/@mui/private-theming/-/private-theming-5.16.13.tgz#0ea25eb5272c2d16f555803bf804b31867d8eed9"
@@ -1029,12 +1054,15 @@
     prop-types "^15.8.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/private-theming@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/private-theming/-/private-theming-6.3.0.tgz#1528aa75bb0f832a3d2b192e72cb105ed8c562a3"
@@ -1047,8 +1075,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/styled-engine@^5.16.13":
   version "5.16.13"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine/-/styled-engine-5.16.13.tgz#b87205cd36b7a6b104f1151e8745bf7a19346987"
@@ -1060,12 +1091,15 @@
     prop-types "^15.8.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/styled-engine@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine/-/styled-engine-6.3.0.tgz#76e351be9965bccfbdae50303948d98b6b4bbb8c"
@@ -1081,8 +1115,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/system@^5.16.12":
   version "5.16.13"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.16.13.tgz#2ebbda08e962e378ecec9cf5a3e50ac9b098472d"
@@ -1098,12 +1135,15 @@
     prop-types "^15.8.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/system@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-6.3.0.tgz#b9bd045b9198ae727adb1a01a773876794a63272"
@@ -1121,6 +1161,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@mui/types@^7.2.15", "@mui/types@^7.2.20":
 =======
 "@mui/types@^7.2.20":
@@ -1131,6 +1172,9 @@
 =======
 "@mui/types@^7.2.20":
 >>>>>>> ea39f66 (connected to database)
+=======
+"@mui/types@^7.2.15", "@mui/types@^7.2.20":
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
   version "7.2.20"
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.2.20.tgz#16d8c9178b42b62ba95bbedbda8f343feb373d1e"
   integrity sha512-straFHD7L8v05l/N5vcWk+y7eL9JF0C2mtph/y4BPm3gn2Eh61dDwDB65pa8DLss3WJfDXYC7Kx5yjP0EmXpgw==
@@ -1138,8 +1182,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/utils@^5.16.12", "@mui/utils@^5.16.13":
   version "5.16.13"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.16.13.tgz#6276eafd15e2c6778cdb6aeb07017c996d3fda52"
@@ -1153,12 +1200,15 @@
     react-is "^19.0.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ab1184b (connected to database)
 =======
 >>>>>>> 02181ba (userSettingFrontendImplementation)
 =======
 >>>>>>> ea39f66 (connected to database)
+=======
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
 "@mui/utils@^5.16.6 || ^6.0.0", "@mui/utils@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-6.3.0.tgz#76c80cb663c7c1bdf782de50a5c3f6ff8bf38e21"
@@ -1407,6 +1457,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@types/prop-types@*", "@types/prop-types@^15.7.12", "@types/prop-types@^15.7.14":
 =======
 "@types/prop-types@*", "@types/prop-types@^15.7.14":
@@ -1417,6 +1468,9 @@
 =======
 "@types/prop-types@*", "@types/prop-types@^15.7.14":
 >>>>>>> ea39f66 (connected to database)
+=======
+"@types/prop-types@*", "@types/prop-types@^15.7.12", "@types/prop-types@^15.7.14":
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
   version "15.7.14"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.14.tgz#1433419d73b2a7ebfc6918dcefd2ec0d5cd698f2"
   integrity sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==
@@ -1823,6 +1877,7 @@ cliui@^8.0.1:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 clsx@^2.1.0, clsx@^2.1.1:
 =======
 clsx@^2.1.1:
@@ -1833,6 +1888,9 @@ clsx@^2.1.0, clsx@^2.1.1:
 =======
 clsx@^2.1.1:
 >>>>>>> ea39f66 (connected to database)
+=======
+clsx@^2.1.0, clsx@^2.1.1:
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.1.1.tgz#eed397c9fd8bd882bfb18deab7102049a2f32999"
   integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
@@ -3788,6 +3846,7 @@ pretty-format@^29.7.0:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     project1-front "file:../../../../../../AppData/Local/Yarn/Cache/v6/npm-project1-front-0.0.0-843fe531-381d-4601-8e91-aef4851cae03-1735911352766/node_modules/project1-front"
 =======
     project1-front "file:../../../../../../AppData/Local/Yarn/Cache/v6/npm-project1-front-0.0.0-9544c9cb-765b-4270-9335-584353a8a658-1735701955577/node_modules/project1-front"
@@ -3798,6 +3857,9 @@ pretty-format@^29.7.0:
 =======
     project1-front "file:../../../../../../AppData/Local/Yarn/Cache/v6/npm-project1-front-0.0.0-9544c9cb-765b-4270-9335-584353a8a658-1735701955577/node_modules/project1-front"
 >>>>>>> ea39f66 (connected to database)
+=======
+    project1-front "file:../../../../../../AppData/Local/Yarn/Cache/v6/npm-project1-front-0.0.0-843fe531-381d-4601-8e91-aef4851cae03-1735911352766/node_modules/project1-front"
+>>>>>>> 88b0419 (userSettingFrontendImplementation)
     prop-types "^15.8.1"
     react "^18.3.1"
     react-dom "^18.3.1"

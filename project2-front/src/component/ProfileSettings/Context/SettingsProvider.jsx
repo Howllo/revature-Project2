@@ -98,7 +98,8 @@ export const SettingsProvider = ({ children }) => {
       }
       const settingsPayload = {
         // I can't seem to find the userId in Cookies.
-        id: Cookies.get("userId"),
+        id: Cookies.get("user_id"),
+
         displayName: settingsData.displayName,
         profilePic: profileMediaString,
         bannerPic: bannerMediaString,
@@ -120,12 +121,14 @@ export const SettingsProvider = ({ children }) => {
           },
         }
       );
+
       if (!response.ok) {
         throw new Error("Settings Couldn't be updated");
       }
 
       console.log(response.data);
       setSettingsData(response.data);
+
       return response.data;
     } catch (error) {
       console.error("Error submitting settings:", error);

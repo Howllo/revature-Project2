@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # yarn-lock fileecho "project2-front/yarn.lock" >> .gitignore
 git rebase origin/master
 
@@ -36,3 +37,7 @@ package-lock.json
 =======
 yarn.lock
 >>>>>>> 5e4f468 (user profile setting page Monday 8:16)
+=======
+# Package 
+package-lock.json
+>>>>>>> 88b0419 (userSettingFrontendImplementation)

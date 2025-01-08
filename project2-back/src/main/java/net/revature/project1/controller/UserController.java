@@ -93,6 +93,7 @@ public class UserController {
             e.printStackTrace();
         }
         return new ResponseEntity<>(appUser, HttpStatus.OK);
+
     }
 
     @PutMapping("/{id}/username")
