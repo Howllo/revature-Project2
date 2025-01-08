@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import PostContainer from "../component/Post/DisplayPost/PostContainer.jsx";
 
 const FeedPage = () => {
-    const { listPostData, getPost, getChildren } = usePost();
+    const { listPostData, getPost, getChildren} = usePost();
     const [postComments, setPostComments] = useState({});
     const [isLoadingComments, setIsLoadingComments] = useState(false);
 
@@ -16,7 +16,6 @@ const FeedPage = () => {
         const loadComments = async () => {
             if (!listPostData) return;
             setIsLoadingComments(true);
-
             try {
                 const commentsPromises = listPostData.map(async (post) => {
                     const comments = await getChildren(post.id);
