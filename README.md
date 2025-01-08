@@ -18,10 +18,10 @@ dir('project2-back'){
 }
 ```
 
-You will need create Jenkins Credentials for each of these injection source. The captcha source isn't needed since the
-system doesn't really verify the captcha state, but you can find HCAPTCHA at: https://www.hcaptcha.com/.
+You will need to create Jenkins credentials for each of these injection sources. The captcha source isn't needed 
+since the system doesn't actually verify the captcha state, but you can find HCAPTCHA at: https://www.hcaptcha.com/.
 
-When it comes to interaction between the Jenkins and docker this system uses a middlemen of SSM:
+When it comes to the interaction between Jenkins and Docker, this system uses SSM as a middleman:
 ```
 sh '''
     # Capture the command ID
@@ -47,16 +47,15 @@ sh '''
 '''
 ```
 
-This command has a lot of things going on. There is an expectation of a S3 deployment bucket and the instance ID of the 
-docker EC2. 
+This command involves multiple components. It requires an S3 deployment bucket and the instance ID of the Docker EC2.
 
-The is one credential that is missing which is the S3_DEPLOY_BUCKET that will need to point to the correct bucket.
+One missing credential is the S3_DEPLOY_BUCKET, which needs to be set to point to the correct bucket.
 
-### With Jenkins make sure you are not changing the file location of anything. It should be a Mono Repo.
+### With Jenkins, make sure you do not change the file location of anything. It should remain a Mono Repo.
 
 ## IAM Roles
 
-Relies heavily on the IAM roles. You must provide the exact roles that the system expects.
+This system relies heavily on AWS IAM roles. You must provide the exact roles that the system requires.
 
 ### The Roles
 
@@ -69,28 +68,30 @@ The roles within AWS uses:
 
 ### EC2 Set up
 
-Jenkins is set up on it own EC2, and docker is set up on its own EC2. I have found that Jenkins uses up a lot of storage
-and processes, so it must be on it own system. The Jenkins version I am using is not containerized. Each of these 
-are set up with IAM role that allows to interact with each system. Once you set up the docker EC2 instance you would need
-to copy the instance ID and set it as Jenkins credential.
+Jenkins is set up on its own EC2 instance, and Docker is set up on a separate EC2 instance. I have found that Jenkins 
+consumes a significant amount of storage and processing power, so it must be hosted on its own system. The version of 
+Jenkins I am using is not containerized. Each instance is configured with an IAM role that allows interaction between 
+the systems. Once the Docker EC2 instance is set up, you will need to copy its instance ID and add it as a Jenkins 
+credential.
 
-Once Jenkins is set up and docker is set up all you have to do is run the build pipeline and it will create the 
-images and containers for you.
+After both Jenkins and Docker are set up, all you need to do is run the build pipeline, and it will create the images
+and containers for you.
 
 ## Backend Setup
 
-When you first use the application everything will be set up for https://api.devature.dev. This is what we are primarily
-using since I didn't like using long domains. I will not go into specifics of setting up a custom domain. AWS has 
-documentation on that process.
+When you first use the application, everything will be set up for https://api.devature.dev. This is our primary domain 
+since I prefer shorter URLs. I will not go into the specifics of setting up a custom domain; AWS provides documentation
+for that process.
 
-All you need to do is grab the URL that Amazon provide as an end point and set it up.
+All you need to do is grab the URL provided by Amazon as an endpoint and set it up.
 
-If you use custom domain and Cloudflare as the host you need to do:
+In order to upload large files with a NGINX system you might need to do something like this:
 ```
 client_max_body_size 200M;
 ```
+in the config of NGINX.
 
-And NGINX setup is if you want to do custom domain:
+If you use a custom domain with Cloudflare as the host, you need to and NGINX setup is if you want to do custom domain:
 ```
 server {
     listen 80;
@@ -128,8 +129,9 @@ server {
 
 So in frontend you would need to do:
 
-axios.js
+
 ```javascript
+// axios.js
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -145,6 +147,11 @@ export const projectApi = axios.create({
     withCredentials: true,
 });
 ```
+
+### Docker
+You will also need set up a Docker EC2 instance on it own EC2. While Spring Boot backend is lightweight it is usually 
+best to keep it to its own instance. You will need take this instance and set the 
+
 ## Frontend Setup
 
 Frontend is just hosted on Amplify. It will literally tell you exactly what to do.
@@ -189,3 +196,5 @@ public CorsConfigurationSource corsConfigurationSource() {
 ```
 
 AWS will provide all the necessary steps for this, and then give you the Amplify link.
+
+##
