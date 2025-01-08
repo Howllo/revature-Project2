@@ -126,6 +126,7 @@ public class FileService {
      * @throws IOException If it fails to create a file it throws the exception.
      */
 
+
     public String createFile(String post) throws IOException {
         String[] parts = post.split(",");
 
@@ -140,6 +141,8 @@ public class FileService {
         FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
 
         String mediaUrl = uploadFile(fileType, tempPath.toString(), tempFileName);
+
+
         Files.deleteIfExists(tempPath);
 
         return mediaUrl;

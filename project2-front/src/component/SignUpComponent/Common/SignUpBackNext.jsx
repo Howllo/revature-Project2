@@ -72,7 +72,6 @@ export function SignUpBackNext({ handleNav, captchaSecurity }) {
         >
           Back
         </Button>
-
         {showButton && (
           <Button
             variant="contained"

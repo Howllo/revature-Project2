@@ -41,8 +41,11 @@ export const useSignInValidation = () => {
           email: email,
           username: Cookies.get("username"),
           password: password,
+<<<<<<< HEAD
 
           birthdate: null,
+=======
+>>>>>>> 2db13914cb5997d2e3a9aca99de2caf7e8e86b6f
         },
         {
           headers: {
@@ -78,7 +81,15 @@ export const useSignInValidation = () => {
         sameSite: "strict",
         secure: true,
       });
+<<<<<<< HEAD
 
+=======
+      Cookies.set("displayName", response.data.displayName, {
+        expires: 7,
+        sameSite: "strict",
+        secure: true,
+      });
+>>>>>>> 2db13914cb5997d2e3a9aca99de2caf7e8e86b6f
       Cookies.set("profile_pic", response.data.profilePicture, {
         expires: 7,
         sameSite: "strict",
@@ -89,8 +100,12 @@ export const useSignInValidation = () => {
         sameSite: "strict",
         secure: true,
       });
+<<<<<<< HEAD
 
       Cookies.set("banner_pic", response.data.bannerPicture, {
+=======
+      Cookies.set("banner_pic", response.data.banner, {
+>>>>>>> 2db13914cb5997d2e3a9aca99de2caf7e8e86b6f
         expires: 7,
         sameSite: "strict",
         secure: true,
@@ -100,11 +115,14 @@ export const useSignInValidation = () => {
         sameSite: "strict",
         secure: true,
       });
+<<<<<<< HEAD
       Cookies.set("bio_text", response.data.biography, {
         expires: 7,
         sameSite: "strict",
         secure: true,
       });
+=======
+>>>>>>> 2db13914cb5997d2e3a9aca99de2caf7e8e86b6f
 
       if (Cookies.get("user_id")) {
         setUser(Cookies.get("user_id"));

@@ -8,7 +8,10 @@ const DisplayNameField = () => {
     <TextField
       label="edit display name"
       placeholder="edit your display name"
+<<<<<<< HEAD
       helperText="50 characters max"
+=======
+>>>>>>> 2db13914cb5997d2e3a9aca99de2caf7e8e86b6f
       maxLength={100}
       variant="outlined"
       sx={{

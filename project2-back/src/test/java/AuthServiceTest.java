@@ -1,11 +1,9 @@
-
 import net.revature.project1.repository.AuthRepo;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.service.AuthService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +22,7 @@ public class AuthServiceTest {
     JwtTokenUtil jwtTokenUtil;
     @Mock
     AuthenticationManager authenticationManager;
+
 
 
 }

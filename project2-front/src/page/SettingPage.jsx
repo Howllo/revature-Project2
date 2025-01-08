@@ -1,6 +1,5 @@
 ﻿import { Box, Button, InputAdornment, OutlinedInput } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
-
 import LogOut from "../component/LogOut/LogOut.jsx";
 
 import { useState } from "react";
