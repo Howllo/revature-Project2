@@ -24,15 +24,12 @@ public class UserController {
     // This would be rate limited.
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserDto(@PathVariable Long id){
-        UserResult userResult = userService.getUser(id);
-        return switch (userResult.getResult()){
-            case SUCCESS -> ResponseEntity.ok(userResult.getUserDto());
-            case BAD_USERNAME -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResult.getMessage());
-            case USERNAME_TAKEN -> ResponseEntity.status(HttpStatus.CONFLICT).body(userResult.getMessage());
-            case EMAIL_ALREADY_EXISTS, USER_ALREADY_FRIENDS, USER_ALREADY_FOLLOWING, UNAUTHORIZED, INVALID_EMAIL_FORMAT,
-                 UNKNOWN_USER, UNKNOWN -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(userResult.getMessage());
-        };
+        return getResponseEntity(userService.getUser(id));
+    }
+
+    @GetMapping("username/{username}")
+    public ResponseEntity<?> getUserDtoByUsername(@PathVariable String username){
+        return getResponseEntity(userService.getUser(username));
     }
 
     // This would be rate limited.
@@ -132,6 +129,17 @@ public class UserController {
                     "this person.");
             case UNKNOWN, UNKNOWN_USER -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server" +
                     " Error - An unexpected error occurred on the server. Please try again later");
+        };
+    }
+
+    private ResponseEntity<?> getResponseEntity(UserResult userResult) {
+        return switch (userResult.getResult()){
+            case SUCCESS -> ResponseEntity.ok(userResult.getUserDto());
+            case BAD_USERNAME -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResult.getMessage());
+            case USERNAME_TAKEN -> ResponseEntity.status(HttpStatus.CONFLICT).body(userResult.getMessage());
+            case EMAIL_ALREADY_EXISTS, USER_ALREADY_FRIENDS, USER_ALREADY_FOLLOWING, UNAUTHORIZED, INVALID_EMAIL_FORMAT,
+                 UNKNOWN_USER, UNKNOWN -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(userResult.getMessage());
         };
     }
 }

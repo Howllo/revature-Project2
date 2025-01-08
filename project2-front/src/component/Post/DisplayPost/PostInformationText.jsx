@@ -193,6 +193,7 @@ PostText.propTypes = {
     display_name: PropTypes.string,
     username: PropTypes.string.isRequired,
     post_date: PropTypes.string,
+    post: PropTypes.object,
 };
 
 export default PostText;

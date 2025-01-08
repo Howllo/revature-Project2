@@ -4,7 +4,7 @@ import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import {usePost} from "../Context/UsePost.jsx";
-import YouTubeDialog from "../CreatePost/YouTubeDialog.jsx";
+import YouTubeDialog from "./YouTubeDialog.jsx";
 import {useState} from "react";
 
 

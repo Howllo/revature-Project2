@@ -1,10 +1,46 @@
-﻿import {Avatar, Link} from "@mui/material";
-
+﻿import {Avatar, Button} from "@mui/material";
 import PropTypes from "prop-types";
+import {useState} from "react";
+import {projectApi} from "../../util/axios.js";
+import {useNavigate} from "react-router-dom";
 
 const UserAvatar = ({username, image, width = 42, height = 42}) => {
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
+
+    const getUserData = async () => {
+        try{
+            const response = await projectApi.get(`/user/username/${username}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            setUserData(response.data);
+            // eslint-disable-next-line no-unused-vars
+        } catch (error) {
+            // We don't have a global logging system.
+        }
+    }
+
+    const handleSubmit = async () => {
+        await getUserData();
+        if(userData){
+            navigate(`/${userData.username.toLowerCase()}`, {state : { userObj: userData}});
+        }
+    }
+
     return (
-        <Link to={"/" + username}>
+        <Button
+            variant="contained"
+            disableRipple={true}
+            onClick={handleSubmit}
+            disableElevation={true}
+            sx={{
+                borderRadius: "30px",
+                width: "30%",
+                backgroundColor: "transparent"
+            }}
+        >
             <Avatar alt={name} src={image}
                     sx={{
                         borderColor: 'rgb(212,217,225)',
@@ -14,7 +50,7 @@ const UserAvatar = ({username, image, width = 42, height = 42}) => {
                         height: {height},
                     }}
             />
-        </Link>
+        </Button>
     )
 }
 

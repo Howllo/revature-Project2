@@ -5,7 +5,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {useEffect, useState} from "react";
 import {usePost} from "../Context/UsePost.jsx";
-import CreatePost from "./CreatePost.jsx";
+import CreatePost from "../CreatePost/CreatePost.jsx";
 
 const InteractionBar = ({ post, setPost }) => {
     const [isLiked, setIsLiked] = useState(false)
@@ -53,6 +53,7 @@ const InteractionBar = ({ post, setPost }) => {
                 }}
             >
                 <Button
+                    disableRipple={true}
                     sx={{
                         borderRadius: '20%',
                         alignItems: 'center',
@@ -92,9 +93,11 @@ const InteractionBar = ({ post, setPost }) => {
             >
 
                 <Button
+                    disableRipple={true}
                     onClick={handleLike}
                     sx={{
-                        borderRadius: '20%',
+                        borderRadius: '50px',
+                        width: '30%',
                         alignItems: 'center',
                     }}
                 >
