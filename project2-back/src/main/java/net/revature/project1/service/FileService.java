@@ -125,6 +125,7 @@ public class FileService {
      * @param post Take in the post to set the new media URL.
      * @throws IOException If it fails to create a file it throws the exception.
      */
+
     public String createFile(String post) throws IOException {
         String[] parts = post.split(",");
         String imageType = parts[0].split(";")[0].split(":")[1];
@@ -169,6 +170,7 @@ public class FileService {
             return false;
         }
         return true;
+
     }
 
     private String getExtensionFromMimeType(String mimeType) {
