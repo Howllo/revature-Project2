@@ -35,7 +35,7 @@ const ProfilePage = () => {
           {userData && <UserDisplay user={userData} />}
           {userData && <ProfileButton user={userData} />}
           {userData && <ProfileInformationPanel user={userData} />}
-          {userData && <SettingsContainer />}
+          {userData && <SettingsContainer user={userData} />}
           {userData && <ProfileBiography user={userData} />}
         </Box>
 

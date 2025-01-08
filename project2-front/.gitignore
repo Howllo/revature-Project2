@@ -30,5 +30,9 @@ git rebase origin/master
 yarn.lockproject2-front/yarn.lock
 =======
 # Package 
+<<<<<<< HEAD
 package-lock.json
 >>>>>>> 02181ba (userSettingFrontendImplementation)
+=======
+yarn.lock
+>>>>>>> 5e4f468 (user profile setting page Monday 8:16)

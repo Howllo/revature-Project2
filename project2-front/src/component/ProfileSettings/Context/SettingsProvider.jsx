@@ -9,10 +9,10 @@ export const SettingsProvider = ({ children }) => {
   // We need to initialize states with the current values
   // and test the hanlde submit function
   const [settingsData, setSettingsData] = useState({
-    displayName: Cookies.get("displayName"),
+    displayName: "",
     profilePic: "",
     bannerPic: "",
-    bioText: "This is just for demo",
+    bioText: "",
   });
 
   const setDisplayName = (event) => {
@@ -97,6 +97,8 @@ export const SettingsProvider = ({ children }) => {
         console.error("No banner picture provided");
       }
       const settingsPayload = {
+        // I can't seem to find the userId in Cookies.
+        id: Cookies.get("userId"),
         displayName: settingsData.displayName,
         profilePic: profileMediaString,
         bannerPic: bannerMediaString,
@@ -118,8 +120,12 @@ export const SettingsProvider = ({ children }) => {
           },
         }
       );
+      if (!response.ok) {
+        throw new Error("Settings Couldn't be updated");
+      }
 
-      resetSettingsData();
+      console.log(response.data);
+      setSettingsData(response.data);
       return response.data;
     } catch (error) {
       console.error("Error submitting settings:", error);
