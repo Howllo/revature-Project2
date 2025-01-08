@@ -41,6 +41,7 @@ export const useSignInValidation = () => {
           email: email,
           username: Cookies.get("username"),
           password: password,
+          birthdate: null,
         },
         {
           headers: {
@@ -77,6 +78,12 @@ export const useSignInValidation = () => {
         secure: true,
       });
 
+      Cookies.set("displayName", response.data.displayName, {
+        expires: 7,
+        sameSite: "strict",
+        secure: true,
+      });
+
       Cookies.set("profile_pic", response.data.profilePicture, {
         expires: 7,
         sameSite: "strict",
@@ -87,6 +94,7 @@ export const useSignInValidation = () => {
         sameSite: "strict",
         secure: true,
       });
+
       Cookies.set("banner_pic", response.data.bannerPicture, {
         expires: 7,
         sameSite: "strict",

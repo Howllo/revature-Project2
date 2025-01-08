@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ea39f66 (connected to database)
 import net.revature.project1.repository.AuthRepo;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.service.AuthService;
@@ -27,7 +30,10 @@ public class AuthServiceTest {
 
 
 
+<<<<<<< HEAD
 =======
 package PACKAGE_NAME;public class AuthServiceTest {
 >>>>>>> 155212b (add search unit test)
+=======
+>>>>>>> ea39f66 (connected to database)
 }
