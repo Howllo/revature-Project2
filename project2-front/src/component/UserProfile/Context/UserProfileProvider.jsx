@@ -10,7 +10,6 @@ export const UserProfileProvider = ({ children }) => {
   const [isOpenDialogBox, setIsOpenDialogBox] = useState(false);
 
   const handleOpenDialogBox = () => {
-    console.log("handle dialog box opened");
     setIsOpenDialogBox(true);
   };
   const handleCloseDialogBox = () => {

@@ -9,10 +9,13 @@ export const SettingsProvider = ({ children }) => {
   // We need to initialize states with the current values
   // and test the hanlde submit function
   const [settingsData, setSettingsData] = useState({
-    displayName: "",
-    profilePic: "",
-    bannerPic: "",
-    bioText: "",
+    displayName:
+      Cookies.get("display_name") != "null"
+        ? Cookies.get("display_name")
+        : "edit display name",
+    profilePic: Cookies.get("profile_pic"),
+    bannerPic: Cookies.get("banner_pic"),
+    bioText: "Edit bio text",
   });
 
   const setDisplayName = (event) => {
@@ -57,15 +60,16 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const handleSubmitSettings = async () => {
-    if (
-      !settingsData.displayName ||
-      !settingsData.bioText ||
-      !settingsData.profilePic ||
-      !settingsData.bannerPic
-    ) {
-      console.error("Missing required settings data");
-      return;
-    }
+    // if (
+    //   !settingsData.displayName ||
+    //   !settingsData.bioText ||
+    //   !settingsData.profilePic ||
+    //   !settingsData.bannerPic
+    // ) {
+    //   console.error("Missing required settings data");
+    //   return;
+    // }
+    console.log("Handle submit called");
     try {
       let profileMediaString = null;
       let bannerMediaString = null;
@@ -107,6 +111,8 @@ export const SettingsProvider = ({ children }) => {
       };
 
       const token = Cookies.get("jwt");
+      console.log("printing token from settings provider");
+      console.log(token);
       if (!token) {
         throw new Error("No authentication token found");
       }

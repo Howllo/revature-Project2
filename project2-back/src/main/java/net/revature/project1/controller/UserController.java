@@ -71,6 +71,8 @@ public class UserController {
     @PutMapping("/settings/update")
     public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
 //        expecting userId, userProfileString, userBannerString, userBio, userDisplayName
+
+        System.out.println(appUser);
         Long userId = appUser.getId();
         Optional<AppUser> optUser = userService.findUserById(userId);
         if (!optUser.isPresent()){

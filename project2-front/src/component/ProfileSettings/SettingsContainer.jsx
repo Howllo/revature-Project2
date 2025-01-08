@@ -16,7 +16,6 @@ import CancelButton from "./ProfileSettingsFields/CancelButton";
 
 const SettingsContainer = () => {
   const { isOpenDialogBox, handleCloseDialogBox } = useUserProfile();
-  console.log(isOpenDialogBox);
 
   return (
     <SettingsProvider>
