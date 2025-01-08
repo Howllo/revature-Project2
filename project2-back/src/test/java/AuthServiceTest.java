@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import net.revature.project1.repository.AuthRepo;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.service.AuthService;
@@ -26,4 +27,7 @@ public class AuthServiceTest {
 
 
 
+=======
+package PACKAGE_NAME;public class AuthServiceTest {
+>>>>>>> 155212b (add search unit test)
 }
