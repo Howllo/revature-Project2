@@ -84,22 +84,22 @@ public class UserController {
 
     @PostMapping("/{id}/follow/{user}")
     public ResponseEntity<String> followNewUser(@PathVariable("id") Long followerId,
-                                                @PathVariable("user") Long followingId) {
-        UserEnum result = userService.followUser(followerId, followingId);
+                                                @PathVariable("user") String username) {
+        UserEnum result = userService.followUser(followerId, username);
         return resultResponse(result);
     }
 
     @DeleteMapping("/{id}/follow/{user}")
     public ResponseEntity<String> unfollowUser(@PathVariable("id") Long followerId,
-                                               @PathVariable("user") Long followingId) {
-        UserEnum result = userService.unfollowUser(followerId, followingId);
+                                               @PathVariable("user") String username) {
+        UserEnum result = userService.unfollowUser(followerId, username);
         return resultResponse(result);
     }
 
     @GetMapping("/{id}/follow/{user}")
     public ResponseEntity<Boolean> checkIfFollowing(@PathVariable("id") Long followerId,
-                                               @PathVariable("user") Long followingId) {
-        boolean result = userService.checkFollowing(followerId, followingId);
+                                               @PathVariable("user") String followingUsername) {
+        boolean result = userService.checkFollowing(followerId, followingUsername);
         return ResponseEntity.ok(result);
     }
 

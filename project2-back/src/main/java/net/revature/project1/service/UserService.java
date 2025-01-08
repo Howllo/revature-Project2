@@ -158,9 +158,9 @@ public class UserService {
      * @param followingId Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
-    public UserEnum followUser(Long followerId, Long followingId){
+    public UserEnum followUser(Long followerId, String username){
         Optional<AppUser> optionalFollower = userRepo.findById(followerId);
-        Optional<AppUser> optionalFollowing = userRepo.findById(followingId);
+        Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(username);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
             return UserEnum.UNKNOWN;
         }
@@ -186,9 +186,9 @@ public class UserService {
      * @param followingId Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
-    public UserEnum unfollowUser(Long followerId, Long followingId){
+    public UserEnum unfollowUser(Long followerId, String username){
         Optional<AppUser> optionalFollower = userRepo.findById(followerId);
-        Optional<AppUser> optionalFollowing = userRepo.findById(followingId);
+        Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(username);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
             return UserEnum.UNKNOWN;
         }
@@ -211,12 +211,12 @@ public class UserService {
     /**
      * Used to check if a user is already following someone
      * @param followerId
-     * @param followingId
+     * @param followingUsername
      * @return
      */
-    public boolean checkFollowing(Long followerId, Long followingId){
+    public boolean checkFollowing(Long followerId, String followingUsername){
         Optional<AppUser> optionalFollower = userRepo.findById(followerId);
-        Optional<AppUser> optionalFollowing = userRepo.findById(followingId);
+        Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(followingUsername);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
             return false;
         }
