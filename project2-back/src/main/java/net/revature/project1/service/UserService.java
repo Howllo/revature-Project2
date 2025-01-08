@@ -336,10 +336,7 @@ public class UserService {
     }
 
     public UserSearchDto getSearchDtoByUsername(String username){
-        Optional<UserSearchDto> optionalUserSearchDto = userRepo.findAppUserByUsername(username, "useless");
-
-        UserSearchDto user = optionalUserSearchDto.get();
-
-        return user;
+        Optional<UserSearchDto> userSearchDto = userRepo.getSearchDtoByUsername(username);
+        return userSearchDto.orElse(null);
     }
 }
