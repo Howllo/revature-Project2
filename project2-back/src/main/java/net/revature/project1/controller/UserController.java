@@ -1,7 +1,9 @@
 package net.revature.project1.controller;
 
 import net.revature.project1.dto.EmailData;
+import net.revature.project1.dto.PostSmallResponseDto;
 import net.revature.project1.dto.UserRequestPicDto;
+import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.result.UserResult;
@@ -30,6 +32,11 @@ public class UserController {
     @GetMapping("username/{username}")
     public ResponseEntity<?> getUserDtoByUsername(@PathVariable String username){
         return getResponseEntity(userService.getUser(username));
+    }
+
+    @GetMapping("/getSearchDto/{username}")
+    public ResponseEntity<UserSearchDto> getPost(@PathVariable String username){
+        return ResponseEntity.ok(userService.getSearchDtoByUsername(username));
     }
 
     // This would be rate limited.
