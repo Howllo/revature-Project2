@@ -6,8 +6,7 @@ const UserDisplay = ({ user }) => {
     <Box>
       <Box>
         <img
-          //src={'https://picsum.photos/1500/500'}
-          src={user.bannerPic}
+          src={user.bannerPic || "https://picsum.photos/1500/500"}
           alt="Post Image"
           loading={"lazy"}
           style={{
