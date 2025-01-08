@@ -12,7 +12,6 @@ const ProfileButton = ({user}) => {
     useEffect(() => {
         const x = checkFollow(Cookies.get("user_id"), user.username)
         x.then(value => {
-            console.log(value)
             setIsFollowed(value)
         })
     }, []);
