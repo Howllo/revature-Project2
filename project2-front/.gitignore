@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# yarn-lock fileecho "project2-front/yarn.lock" >> .gitignore
+git rebase origin/master
+
+yarn.lockproject2-front/yarn.lock
