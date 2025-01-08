@@ -25,58 +25,70 @@ export const UserProfileProvider = ({ children }) => {
       console.error(`Error Status: ${e.status}`);
       throw e;
     }
-  }
-    const removeFollow = async (follower_id, username) => {
-      try {
-        const response = await projectApi.delete(
-          `/user/${follower_id}/follow/${username}`
-        );
-        return response.status === 200;
-      } catch (e) {
-        console.error(`Error Status: ${e.status}`);
+  };
+  const removeFollow = async (follower_id, username) => {
+    try {
+      const response = await projectApi.delete(
+        `/user/${follower_id}/follow/${username}`
+      );
+      return response.status === 200;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
 
-        throw e;
-      }
-    };
-
-    const checkFollow = async (follower_id, following_username) => {
-      try {
-        const response = await projectApi.get(
-          `/user/${follower_id}/follow/${following_username}`
-        );
-        const respData = response.data;
-
-        return respData;
-      } catch (e) {
-        console.error(`Error Status: ${e.status}`);
-
-        throw e;
-      }
-    };
-
-    const value = {
-      listPostData,
-      setListPostData,
-      following,
-      setFollowing,
-      setFollow,
-      checkFollow,
-      removeFollow,
-      handleOpenDialogBox,
-      handleCloseDialogBox,
-      isOpenDialogBox,
-    };
-
-    return (
-      <UserProfileContext.Provider value={value}>
-        {children}
-      </UserProfileContext.Provider>
-    );
+      throw e;
+    }
   };
 
-  UserProfileProvider.propTypes = {
-    children: PropTypes.node,
+  const checkFollow = async (follower_id, following_username) => {
+    try {
+      const response = await projectApi.get(
+        `/user/${follower_id}/follow/${following_username}`
+      );
+      const respData = response.data;
+
+      return respData;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
   };
+
+  const getId = async (username) => {
+    try {
+      const response = await projectApi.get(`/user/getSearchDto/${username}`);
+      const respData = response.data;
+
+      return respData.id;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
+  };
+
+  const value = {
+    listPostData,
+    setListPostData,
+    following,
+    setFollowing,
+    setFollow,
+    checkFollow,
+    removeFollow,
+    handleOpenDialogBox,
+    handleCloseDialogBox,
+    isOpenDialogBox,
+    getId,
+  };
+
+  return (
+    <UserProfileContext.Provider value={value}>
+      {children}
+    </UserProfileContext.Provider>
+  );
 };
 
+UserProfileProvider.propTypes = {
+  children: PropTypes.node,
+};
 export default UserProfileContext;
