@@ -14,12 +14,15 @@ const ProfileButton = ({user}) => {
         x.then(value => {
             setIsFollowed(value)
         })
-    }, []);
+    }, [user]);
 
     const handleFollow = async () => {
         isFollowed ? removeFollow(Cookies.get("user_id"), user.username) : setFollow(Cookies.get("user_id"), user.username);
     }
-    
+
+    const btnChange = () => {
+        setIsFollowed(!isFollowed)
+    }
 
     if(Cookies.get("username") === user.username){
         return (
@@ -84,7 +87,10 @@ const ProfileButton = ({user}) => {
                 }}
             >
                 <Button
-                    onClick={handleFollow}
+                    onClick={() => {
+                        handleFollow();
+                        btnChange();
+                    }}
 
                     variant="contained"
                     size="small"

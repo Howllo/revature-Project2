@@ -45,6 +45,19 @@ export const UserProfileProvider = ({ children }) => {
         }
     }
 
+    const getId = async (username) => {
+        try {
+            const response = await projectApi.get(`/user/getSearchDto/${username}`)
+            const respData = response.data
+            
+            return respData.id
+        } catch (e) {
+            console.error(`Error Status: ${e.status}`);
+
+            throw e;
+        }
+    }
+
     const value = {
         listPostData,
         setListPostData,
@@ -52,7 +65,8 @@ export const UserProfileProvider = ({ children }) => {
         setFollowing,
         setFollow,
         checkFollow,
-        removeFollow
+        removeFollow,
+        getId
     };
 
     return (
