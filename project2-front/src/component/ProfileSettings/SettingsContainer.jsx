@@ -23,8 +23,8 @@ const SettingsContainer = () => {
         open={isOpenDialogBox}
         sx={{
           "& .MuiPaper-root": {
-            width: { xs: "90%", sm: "500px" },
-            height: { xs: "300px", sm: "500px" },
+            width: { xs: "90%", sm: "50%" },
+            height: { xs: "300px", sm: "80%" },
             borderRadius: "50px",
           },
         }}

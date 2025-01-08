@@ -79,12 +79,6 @@ export const useSignInValidation = () => {
         secure: true,
       });
 
-      Cookies.set("displayName", response.data.displayName, {
-        expires: 7,
-        sameSite: "strict",
-        secure: true,
-      });
-
       Cookies.set("profile_pic", response.data.profilePicture, {
         expires: 7,
         sameSite: "strict",
@@ -102,6 +96,11 @@ export const useSignInValidation = () => {
         secure: true,
       });
       Cookies.set("display_name", response.data.displayName, {
+        expires: 7,
+        sameSite: "strict",
+        secure: true,
+      });
+      Cookies.set("bio_text", response.data.biography, {
         expires: 7,
         sameSite: "strict",
         secure: true,

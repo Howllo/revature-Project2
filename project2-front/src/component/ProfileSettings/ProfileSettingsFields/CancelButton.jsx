@@ -2,16 +2,21 @@ import { Button } from "@mui/material";
 // import { useSettings } from "../Context/useSettings";
 
 // import { useContext } from "react";
-// import SettingsContext from "../Context/SettingsProvider";
+import SettingsContext from "../Context/SettingsProvider";
 import { useUserProfile } from "../../UserProfile/Context/UseUserProfile";
+import { useContext } from "react";
 
 const CancelButton = () => {
   const { handleCloseDialogBox } = useUserProfile();
+  const { resetSettingsData } = useContext(SettingsContext);
 
   return (
     <Button
       variant="contained"
-      onClick={handleCloseDialogBox}
+      onClick={() => {
+        handleCloseDialogBox();
+        resetSettingsData();
+      }}
       sx={{
         backgroundColor: "rgb(212,217,225)",
         color: "rgb(66, 87, 108)",

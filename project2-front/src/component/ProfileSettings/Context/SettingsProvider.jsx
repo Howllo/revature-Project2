@@ -9,15 +9,15 @@ export const SettingsProvider = ({ children }) => {
   // We need to initialize states with the current values
   // and test the hanlde submit function
   const [settingsData, setSettingsData] = useState({
-    displayName:
-      Cookies.get("display_name") != "null"
-        ? Cookies.get("display_name")
-        : "edit display name",
-    profilePic: Cookies.get("profile_pic"),
-    bannerPic: Cookies.get("banner_pic"),
-    bioText: "Edit bio text",
+    displayName: Cookies.get("display_name") == null || "",
+    profilePic:
+      Cookies.get("profile_pic") == null || "https://placehold.co/600x400",
+    bannerPic:
+      Cookies.get("banner_pic") == null || "https://placehold.co/600x400/png",
+    biography: Cookies.get("bioText") || "",
   });
 
+  console.log(Cookies.get("banner_pic"));
   const setDisplayName = (event) => {
     const displayName = event.target.value;
     setSettingsData((prev) => ({
@@ -28,18 +28,24 @@ export const SettingsProvider = ({ children }) => {
 
   const setProfilePic = (event) => {
     const file = event.target.files[0];
-    setSettingsData((prev) => ({
-      ...prev,
-      profilePic: file ? file : null,
-    }));
+    if (file) {
+      const tempURL = URL.createObjectURL(file);
+      setSettingsData((prev) => ({
+        ...prev,
+        profilePic: tempURL ? tempURL : null,
+      }));
+    }
   };
 
   const setBannerPic = (event) => {
     const file = event.target.files[0];
-    setSettingsData((prev) => ({
-      ...prev,
-      bannerPic: file ? file : null,
-    }));
+    if (file) {
+      const tempURL = URL.createObjectURL(file);
+      setSettingsData((prev) => ({
+        ...prev,
+        bannerPic: tempURL ? tempURL : "https://via.placeholder.com/400",
+      }));
+    }
   };
 
   const setBioText = (event) => {
@@ -52,12 +58,17 @@ export const SettingsProvider = ({ children }) => {
 
   const resetSettingsData = () => {
     setSettingsData({
-      displayName: "",
-      profilePic: "",
-      bannerPic: "",
-      bioText: "",
+      displayName: Cookies.get("display_name") == null || "",
+      profilePic:
+        Cookies.get("profile_pic") == null || "https://placehold.co/600x400",
+      bannerPic:
+        Cookies.get("banner_pic") == null || "https://placehold.co/600x400/png",
+      biography: Cookies.get("bio_text") || "",
     });
   };
+  // const testClick = () => {
+  //   console.log("I am test click from from settings provider");
+  // };
 
   const handleSubmitSettings = async () => {
     // if (
@@ -69,13 +80,18 @@ export const SettingsProvider = ({ children }) => {
     //   console.error("Missing required settings data");
     //   return;
     // }
-    console.log("Handle submit called");
+
     try {
       let profileMediaString = null;
       let bannerMediaString = null;
+      console.log("from settings data");
+      console.log(settingsData.profilePic);
+      console.log(settingsData.bannerPic);
+      console.log("logging from the top of if block to create profile string");
       if (settingsData.profilePic) {
         const reader = new FileReader();
         profileMediaString = await new Promise((resolve) => {
+          console.log("logging from promise to create profile string");
           reader.onload = () => {
             // const base64 = reader.result.split(",")[1];
             resolve(reader.result);
@@ -86,10 +102,11 @@ export const SettingsProvider = ({ children }) => {
       } else {
         console.error("No profile picture provided");
       }
-
+      console.log("logging from the top of if block to create banner string");
       if (settingsData.bannerPic) {
         const reader = new FileReader();
         bannerMediaString = await new Promise((resolve) => {
+          console.log("logging from promise to create banner string");
           reader.onload = () => {
             // const base64 = reader.result.split(",")[1];
             resolve(reader.result);
@@ -101,13 +118,12 @@ export const SettingsProvider = ({ children }) => {
         console.error("No banner picture provided");
       }
       const settingsPayload = {
-        // I can't seem to find the userId in Cookies.
         id: Cookies.get("user_id"),
 
         displayName: settingsData.displayName,
         profilePic: profileMediaString,
         bannerPic: bannerMediaString,
-        bioText: settingsData.bioText,
+        biography: settingsData.biography,
       };
 
       const token = Cookies.get("jwt");
@@ -117,8 +133,8 @@ export const SettingsProvider = ({ children }) => {
         throw new Error("No authentication token found");
       }
 
-      const response = await projectApi.post(
-        "/settings/update",
+      const response = await projectApi.put(
+        "user/settings/update",
         settingsPayload,
         {
           headers: {
@@ -129,13 +145,16 @@ export const SettingsProvider = ({ children }) => {
       );
 
       if (!response.ok) {
+        console.log("response from api was not okay");
+        resetSettingsData();
         throw new Error("Settings Couldn't be updated");
       }
 
-      console.log(response.data);
       setSettingsData(response.data);
-
-      return response.data;
+      Cookies.set("profile_pic", response.data.profilePic);
+      Cookies.set("banner_pic", response.data.bannerPic);
+      Cookies.set("display_name", response.data.displayName);
+      Cookies.set("bio_text", response.data.biography);
     } catch (error) {
       console.error("Error submitting settings:", error);
       throw error;

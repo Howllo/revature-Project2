@@ -6,18 +6,17 @@ import SettingsContext from "../Context/SettingsProvider";
 // import { display, margin } from "@mui/system";
 
 const ProfilePictureInput = ({ width = 42, height = 42 }) => {
-  let { setProfilePic } = useContext(SettingsContext);
+  let { setProfilePic, settingsData } = useContext(SettingsContext);
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.click();
-    console.log("I got clicked");
   };
 
   return (
     <Box style={{ display: "flex", marginBottom: "10px" }}>
       <Avatar
         alt="Profile Picture"
-        src={"https://www.w3schools.com/howto/img_avatar.png"}
+        src={settingsData.profilePic}
         sx={{
           borderColor: "rgb(212,217,225)",
           borderStyle: "solid",

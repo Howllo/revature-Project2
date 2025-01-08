@@ -6,26 +6,23 @@ import { useContext, useRef } from "react";
 // import { useSettings } from "../Context/useSettings";
 
 const Banner = () => {
-  // source of the image
-  // dimensions of the image
-  const { setBannerPic } = useContext(SettingsContext);
-
+  const { setBannerPic, settingsData } = useContext(SettingsContext);
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.click();
-    console.log("I got clicked");
   };
 
   return (
     <Box
       sx={{
         width: "100%",
-
-        height: "25%",
-
-        backgroundColor: "rgb(29, 161, 242)",
+        height: "30%",
+        backgroundImage: `url(${settingsData.bannerPic})`,
         borderRadius: "10px",
         marginBottom: "10px",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <IconButton onClick={handleClick}>

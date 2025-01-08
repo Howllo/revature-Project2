@@ -4,7 +4,7 @@ import { useContext } from "react";
 import SettingsContext from "../Context/SettingsProvider";
 
 const SubmitButton = () => {
-  let { handleSubmitSettingsData } = useContext(SettingsContext);
+  let { handleSubmitSettings } = useContext(SettingsContext);
   return (
     <Button
       variant="contained"
@@ -14,7 +14,7 @@ const SubmitButton = () => {
         fontWeight: 600,
         textTransform: "capitalize",
       }}
-      onClick={handleSubmitSettingsData}
+      onClick={handleSubmitSettings}
     >
       Submit Changes
     </Button>
