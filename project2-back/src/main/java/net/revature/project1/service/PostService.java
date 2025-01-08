@@ -131,6 +131,7 @@ public class PostService {
 
                post.setMedia(fileService.createFile(post.getMedia()));
 
+
             } catch (IOException e) {
                 return new PostResult(PostEnum.INVALID_POST, "File could not be created.", null);
             }
