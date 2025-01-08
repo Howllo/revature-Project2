@@ -129,7 +129,6 @@ public class FileService {
     public String createFile(String post) throws IOException {
         String[] parts = post.split(",");
 
-
         String imageType = parts[0].split(";")[0].split(":")[1];
         byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
 
