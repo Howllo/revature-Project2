@@ -1,7 +1,9 @@
 package net.revature.project1.controller;
 
 import net.revature.project1.dto.EmailData;
+import net.revature.project1.dto.PostSmallResponseDto;
 import net.revature.project1.dto.UserRequestPicDto;
+import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.result.UserResult;
@@ -33,6 +35,11 @@ public class UserController {
                  UNKNOWN_USER, UNKNOWN -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(userResult.getMessage());
         };
+    }
+
+    @GetMapping("/getSearchDto/{username}")
+    public ResponseEntity<UserSearchDto> getPost(@PathVariable String username){
+        return ResponseEntity.ok(userService.getSearchDtoByUsername(username));
     }
 
     // This would be rate limited.

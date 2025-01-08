@@ -3,7 +3,11 @@ package net.revature.project1.repository;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,4 +49,12 @@ public interface UserRepo extends JpaRepository<AppUser, Long> {
      * @return Return a  list of AppUser if it found something or empty if it didn't.
      */
     List<UserSearchDto> findTop7ByUsernameContaining(String username);
+
+    @Query("SELECT new net.revature.project1.dto.UserSearchDto(" +
+            "u.id, " +
+            "u.username, " +
+            "u.displayName, " +
+            "u.profilePic) " +
+            "FROM AppUser u WHERE u.username = :username")
+    Optional<UserSearchDto> getSearchDtoByUsername(@Param("username") String username);
 }
