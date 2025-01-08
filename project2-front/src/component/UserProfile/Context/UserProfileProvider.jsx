@@ -32,8 +32,7 @@ export const UserProfileProvider = ({ children }) => {
     }
 
     const checkFollow = async (follower_id, following_username) => {
-        console.log(follower_id)
-        console.log(following_username)
+        
         try {
             const response = await projectApi.get(`/user/${follower_id}/follow/${following_username}`)
             const respData = response.data
