@@ -29,6 +29,7 @@ const ProfileInformationPanel = ({user}) => {
                     fontSize: "34px",
                     color: "black",
                     mt: '-15px',
+                    paddingLeft: '10px'
                 }}
             >
                 {user.displayName || user.username}
@@ -40,9 +41,10 @@ const ProfileInformationPanel = ({user}) => {
                             fontWeight: "300",
                             fontSize: "13px",
                             color: "rgb(66, 87, 108)",
+                            paddingLeft: '10px'
                         }}
             >
-                {user.username}
+                @{user.username}
             </Typography>
 
             <Typography variant="h6" color="secondary"
@@ -51,6 +53,7 @@ const ProfileInformationPanel = ({user}) => {
                             fontWeight: "300",
                             fontSize: "13px",
                             color: "rgb(66, 87, 108)",
+                            paddingLeft: '10px'
                         }}
             >
                 Join Date: {user.joinDate.split('T')[0]}
@@ -73,6 +76,7 @@ const ProfileInformationPanel = ({user}) => {
                                     fontWeight: "800",
                                     fontSize: "13px",
                                     color: "rgb(66, 87, 108)",
+                                    paddingLeft: '10px'
                                 }}
                     >
                         {user.followerCount}

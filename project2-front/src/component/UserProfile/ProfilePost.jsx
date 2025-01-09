@@ -75,11 +75,12 @@ const ProfilePost = ({user}) => {
             return (
                 <Box
                     sx={{
-                        maxWidth: "85%",
-                        width: "100%",
+                        maxWidth: "104.7%",
+                        width: "104.7%",
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 2
+                        
+                        marginLeft: '-1px'
                     }}
                 >
                     {listPostData.map((post) => (
