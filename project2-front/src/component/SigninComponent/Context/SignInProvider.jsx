@@ -13,8 +13,6 @@ export const SighInProvider = ({ children }) => {
 
   const location = useLocation();
   useEffect(() => {
-    // why is this here?
-    // why are we checking for leaving signup?
     const isLeavingSignup =
       !location.pathname.includes("signup") && data.email !== "";
 
