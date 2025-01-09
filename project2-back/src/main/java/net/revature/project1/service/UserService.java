@@ -4,16 +4,21 @@ import net.revature.project1.dto.UserDto;
 import net.revature.project1.dto.UserRequestPicDto;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
+import net.revature.project1.entity.Post;
 import net.revature.project1.enumerator.PicUploadType;
+import net.revature.project1.enumerator.PostEnum;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.repository.UserRepo;
+import net.revature.project1.result.PostResult;
 import net.revature.project1.result.UserResult;
+import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,11 +26,13 @@ import java.util.Optional;
 public class UserService {
     private final UserRepo userRepo;
     private final FileService fileService;
+    final private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public UserService(UserRepo userRepo, FileService fileService){
+    public UserService(UserRepo userRepo, FileService fileService, JwtTokenUtil jwtTokenUtil){
         this.userRepo = userRepo;
         this.fileService = fileService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     /**
@@ -35,20 +42,6 @@ public class UserService {
      */
     public UserResult getUser(Long id){
         Optional<AppUser> optionalAppUser = userRepo.findById(id);
-        return getUserResult(optionalAppUser);
-    }
-
-    /**
-     * Returns a user DTO of the information that is need to display an accocunt information.
-     * @param username Take in an id that will be searched for the user information.
-     * @return A {@code UserResult} object that contains information about service status, and DTO.
-     */
-    public UserResult getUser(String username){
-        Optional<AppUser> optionalAppUser = userRepo.findAppUserByUsername(username);
-        return getUserResult(optionalAppUser);
-    }
-
-    private UserResult getUserResult(Optional<AppUser> optionalAppUser) {
         if(optionalAppUser.isEmpty()){
             return new UserResult(UserEnum.UNKNOWN_USER, "Unknown user id.", null);
         }
@@ -169,10 +162,10 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
-     * @param username Take in a following id. AKA who the person that is being followed.
+     * @param followingId Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
-    public UserEnum followUser(Long followerId, String username){
+    public UserEnum followUser(Long followerId, String username, String token){ 
         Optional<AppUser> optionalFollower = userRepo.findById(followerId);
         Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(username);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
@@ -183,6 +176,11 @@ public class UserService {
         AppUser following = optionalFollowing.get();
         if(follower.getFollowing().contains(following)){
             return UserEnum.USER_ALREADY_FOLLOWING;
+        }
+
+        boolean isValid = isValidToken(token, followerId);
+        if(!isValid){
+            return UserEnum.UNAUTHORIZED;
         }
 
         follower.getFollowing().add(following);
@@ -197,10 +195,10 @@ public class UserService {
     /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-     * @param username Take in a following id. AKA who the person that is being unfollowed.
+     * @param followingId Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
-    public UserEnum unfollowUser(Long followerId, String username){
+    public UserEnum unfollowUser(Long followerId, String username, String token){
         Optional<AppUser> optionalFollower = userRepo.findById(followerId);
         Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(username);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
@@ -211,6 +209,11 @@ public class UserService {
         AppUser following = optionalFollowing.get();
         if(!follower.getFollowing().contains(following) || !following.getFollower().contains(follower)){
             return UserEnum.UNKNOWN;
+        }
+
+        boolean isValid = isValidToken(token, followerId);
+        if(!isValid){
+            return UserEnum.UNAUTHORIZED;
         }
 
         follower.getFollowing().remove(following);
@@ -361,5 +364,28 @@ public class UserService {
     public UserSearchDto getSearchDtoByUsername(String username){
         Optional<UserSearchDto> userSearchDto = userRepo.getSearchDtoByUsername(username);
         return userSearchDto.orElse(null);
+    }
+
+    public boolean isValidToken(String token, Long userId) {
+        Optional<AppUser> optionalAppUser = getUser(token);
+        if(optionalAppUser.isEmpty()){
+            return false;
+        }
+
+        AppUser appUser = optionalAppUser.get();
+
+        if(!Objects.equals(userId, appUser.getId())){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns the user of a token if there is a username listed.
+     * @param token Take in the JWT token to be processed.
+     * @return The AppUser that is associated with the token.
+     */
+    private Optional<AppUser> getUser(String token) {
+        return findByUsername(jwtTokenUtil.getUsernameFromToken(token));
     }
 }
