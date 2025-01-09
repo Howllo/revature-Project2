@@ -76,16 +76,6 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const handleSubmitSettings = async () => {
-    // if (
-    //   !settingsData.displayName ||
-    //   !settingsData.bioText ||
-    //   !settingsData.profilePic ||
-    //   !settingsData.bannerPic
-    // ) {
-    //   console.error("Missing required settings data");
-    //   return;
-    // }
-
     try {
       let profileMediaString = null;
       let bannerMediaString = null;
@@ -98,12 +88,10 @@ export const SettingsProvider = ({ children }) => {
         profileMediaString = await new Promise((resolve) => {
           console.log("logging from promise to create profile string");
           reader.onload = () => {
-            // const base64 = reader.result.split(",")[1];
             resolve(reader.result);
           };
           reader.readAsDataURL(settingsData.profilePic);
         });
-        // profileMediaString = `data:${settingsData.profilePicture.type};base64,${base64String}`;
       } else {
         console.error("No profile picture provided");
       }
@@ -113,12 +101,10 @@ export const SettingsProvider = ({ children }) => {
         bannerMediaString = await new Promise((resolve) => {
           console.log("logging from promise to create banner string");
           reader.onload = () => {
-            // const base64 = reader.result.split(",")[1];
             resolve(reader.result);
           };
           reader.readAsDataURL(settingsData.bannerPic);
         });
-        // bannerMediaString = `data:${settingsData.bannerPicture.type};base64,${base64String}`;
       } else {
         console.error("No banner picture provided");
       }
