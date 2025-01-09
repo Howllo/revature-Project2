@@ -74,9 +74,6 @@ export const SettingsProvider = ({ children }) => {
       biography: Cookies.get("bio_text") || "",
     });
   };
-  // const testClick = () => {
-  //   console.log("I am test click from from settings provider");
-  // };
 
   const handleSubmitSettings = async () => {
     // if (
