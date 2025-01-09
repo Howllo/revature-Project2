@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -108,13 +107,6 @@ public class UserController {
         UserEnum result = userService.updateUsername(id, appUser);
         return resultResponse(result);
     }
-
-//    @PutMapping("/{id}/display_name")
-//    public ResponseEntity<String> updateDisplayName(@PathVariable Long id,
-//                                                    @RequestBody AppUser appUser) {
-//        UserEnum result = userService.updateDisplayName(id, appUser);
-//        return resultResponse(result);
-//    }
 
     @PutMapping("/{id}/biography")
     public ResponseEntity<String> updateBiography(@PathVariable Long id,
