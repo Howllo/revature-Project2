@@ -26,10 +26,7 @@ dist-ssr
 
 
 
-#yarn.lockproject2-front/yarn.lock
 
-# Package 
-package-lock.json
 #yarn
 yarn.lock
 
