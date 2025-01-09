@@ -1,49 +1,49 @@
-﻿import {Box} from "@mui/material";
+﻿import { Box } from "@mui/material";
 import UserDisplay from "../component/UserProfile/UserDisplay.jsx";
 import ProfileButton from "../component/UserProfile/ProfileButton.jsx";
 import ProfileInformationPanel from "../component/UserProfile/ProfileInformationPanel.jsx";
 import ProfileBiography from "../component/UserProfile/ProfileBiography.jsx";
 import ProfilePost from "../component/UserProfile/ProfilePost.jsx";
-import {useEffect, useState} from "react";
-import {UserProfileProvider} from "../component/UserProfile/Context/UserProfileProvider.jsx";
-import {useLocation} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { UserProfileProvider } from "../component/UserProfile/Context/UserProfileProvider.jsx";
+import { useLocation } from "react-router-dom";
+import SettingsContainer from "../component/ProfileSettings/SettingsContainer.jsx";
 
 const ProfilePage = () => {
-    const location = useLocation();
-    const [userData, setUserData] = useState(null);
+  const location = useLocation();
+  const [userData, setUserData] = useState(null);
 
-    useEffect(() => {
-        if(location.state?.userObj){
-            setUserData(location.state?.userObj);
-        } else {
-            setUserData(null);
-        }
-    }, [location]);
+  useEffect(() => {
+    if (location.state?.userObj) {
+      setUserData(location.state?.userObj);
+    } else {
+      setUserData(null);
+    }
+  }, [location]);
 
-    return (
-        <UserProfileProvider>
-            <Box
-                sx={{
-                    maxWidth: "85%",
-                    width: '100%',
-                    flexDirection: 'column',
-                }}
-            >
-                {/* User Profile Information */}
-                <Box>
-                    {userData && <UserDisplay user={userData} />}
-                    {userData && <ProfileButton user={userData} />}
-                    {userData && <ProfileInformationPanel user={userData} />}
-                    {userData && <ProfileBiography user={userData} />}
-                </Box>
+  return (
+    <UserProfileProvider>
+      <Box
+        sx={{
+          maxWidth: "85%",
+          width: "100%",
+          flexDirection: "column",
+        }}
+      >
+        {/* User Profile Information */}
+        <Box>
+          {userData && <UserDisplay user={userData} />}
+          {userData && <ProfileButton user={userData} />}
+          {userData && <ProfileInformationPanel user={userData} />}
+          {userData && <SettingsContainer user={userData} />}
+          {userData && <ProfileBiography user={userData} />}
+        </Box>
 
-                {/* User Post */}
-                <Box>
-                {userData && <ProfilePost user={userData} />}
-                </Box>
-            </Box>
-        </UserProfileProvider>
-    )
-}
+        {/* User Post */}
+        <Box>{userData && <ProfilePost user={userData} />}</Box>
+      </Box>
+    </UserProfileProvider>
+  );
+};
 
 export default ProfilePage;

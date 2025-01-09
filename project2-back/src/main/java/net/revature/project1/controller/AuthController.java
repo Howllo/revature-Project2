@@ -39,6 +39,7 @@ public class AuthController {
                     .body(new AuthResponseDto("Successfully created a account.",
                             returnedUser.getId(),
                             returnedUser.getUsername(),
+                            returnedUser.getBiography(),
                             null,
                             returnedUser.getProfilePic(),
                             null,
@@ -68,6 +69,7 @@ public class AuthController {
                                 returnUser.getId(),
                                 returnUser.getUsername(),
                                 returnUser.getDisplayName(),
+                                returnUser.getBiography(),
                                 returnUser.getProfilePic(),
                                 returnUser.getBannerPic(),
                                 authResult.getToken()
