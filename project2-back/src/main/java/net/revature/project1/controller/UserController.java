@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -32,12 +33,15 @@ public class UserController {
     // This would be rate limited.
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserDto(@PathVariable Long id){
-        return getResponseEntity(userService.getUser(id));
-    }
-
-    @GetMapping("username/{username}")
-    public ResponseEntity<?> getUserDtoByUsername(@PathVariable String username){
-        return getResponseEntity(userService.getUser(username));
+        UserResult userResult = userService.getUser(id);
+        return switch (userResult.getResult()){
+            case SUCCESS -> ResponseEntity.ok(userResult.getUserDto());
+            case BAD_USERNAME -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResult.getMessage());
+            case USERNAME_TAKEN -> ResponseEntity.status(HttpStatus.CONFLICT).body(userResult.getMessage());
+            case EMAIL_ALREADY_EXISTS, USER_ALREADY_FRIENDS, USER_ALREADY_FOLLOWING, UNAUTHORIZED, INVALID_EMAIL_FORMAT,
+                 UNKNOWN_USER, UNKNOWN -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(userResult.getMessage());
+        };
     }
 
     @GetMapping("/getSearchDto/{username}")
@@ -108,6 +112,13 @@ public class UserController {
         return resultResponse(result);
     }
 
+//    @PutMapping("/{id}/display_name")
+//    public ResponseEntity<String> updateDisplayName(@PathVariable Long id,
+//                                                    @RequestBody AppUser appUser) {
+//        UserEnum result = userService.updateDisplayName(id, appUser);
+//        return resultResponse(result);
+//    }
+
     @PutMapping("/{id}/biography")
     public ResponseEntity<String> updateBiography(@PathVariable Long id,
                                                   @RequestBody AppUser appUser) {
@@ -115,17 +126,19 @@ public class UserController {
         return resultResponse(result);
     }
 
-    @PostMapping("/{id}/follow/{user}")
+    @PostMapping("/{id}/follow/{user}") 
     public ResponseEntity<String> followNewUser(@PathVariable("id") Long followerId,
-                                                @PathVariable("user") String username) {
-        UserEnum result = userService.followUser(followerId, username);
+                                                @PathVariable("user") String username,
+                                                @RequestHeader("Authorization") String token) {
+        UserEnum result = userService.followUser(followerId, username, token);
         return resultResponse(result);
     }
 
     @DeleteMapping("/{id}/follow/{user}")
     public ResponseEntity<String> unfollowUser(@PathVariable("id") Long followerId,
-                                               @PathVariable("user") String username) {
-        UserEnum result = userService.unfollowUser(followerId, username);
+                                               @PathVariable("user") String username,
+                                               @RequestHeader("Authorization") String token) {
+        UserEnum result = userService.unfollowUser(followerId, username, token);
         return resultResponse(result);
     }
 
@@ -165,17 +178,6 @@ public class UserController {
                     "this person.");
             case UNKNOWN, UNKNOWN_USER -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server" +
                     " Error - An unexpected error occurred on the server. Please try again later");
-        };
-    }
-
-    private ResponseEntity<?> getResponseEntity(UserResult userResult) {
-        return switch (userResult.getResult()){
-            case SUCCESS -> ResponseEntity.ok(userResult.getUserDto());
-            case BAD_USERNAME -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userResult.getMessage());
-            case USERNAME_TAKEN -> ResponseEntity.status(HttpStatus.CONFLICT).body(userResult.getMessage());
-            case EMAIL_ALREADY_EXISTS, USER_ALREADY_FRIENDS, USER_ALREADY_FOLLOWING, UNAUTHORIZED, INVALID_EMAIL_FORMAT,
-                 UNKNOWN_USER, UNKNOWN -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(userResult.getMessage());
         };
     }
 }
