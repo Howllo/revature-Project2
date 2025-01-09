@@ -10,6 +10,7 @@ pipeline {
         INSTANCE_ID = credentials('INSTANCE_ID')
         S3_DEPLOY_BUCKET = credentials('S3_DEPLOY_BUCKET')
         S3_BUCKET = credentials('S3_BUCKET')
+        PROFILE = default
     }
 
     stages {
@@ -18,6 +19,7 @@ pipeline {
                 dir('project2-back'){
                     sh """
                         echo "" >> src/main/resources/application.properties
+                        echo "spring.profiles.active=${PROFILE}" >> src/main/resources/application.properties
                         echo "spring.datasource.url=${DB_URL}" >> src/main/resources/application.properties
                         echo "spring.datasource.username=${DB_USERNAME}" >> src/main/resources/application.properties
                         echo "spring.datasource.password=${DB_PASSWORD}" >> src/main/resources/application.properties
