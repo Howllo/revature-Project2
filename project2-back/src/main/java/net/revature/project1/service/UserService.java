@@ -35,6 +35,20 @@ public class UserService {
      */
     public UserResult getUser(Long id){
         Optional<AppUser> optionalAppUser = userRepo.findById(id);
+        return getUserResult(optionalAppUser);
+    }
+
+    /**
+     * Returns a user DTO of the information that is need to display an accocunt information.
+     * @param username Take in an id that will be searched for the user information.
+     * @return A {@code UserResult} object that contains information about service status, and DTO.
+     */
+    public UserResult getUser(String username){
+        Optional<AppUser> optionalAppUser = userRepo.findAppUserByUsername(username);
+        return getUserResult(optionalAppUser);
+    }
+
+    private UserResult getUserResult(Optional<AppUser> optionalAppUser) {
         if(optionalAppUser.isEmpty()){
             return new UserResult(UserEnum.UNKNOWN_USER, "Unknown user id.", null);
         }
@@ -155,7 +169,7 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
-     * @param followingId Take in a following id. AKA who the person that is being followed.
+     * @param username Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum followUser(Long followerId, String username){
@@ -183,7 +197,7 @@ public class UserService {
     /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-     * @param followingId Take in a following id. AKA who the person that is being unfollowed.
+     * @param username Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum unfollowUser(Long followerId, String username){

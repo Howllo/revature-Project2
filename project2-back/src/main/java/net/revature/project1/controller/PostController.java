@@ -36,8 +36,7 @@ public class PostController {
 
     @GetMapping("/{id}/feed")
     public ResponseEntity<PostFeedResponse> getUserFeed(@PathVariable Long id,
-                                                        @RequestBody PostFeedRequest postFeedRequest,
-                                                        HttpSession session){
+                                                        @RequestBody PostFeedRequest postFeedRequest){
         return ResponseEntity.ok(postService.getUserFeed(postFeedRequest, CHUNK_SIZE));
     }
 
@@ -49,7 +48,6 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody Post post,
                                         @RequestHeader("Authorization") String token){
-        System.out.println(post.getPostParent());
         PostResult postResult = postService.createPost(post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());

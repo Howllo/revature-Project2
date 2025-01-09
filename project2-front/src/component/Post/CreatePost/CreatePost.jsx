@@ -4,8 +4,9 @@ import UserAvatar from "../../AvatarComponent/UserAvatar.jsx";
 import Cookies from "js-cookie";
 import PostTextField from "./PostTextField.jsx";
 import MediaContainer from "../DisplayPost/MediaContainer.jsx";
-import PostInteractiveBar from "../DisplayPost/PostInteractiveBar.jsx";
+import PostInteractiveBar from "./PostInteractiveBar.jsx";
 import {usePost} from "../Context/UsePost.jsx";
+import PropTypes from "prop-types";
 
 const CreatePost = ({handleOpen, child}) => {
     const {resetPost, previewUrl, isVideo, submitPost, getPost} = usePost();
@@ -119,5 +120,10 @@ const CreatePost = ({handleOpen, child}) => {
         </Backdrop>
     )
 }
+
+CreatePost.propTypes = {
+    handleOpen: PropTypes.func,
+    child: PropTypes.number,
+};
 
 export default CreatePost;
