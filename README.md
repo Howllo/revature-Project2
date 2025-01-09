@@ -197,4 +197,25 @@ public CorsConfigurationSource corsConfigurationSource() {
 
 AWS will provide all the necessary steps for this, and then give you the Amplify link.
 
+## Running Project Locally
+
+Backend
+* Run project with the test Spring profile active
+  * In IntelliJ you can edit the Run configuration to add the test profile
+    * Under "Edit Configurations" go to the field "Active profiles" and enter "test" and click "Apply"
+    * Press play to run the application in test mode
+    * Spring profiles allow us to set variables specific to the environment we want to run
+    * So for the test profile it will run using the variables in the application-test.properties file
+* This will allow your project to use an h2 database that will mimic our production database
+* This will not affect production as the default profile will be "default" which only uses application.properties 
+* The backend will run on localhost:8080
+
+Frontend
+* Run the project using the terminal command: yarn test
+* This runs the project in test mode that will use the variables from the .env.test file
+* In test mode we bypass the captcha verification since localhost is not a valid host allowed by the captcha system
+* The frontend will run on localhost:5173
+
+Running both of these will allow you to run the project locally and debug changes before pushing to GitHub.
+
 ##

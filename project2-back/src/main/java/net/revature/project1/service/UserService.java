@@ -116,12 +116,12 @@ public class UserService {
 
     /**
      * Used to change the user display name.
-     * @param id Take in a user id to find the user.
+//     * @param id Take in a user id to find the user.
      * @param appUser Take in a user object to be used to change name.
      * @return UserEnum based on the status of the service.
      */
-    public UserEnum updateDisplayName(Long id, AppUser appUser){
-        Optional<AppUser> userOptional = userRepo.findById(id);
+    public UserEnum updateDisplayName(AppUser appUser){
+        Optional<AppUser> userOptional = userRepo.findById(appUser.getId());
         if(userOptional.isEmpty()){
             return UserEnum.UNKNOWN;
         }
@@ -292,6 +292,15 @@ public class UserService {
 
     /**
      * Used to get check if an email already exist.
+     * @param appUser .
+     * @return An AppUser instance.
+     */
+    public AppUser saveAppUser(AppUser appUser){
+       return userRepo.save(appUser);
+    }
+
+    /**
+     * Used to get check if an email already exist.
      * @param email Take in a {@code String} with the email.
      * @return A {@code boolean} of true that it exist, or false it doesn't.
      */
@@ -333,5 +342,10 @@ public class UserService {
      */
     public Optional<AppUser> findByUsername(String username) {
         return userRepo.findAppUserByUsername(username);
+    }
+
+    public UserSearchDto getSearchDtoByUsername(String username){
+        Optional<UserSearchDto> userSearchDto = userRepo.getSearchDtoByUsername(username);
+        return userSearchDto.orElse(null);
     }
 }

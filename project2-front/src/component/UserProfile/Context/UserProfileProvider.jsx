@@ -1,70 +1,95 @@
-﻿import { createContext, useState } from 'react';
+﻿import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-import {projectApi} from "../../../util/axios.js";
-import Cookies from 'js-cookie';
+import { projectApi } from "../../../util/axios.js";
 
 const UserProfileContext = createContext(null);
 
 export const UserProfileProvider = ({ children }) => {
-    const [listPostData, setListPostData] = useState([]);
-    const [following, setFollowing] = useState()
+  const [listPostData, setListPostData] = useState([]);
+  const [following, setFollowing] = useState();
+  const [isOpenDialogBox, setIsOpenDialogBox] = useState(false);
 
-    const setFollow = async (follower_id, username) => {
-        try {
-            const response = await projectApi.post(`/user/${follower_id}/follow/${username}`)
-            return response.status === 200;
-        } catch (e) {
-            console.error(`Error Status: ${e.status}`);
+  const handleOpenDialogBox = () => {
+    setIsOpenDialogBox(true);
+  };
+  const handleCloseDialogBox = () => {
+    setIsOpenDialogBox(false);
+  };
 
-            throw e;
-        }
+  const setFollow = async (follower_id, username) => {
+    try {
+      const response = await projectApi.post(
+        `/user/${follower_id}/follow/${username}`
+      );
+      return response.status === 200;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+      throw e;
     }
+  };
+  const removeFollow = async (follower_id, username) => {
+    try {
+      const response = await projectApi.delete(
+        `/user/${follower_id}/follow/${username}`
+      );
+      return response.status === 200;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
 
-    const removeFollow = async (follower_id, username) => {
-        try {
-            const response = await projectApi.delete(`/user/${follower_id}/follow/${username}`)
-            return response.status === 200;
-        } catch (e) {
-            console.error(`Error Status: ${e.status}`);
-
-            throw e;
-        }
+      throw e;
     }
+  };
 
-    const checkFollow = async (follower_id, following_username) => {
-        
-        try {
-            const response = await projectApi.get(`/user/${follower_id}/follow/${following_username}`)
-            const respData = response.data
-           
-            return respData
-        } catch (e) {
-            console.error(`Error Status: ${e.status}`);
+  const checkFollow = async (follower_id, following_username) => {
+    try {
+      const response = await projectApi.get(
+        `/user/${follower_id}/follow/${following_username}`
+      );
+      const respData = response.data;
 
-            throw e;
-        }
+      return respData;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
     }
+  };
 
-    const value = {
-        listPostData,
-        setListPostData,
-        following,
-        setFollowing,
-        setFollow,
-        checkFollow,
-        removeFollow
-    };
+  const getId = async (username) => {
+    try {
+      const response = await projectApi.get(`/user/getSearchDto/${username}`);
+      const respData = response.data;
 
-    return (
-        <UserProfileContext.Provider value={value}>
-            {children}
-        </UserProfileContext.Provider>
-    );
+      return respData.id;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
+  };
+
+  const value = {
+    listPostData,
+    setListPostData,
+    following,
+    setFollowing,
+    setFollow,
+    checkFollow,
+    removeFollow,
+    handleOpenDialogBox,
+    handleCloseDialogBox,
+    isOpenDialogBox,
+    getId,
+  };
+
+  return (
+    <UserProfileContext.Provider value={value}>
+      {children}
+    </UserProfileContext.Provider>
+  );
 };
 
 UserProfileProvider.propTypes = {
-    children: PropTypes.node,
+  children: PropTypes.node,
 };
-
-
 export default UserProfileContext;

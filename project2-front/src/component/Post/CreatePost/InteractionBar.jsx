@@ -65,22 +65,21 @@ const InteractionBar = ({ post, setPost }) => {
                         }}
                     />
                 </Button>
-                {post.commentsNum > 0 && (
-                    <Typography
-                        variant="body1"
-                        fontFamily="Inter, sans-serif"
-                        sx={{
-                            paddingLeft: '2px',
-                            paddingTop: '8px',
-                            flexDirection: 'row',
-                            fontSize: '13.125px',
-                            fontWeight: 400,
-                            color: 'rgb(66, 87, 108)'
-                        }}
-                    >
-                        {post.commentsNum}
-                    </Typography>
-                )}
+
+                <Typography
+                    variant="body1"
+                    fontFamily="Inter, sans-serif"
+                    sx={{
+                        paddingLeft: '2px',
+                        paddingTop: '8px',
+                        flexDirection: 'row',
+                        fontSize: '13.125px',
+                        fontWeight: 400,
+                        color: 'rgb(66, 87, 108)'
+                    }}
+                >
+                    {post.commentCount}
+                </Typography>
             </Box>
 
             <Box
@@ -114,21 +113,20 @@ const InteractionBar = ({ post, setPost }) => {
                         />
                     }
                 </Button>
-                {post.likesNum > 0 && (
-                    <Typography
-                        variant="h6"
-                        fontFamily="Inter, sans-serif"
-                        sx={{
-                            paddingLeft: '2px',
-                            paddingTop: '8px',
-                            flexDirection: 'row',
-                            fontSize: '13.125px',
-                            color: 'rgb(66, 87, 108)'
-                        }}
-                    >
-                        {post.likesNum}
-                    </Typography>
-                )}
+
+                <Typography
+                    variant="h6"
+                    fontFamily="Inter, sans-serif"
+                    sx={{
+                        paddingLeft: '2px',
+                        paddingTop: '8px',
+                        flexDirection: 'row',
+                        fontSize: '13.125px',
+                        color: 'rgb(66, 87, 108)'
+                    }}
+                >
+                    {post.likes}
+                </Typography>
 
                 {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
             </Box>

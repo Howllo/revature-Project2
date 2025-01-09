@@ -170,4 +170,25 @@ public class AppUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", username='" + username + '\'' +
+                ", profilePic='" + profilePic + '\'' +
+                ", bannerPic='" + bannerPic + '\'' +
+                ", biography='" + biography + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", createdAt=" + createdAt +
+                ", follower=" + follower +
+                ", following=" + following +
+                ", initiatedFriendships=" + initiatedFriendships +
+                ", receivedFriendships=" + receivedFriendships +
+                ", likedPosts=" + likedPosts +
+                '}';
+    }
 }
