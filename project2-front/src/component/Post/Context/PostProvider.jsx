@@ -242,6 +242,26 @@ export const PostProvider = ({ children }) => {
         }
     }
 
+    const getUserPost = async (id) => {
+        try {
+            const response = await projectApi.get("/post/all", {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const sortedByDate = response.data.sort((a, b) => {
+                return new Date(b.postAt) - new Date(a.postAt);
+            });
+
+            const filterByUser = sortedByDate.filter(userPost => userPost.userId === id);
+
+            setListPostData(filterByUser);
+        } catch (error) {
+            console.error(`Error getPost: ${error.status}`);
+        }
+    }
+
     const value = {
         listPostData,
         setListPostData,
@@ -260,7 +280,8 @@ export const PostProvider = ({ children }) => {
         likePost,
         getLikes,
         isUserLike,
-        getChildren
+        getChildren,
+        getUserPost
     };
 
     return (

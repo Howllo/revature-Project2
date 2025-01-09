@@ -7,20 +7,27 @@ import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.result.UserResult;
+import net.revature.project1.service.FileService;
 import net.revature.project1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
+import java.io.IOException;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
+    private final FileService fileService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, FileService fileService){
         this.userService = userService;
+        this.fileService = fileService;
     }
 
     // This would be rate limited.
@@ -65,6 +72,36 @@ public class UserController {
         return ResponseEntity.ok("This email is available.");
     }
 
+    @PutMapping("/settings/update")
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
+//        expecting userId, userProfileString, userBannerString, userBio, userDisplayName
+        Long userId = appUser.getId();
+        Optional<AppUser> optUser = userService.findUserById(userId);
+        if (!optUser.isPresent()){
+           return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        AppUser user = optUser.get();
+        user.setDisplayName(appUser.getDisplayName());
+        user.setBiography(appUser.getBiography());
+        try {
+            String bannerUrl = fileService.createFile(appUser.getBannerPic());
+            user.setBannerPic(bannerUrl);
+            appUser.setBannerPic(bannerUrl);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try {
+            String profileUrl = fileService.createFile(appUser.getProfilePic());
+            user.setProfilePic(profileUrl);
+            appUser.setProfilePic(profileUrl);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        userService.saveAppUser(user);
+        return new ResponseEntity<>(appUser, HttpStatus.OK);
+
+    }
+
     @PutMapping("/{id}/username")
     public ResponseEntity<String> updateUsername(@PathVariable Long id,
                                                  @RequestBody AppUser appUser) {
@@ -72,12 +109,12 @@ public class UserController {
         return resultResponse(result);
     }
 
-    @PutMapping("/{id}/display_name")
-    public ResponseEntity<String> updateDisplayName(@PathVariable Long id,
-                                                    @RequestBody AppUser appUser) {
-        UserEnum result = userService.updateDisplayName(id, appUser);
-        return resultResponse(result);
-    }
+//    @PutMapping("/{id}/display_name")
+//    public ResponseEntity<String> updateDisplayName(@PathVariable Long id,
+//                                                    @RequestBody AppUser appUser) {
+//        UserEnum result = userService.updateDisplayName(id, appUser);
+//        return resultResponse(result);
+//    }
 
     @PutMapping("/{id}/biography")
     public ResponseEntity<String> updateBiography(@PathVariable Long id,
