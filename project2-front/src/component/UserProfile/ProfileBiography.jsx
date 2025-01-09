@@ -14,6 +14,7 @@ const ProfileBiography = (user) => {
                           fontWeight: "300",
                           fontSize: "13px",
                           color: "rgb(11, 15, 20)",
+                          paddingLeft: '10px'
                       }}
           >
               {user.ProfileBiography}
