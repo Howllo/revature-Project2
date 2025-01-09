@@ -116,12 +116,12 @@ public class UserService {
 
     /**
      * Used to change the user display name.
-     * @param id Take in a user id to find the user.
+//     * @param id Take in a user id to find the user.
      * @param appUser Take in a user object to be used to change name.
      * @return UserEnum based on the status of the service.
      */
-    public UserEnum updateDisplayName(Long id, AppUser appUser){
-        Optional<AppUser> userOptional = userRepo.findById(id);
+    public UserEnum updateDisplayName(AppUser appUser){
+        Optional<AppUser> userOptional = userRepo.findById(appUser.getId());
         if(userOptional.isEmpty()){
             return UserEnum.UNKNOWN;
         }
@@ -288,6 +288,15 @@ public class UserService {
         userRepo.save(sender);
 
         return UserEnum.SUCCESS;
+    }
+
+    /**
+     * Used to get check if an email already exist.
+     * @param appUser .
+     * @return An AppUser instance.
+     */
+    public AppUser saveAppUser(AppUser appUser){
+       return userRepo.save(appUser);
     }
 
     /**
