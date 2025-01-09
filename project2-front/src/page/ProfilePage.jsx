@@ -39,7 +39,7 @@ const ProfilePage = () => {
 
                 {/* User Post */}
                 <Box>
-                    <ProfilePost/>
+                {userData && <ProfilePost user={userData} />}
                 </Box>
             </Box>
         </UserProfileProvider>
