@@ -348,4 +348,9 @@ public class UserService {
     public Optional<AppUser> findByUsername(String username) {
         return userRepo.findAppUserByUsername(username);
     }
+
+    public UserSearchDto getSearchDtoByUsername(String username){
+        Optional<UserSearchDto> userSearchDto = userRepo.getSearchDtoByUsername(username);
+        return userSearchDto.orElse(null);
+    }
 }
