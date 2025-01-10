@@ -258,8 +258,8 @@ public class PostService {
         return post.getLikes().size();
     }
 
-    public Long returnTotalComments(Long postId) {
-        Long commentCount = postRepo.getPostCommentNumber(postId);
+    public int returnTotalComments(Long postId) {
+        int commentCount = postRepo.getPostCommentNumber(postId);
         return commentCount;
     }
 
