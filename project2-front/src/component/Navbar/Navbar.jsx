@@ -86,7 +86,7 @@ const Navbar = () => {
                 onClick={handleOpeningPost}
                 sx={{
                     fontSize: '16px',
-                    marginTop: '30px',
+                    marginTop: '25px',
                     color: 'white',
                     backgroundColor: 'rgb(56,154,251)',
                     borderRadius: '30px',
