@@ -64,7 +64,7 @@ public class PostService {
                     post.isPostEdited(),
                     post.getPostAt(),
                     post.getLikes().size(),
-                    post.getComment().length()
+                    (long) post.getComment().length()
             ));
         }
         return posts;
@@ -258,8 +258,8 @@ public class PostService {
         return post.getLikes().size();
     }
 
-    public int returnTotalComments(Long postId) {
-        int commentCount = postRepo.getPostCommentNumber(postId);
+    public Long returnTotalComments(Long postId) {
+        Long commentCount = postRepo.getPostCommentNumber(postId);
         return commentCount;
     }
 
@@ -309,7 +309,7 @@ public class PostService {
                 post.isPostEdited(),
                 post.getPostAt(),
                 post.getLikes().size(),
-                post.getComment().length()
+                (long) post.getComment().length()
         );
     }
 
