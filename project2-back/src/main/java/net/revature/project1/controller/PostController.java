@@ -46,7 +46,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@RequestBody Post post,
+    public ResponseEntity<?> createPost(@RequestBody PostCreateDto post,
                                         @RequestHeader("Authorization") String token){
         if(post == null){
             return ResponseEntity.badRequest().body("Invalid post");
