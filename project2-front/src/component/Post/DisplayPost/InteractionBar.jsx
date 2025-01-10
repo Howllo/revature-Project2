@@ -9,16 +9,18 @@ import CreatePost from "../CreatePost/CreatePost.jsx";
 
 const InteractionBar = ({ post, setPost }) => {
     const [isLiked, setIsLiked] = useState(false)
-    const {likePost, getLikes, isUserLike} = usePost();
+    const {likePost, getLikes, isUserLike, getCommentTotal} = usePost();
     const [showCommentMenu, setShowCommentMenu] = useState()
 
     const handleLike = async () => {
         const liked = await likePost(post.id);
         setIsLiked(liked);
         const likes = await getLikes(post.id);
+        const commentsNum = await getCommentTotal(post.id);
         setPost({
             ...post,
             likes: likes,
+            commentsNum: commentsNum,
         });
     };
 
@@ -29,17 +31,21 @@ const InteractionBar = ({ post, setPost }) => {
         };
         checkLikeStatus();
 
-        const setInitialLikes = async () => {
+        const setInitialLikesAndComments = async () => {
             const likes = await getLikes(post.id);
+            const commentsNum = await getCommentTotal(post.id);
             setPost({
                 ...post,
                 likes: likes,
+                commentsNum: commentsNum,
             });
         }
-        setInitialLikes();
+        setInitialLikesAndComments();
+
+
     }, [post.likes, post.id, isUserLike]);
 
-    const handleComments =  () => {
+    const handleComments = async () => {
         setShowCommentMenu(true)
     }
 
@@ -88,7 +94,7 @@ const InteractionBar = ({ post, setPost }) => {
                         color: 'rgb(66, 87, 108)'
                     }}
                 >
-                    {post.commentCount}
+                    {post.commentsNum}
                 </Typography>
             </Box>
 
