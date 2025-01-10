@@ -46,7 +46,7 @@ const ProfileButton = ({ user }) => {
             onClick={handleOpenDialogBox}
             variant="contained"
             size="small"
-            sx={{ borderRadius: 6, textTransform: "capitalize" }}
+            sx={{ borderRadius: 6, textTransform: "capitalize", mt: "5px" }}
           >
             Edit
           </Button>
@@ -80,6 +80,7 @@ const ProfileButton = ({ user }) => {
           sx={{
             borderRadius: 6,
             textTransform: "capitalize",
+            mt: "5px"
           }}
         >
           {isFollowed ? "Unfollow" : "Follow"}
