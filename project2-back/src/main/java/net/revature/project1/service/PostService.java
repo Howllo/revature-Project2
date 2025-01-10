@@ -258,6 +258,11 @@ public class PostService {
         return post.getLikes().size();
     }
 
+    public Long returnTotalComments(Long postId) {
+        Long commentCount = postRepo.getPostCommentNumber(postId);
+        return commentCount;
+    }
+
     public boolean doesUserLikeThisPost(Long postId, Long userId, String token) {
         Optional<Post> optionalPost = postRepo.findById(postId);
         if(optionalPost.isEmpty()) {
