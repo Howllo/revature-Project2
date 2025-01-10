@@ -179,12 +179,9 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
-<<<<<<< HEAD
      * @param username Take in a username. AKA who the person that is being unfollowed.
      * @param token Takes the token of the user who wants to unfollow
-=======
      * @param username Take in a following id. AKA who the person that is being followed.
->>>>>>> c1d1fbb6913f7c54349494b6aede2a49ab44d14a
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum followUser(Long followerId, String username, String token){ 
@@ -254,12 +251,9 @@ public class UserService {
     /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-<<<<<<< HEAD
      * @param username Take in a username. AKA who the person that is being unfollowed.
      * @param token Takes the token of the user who wants to unfollow
-=======
      * @param username Take in a following id. AKA who the person that is being unfollowed.
->>>>>>> c1d1fbb6913f7c54349494b6aede2a49ab44d14a
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum unfollowUser(Long followerId, String username, String token){
