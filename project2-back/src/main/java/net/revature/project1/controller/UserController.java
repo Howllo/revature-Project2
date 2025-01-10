@@ -1,7 +1,6 @@
 package net.revature.project1.controller;
 
 import net.revature.project1.dto.EmailData;
-import net.revature.project1.dto.PostSmallResponseDto;
 import net.revature.project1.dto.UserRequestPicDto;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
