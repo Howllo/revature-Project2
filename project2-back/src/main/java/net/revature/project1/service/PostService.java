@@ -107,10 +107,21 @@ public class PostService {
 
     /**
     * Create a post.
-    * @param post The post to be created.
+    * @param postDto The post to be created.
     * @return The created post.
     */
-    public PostResult createPost(Post post, String token) {
+    public PostResult createPost(PostCreateDto postDto, String token) {
+        Post post = new Post();
+        post.setPostParent(postRepo.findById(post.getId()).get());
+        post.setComment(postDto.comment());
+        post.setMedia(postDto.media());
+
+        Optional<AppUser> optionalAppUser = userService.findUserById(postDto.userId());
+        if(optionalAppUser.isEmpty()){
+            return new PostResult(PostEnum.INVALID_USER, "User does not exist.", null);
+        }
+        post.setUser(optionalAppUser.get());
+
         if(post.getComment() == null && post.getMedia() == null) {
             return new PostResult(PostEnum.INVALID_POST, "Post must have a comment, " +
                  "image, or video.", null);

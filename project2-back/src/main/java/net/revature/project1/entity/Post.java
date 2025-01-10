@@ -102,4 +102,12 @@ public class Post {
     public void setPostAt(Timestamp postAt) {
         this.postAt = postAt;
     }
+
+    public void setPostParent(Post postParent) {
+        this.postParent = postParent;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
 }
