@@ -206,11 +206,12 @@ public class UserService {
      */
     public AppUser updateAppUser(AppUser appUser, String token){
         Long userId = appUser.getId();
-        Boolean isValidUser = isValidToken(token, userId);
+
         Optional<AppUser> optUser = findUserById(userId);
         if (!optUser.isPresent()){
             return null;
         }
+        Boolean isValidUser = isValidToken(token, userId);
         if (!isValidUser){
             return null;
         }
