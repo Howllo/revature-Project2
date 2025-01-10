@@ -78,31 +78,11 @@ public class UserController {
     @PutMapping("/settings/update")
     public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
 //        expecting userId, userProfileString, userBannerString, userBio, userDisplayName
-        Long userId = appUser.getId();
-        Optional<AppUser> optUser = userService.findUserById(userId);
-        if (!optUser.isPresent()){
+        AppUser receivedAppUser = userService.updateAppUser(appUser);
+        if (receivedAppUser == null){
            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        AppUser user = optUser.get();
-        user.setDisplayName(appUser.getDisplayName());
-        user.setBiography(appUser.getBiography());
-        try {
-            String bannerUrl = fileService.createFile(appUser.getBannerPic());
-            user.setBannerPic(bannerUrl);
-            appUser.setBannerPic(bannerUrl);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        try {
-            String profileUrl = fileService.createFile(appUser.getProfilePic());
-            user.setProfilePic(profileUrl);
-            appUser.setProfilePic(profileUrl);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        userService.saveAppUser(user);
-        return new ResponseEntity<>(appUser, HttpStatus.OK);
-
+            return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/username")

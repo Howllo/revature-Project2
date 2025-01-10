@@ -13,6 +13,8 @@ import net.revature.project1.result.PostResult;
 import net.revature.project1.result.UserResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,7 @@ public class UserService {
     private final UserRepo userRepo;
     private final FileService fileService;
     final private JwtTokenUtil jwtTokenUtil;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepo userRepo, FileService fileService, JwtTokenUtil jwtTokenUtil){
@@ -215,14 +218,14 @@ public class UserService {
             user.setBannerPic(bannerUrl);
             appUser.setBannerPic(bannerUrl);
         } catch (IOException e){
-            e.printStackTrace();
+            logger.error("Error while creating Banner file: ", e);
         }
         try {
             String profileUrl = fileService.createFile(appUser.getProfilePic());
             user.setProfilePic(profileUrl);
             appUser.setProfilePic(profileUrl);
         } catch (IOException e){
-            e.printStackTrace();
+            logger.error("Error while creating profile file: ", e);
         }
         saveAppUser(user);
         return appUser;
