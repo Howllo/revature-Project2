@@ -63,7 +63,7 @@ public class PostService {
                     post.getMedia(),
                     post.isPostEdited(),
                     post.getPostAt(),
-                    post.getLikes().size(),
+                    (long) post.getLikes().size(),
                     (long) post.getComment().length()
             ));
         }
@@ -248,19 +248,18 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public Integer returnTotalLikes(Long postId) {
+    public Long returnTotalLikes(Long postId) {
         Optional<Post> optionalPost = postRepo.findById(postId);
         if(optionalPost.isEmpty()) {
             return null;
         }
         Post post = optionalPost.get();
 
-        return post.getLikes().size();
+        return (long) post.getLikes().size();
     }
 
     public Long returnTotalComments(Long postId) {
-        Long commentCount = postRepo.getPostCommentNumber(postId);
-        return commentCount;
+        return postRepo.getPostCommentNumber(postId);
     }
 
     public boolean doesUserLikeThisPost(Long postId, Long userId, String token) {
@@ -308,7 +307,7 @@ public class PostService {
                 post.getMedia(),
                 post.isPostEdited(),
                 post.getPostAt(),
-                post.getLikes().size(),
+                (long) post.getLikes().size(),
                 (long) post.getComment().length()
         );
     }
