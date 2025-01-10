@@ -118,7 +118,7 @@ public class UserController {
     public ResponseEntity<String> followNewUser(@PathVariable("id") Long followerId,
                                                 @PathVariable("user") String username,
                                                 @RequestHeader("Authorization") String token) {
-        UserEnum result = userService.followUser(followerId, username, token);
+        UserEnum result = userService.followUser(followerId, username, token.substring(7));
         return resultResponse(result);
     }
 
@@ -126,7 +126,7 @@ public class UserController {
     public ResponseEntity<String> unfollowUser(@PathVariable("id") Long followerId,
                                                @PathVariable("user") String username,
                                                @RequestHeader("Authorization") String token) {
-        UserEnum result = userService.unfollowUser(followerId, username, token);
+        UserEnum result = userService.unfollowUser(followerId, username, token.substring(7));
         return resultResponse(result);
     }
 
