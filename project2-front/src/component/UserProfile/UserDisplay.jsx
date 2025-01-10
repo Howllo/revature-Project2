@@ -14,6 +14,10 @@ const UserDisplay = ({ user }) => {
             width: "100%",
             height: "100%",
             borderRadius: "0px",
+            maxWidth: "546px",
+            maxHeight: "180px",
+            minWidth: "546px",
+            minHeight: "180px"
           }}
         />
         <Box
