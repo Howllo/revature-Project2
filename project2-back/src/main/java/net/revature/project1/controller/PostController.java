@@ -81,10 +81,10 @@ public class PostController {
     }
 
     @GetMapping("{id}/likes")
-    public ResponseEntity<Integer> returnTotalLikes(@PathVariable Long id){
-        Integer result = postService.returnTotalLikes(id);
+    public ResponseEntity<Long> returnTotalLikes(@PathVariable Long id){
+        Long result = postService.returnTotalLikes(id);
         if(result == null){
-            return ResponseEntity.badRequest().body(-1);
+            return ResponseEntity.badRequest().body(-1L);
         }
         return ResponseEntity.ok(result);
     }
