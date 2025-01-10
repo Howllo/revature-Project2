@@ -11,119 +11,114 @@ import {useState} from "react";
 const PostContainer = ({key, post, commentChildren}) => {
     const [savedPost, setSavedPost] = useState(post);
 
-    const handleClick = () => {
-    }
-
     return (
-        <Box
-            onClick={handleClick}
+        <Card
+            elevation={0}
             sx={{
-
+                mt: '-1px',
+                borderRadius: '0px',
+                display: 'flex',
+                borderStyle: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgb(212, 219, 226)',
+                maxWidth: '650px',
+                width: '90%',
+                padding: '13px',
             }}
+            key={key}
         >
-            <Card
-                elevation={0}
+            <Box
                 sx={{
-                    mt: '-1px',
-                    borderRadius: '0px',
                     display: 'flex',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '90%',
-                    padding: '13px',
-                }}                key={key}
+                    height: '100%',
+                    paddingRight: '5px',
+                }}
+                key={key}
+            >
+                <UserAvatar username={post.username} image={Cookies.get('profile_pic')} />
+            </Box>
+
+            <Box
+                sx={{
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+                key={key}
             >
                 <Box
                     sx={{
-                        display: 'flex',
+                        paddingTop: '10px',
+                        paddingBottom: '10px',
+                        maxHeight: '20%',
                         height: '100%',
-                        paddingRight: '8px',
-                    }}
-                    key={key}
-                >
-                    <UserAvatar username={post.username} image={Cookies.get('profile_pic')} />
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                    <PostInformationText display_name={post.displayName ? post.displayName : post.username}
+                                         username={post.username} post_date={post.postAt} post={post} />
                 </Box>
 
                 <Box
                     sx={{
-                        height: '100%',
                         width: '100%',
+                        height: '100%',
                         display: 'flex',
                         flexDirection: 'column',
+                        justifyContent: 'left',
+                        alignItems: 'left',
+                    }}
+                >
+                    <PostText comment={post.comment}/>
+                </Box>
+
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: 'auto',
+                        display: 'block',
+                        overflow: 'hidden'
+                    }}
+                >
+                    {post.media ? <MediaContainer media={post.media}/> : null}
+                </Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        width: '100%',
+                        height: '100%',
                     }}
-                    key={key}
                 >
-                    <Box
-                        sx={{
-                            paddingTop: '10px',
-                            paddingBottom: '10px',
-                            maxHeight: '20%',
-                            height: '100%',
-                            width: '100%',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                        <PostInformationText display_name={post.displayName ? post.displayName : post.username}
-                                             username={post.username} post_date={post.postAt} post={post} />
-                    </Box>
-
-                    <Box
-                        sx={{
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'left',
-                            alignItems: 'left',
-                        }}
-                    >
-                        <PostText comment={post.comment}/>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            maxHeight: '600px',
-                            maxWidth: '600px',
-                        }}
-                    >
-                        {post.media ? <MediaContainer media={post.media}/> : null}
-                    </Box>
-
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    >
-                        <InteractionBar post={savedPost} setPost={setSavedPost} likesNum={post.likesNum ? post.likesNum : 0} commentsNum={post.commentsNum ? post.commentsNum : 0}/>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '95%',
-                            height: '100%',
-                        }}
-                    >
-                        {commentChildren}
-                    </Box>
+                    <InteractionBar post={savedPost} setPost={setSavedPost} likesNum={post.likesNum ? post.likesNum : 0} commentsNum={post.commentsNum ? post.commentsNum : 0}/>
                 </Box>
-            </Card>
-        </Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '95%',
+                        height: '100%',
+                    }}
+                >
+                    {commentChildren}
+                </Box>
+            </Box>
+        </Card>
     )
 }
 
 PostContainer.propTypes = {
+    key: PropTypes.string,
     post: PropTypes.shape({
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         username: PropTypes.string.isRequired,

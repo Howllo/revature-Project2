@@ -97,6 +97,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/post/all").permitAll()
+                .requestMatchers("/api/v1/post/check/**").permitAll()
                 .requestMatchers("/api/v1/post/{id}/likes").permitAll()
                 .requestMatchers("/api/v1/post/{id}/comments").permitAll()
                 .requestMatchers("/api/v1/auth/verify-captcha").permitAll()

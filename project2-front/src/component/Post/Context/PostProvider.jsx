@@ -242,6 +242,21 @@ export const PostProvider = ({ children }) => {
         }
     }
 
+    const getCommentTotal = async (postId) => {
+        const token = Cookies.get('jwt');
+        try {
+            const response  = await projectApi.get(`/post/${postId}/comments/total`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data;
+        } catch (e) {
+            console.error('Error getting comment total for post: ', e.status);
+        }
+    }
+
     const getUserPost = async (id) => {
         try {
             const response = await projectApi.get("/post/all", {
@@ -281,6 +296,7 @@ export const PostProvider = ({ children }) => {
         getLikes,
         isUserLike,
         getChildren,
+        getCommentTotal,
         getUserPost
     };
 

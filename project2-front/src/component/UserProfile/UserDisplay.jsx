@@ -19,7 +19,7 @@ const UserDisplay = ({ user }) => {
         <Box
           sx={{
             mt: "-41px",
-            marginLeft: "12px",
+            marginLeft: "5px",
           }}
         >
           <UserAvatar
