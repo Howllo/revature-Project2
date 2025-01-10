@@ -1,6 +1,6 @@
 ﻿import {Box, Typography} from "@mui/material";
 
-const ProfileBiography = (user) => {
+const ProfileBiography = ({user}) => {
   return (
       <Box
         sx={{
