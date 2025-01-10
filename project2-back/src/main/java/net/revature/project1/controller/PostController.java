@@ -56,7 +56,7 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody PostUpdateDto post,
                                         @RequestHeader("Authorization") String token){
-        PostResult postResult = postService.updatePost(id, post, token);
+        PostResult postResult = postService.updatePost(id, post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
     }

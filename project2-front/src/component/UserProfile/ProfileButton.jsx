@@ -80,6 +80,7 @@ const ProfileButton = ({ user }) => {
           sx={{
             borderRadius: 6,
             textTransform: "capitalize",
+            mt: "5px"
           }}
         >
           {isFollowed ? "Unfollow" : "Follow"}
