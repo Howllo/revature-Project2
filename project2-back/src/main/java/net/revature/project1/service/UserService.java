@@ -4,12 +4,9 @@ import net.revature.project1.dto.UserDto;
 import net.revature.project1.dto.UserRequestPicDto;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
-import net.revature.project1.entity.Post;
 import net.revature.project1.enumerator.PicUploadType;
-import net.revature.project1.enumerator.PostEnum;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.repository.UserRepo;
-import net.revature.project1.result.PostResult;
 import net.revature.project1.result.UserResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
@@ -42,6 +39,20 @@ public class UserService {
      */
     public UserResult getUser(Long id){
         Optional<AppUser> optionalAppUser = userRepo.findById(id);
+        return getUserResult(optionalAppUser);
+    }
+
+    /**
+     * Returns a user DTO of the information that is need to display an accocunt information.
+     * @param username Take in an id that will be searched for the user information.
+     * @return A {@code UserResult} object that contains information about service status, and DTO.
+     */
+    public UserResult getUser(String username){
+        Optional<AppUser> optionalAppUser = userRepo.findAppUserByUsername(username);
+        return getUserResult(optionalAppUser);
+    }
+
+    private UserResult getUserResult(Optional<AppUser> optionalAppUser) {
         if(optionalAppUser.isEmpty()){
             return new UserResult(UserEnum.UNKNOWN_USER, "Unknown user id.", null);
         }
@@ -162,7 +173,7 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
-     * @param followingId Take in a following id. AKA who the person that is being followed.
+     * @param username Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum followUser(Long followerId, String username, String token){ 
@@ -195,7 +206,7 @@ public class UserService {
     /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-     * @param followingId Take in a following id. AKA who the person that is being unfollowed.
+     * @param username Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum unfollowUser(Long followerId, String username, String token){
@@ -240,11 +251,7 @@ public class UserService {
 
         AppUser follower = optionalFollower.get();
         AppUser following = optionalFollowing.get();
-        if(follower.getFollowing().contains(following)){
-            return true;
-        }
-
-        return false;
+        return follower.getFollowing().contains(following);
     }
 
     /**
@@ -367,7 +374,7 @@ public class UserService {
     }
 
     public boolean isValidToken(String token, Long userId) {
-        Optional<AppUser> optionalAppUser = getUser(token);
+        Optional<AppUser> optionalAppUser = getUserToken(token);
         if(optionalAppUser.isEmpty()){
             return false;
         }
@@ -385,7 +392,7 @@ public class UserService {
      * @param token Take in the JWT token to be processed.
      * @return The AppUser that is associated with the token.
      */
-    private Optional<AppUser> getUser(String token) {
+    private Optional<AppUser> getUserToken(String token) {
         return findByUsername(jwtTokenUtil.getUsernameFromToken(token));
     }
 }
