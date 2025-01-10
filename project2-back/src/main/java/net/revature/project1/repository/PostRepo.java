@@ -33,7 +33,7 @@ public interface PostRepo extends JpaRepository<Post, Long> {
             @Param("chunkSize") int chunkSize);
 
     @Query("SELECT COUNT(p) FROM Post p WHERE p.postParent.id = :postId")
-    Long getPostCommentNumber(@Param("postId") Long postId);
+    int getPostCommentNumber(@Param("postId") Long postId);
 
     List<Post> findByPostParentIdOrderByPostAtDesc(Long parentId);
 }

@@ -43,8 +43,7 @@ function HomePage({children}) {
                 sx={{
                     height: '100%',
                     display: 'grid',
-                    gridTemplateColumns: '2fr 3fr 2fr',
-                    gap: '20px',
+                    gridTemplateColumns: '3fr 4fr 3fr',
                     padding: '20px',
                     boxSizing: 'border-box',
                 }}
@@ -53,6 +52,7 @@ function HomePage({children}) {
                     sx={{
                         height: '100%',
                         overflow: 'hidden',
+                        paddingRight: '50px',
                     }}
                 >
                     <AuthBarHandle />
@@ -61,8 +61,8 @@ function HomePage({children}) {
                 <Grid2
                     ref={containerRef}
                     sx={{
-                        maxWidth: '90%',
-                        minWidth: '90%',
+                        maxWidth: '650px',
+                        minWidth: '650px',
                         height: '100%',
                         overflowY: 'auto',
                         overflowX: 'hidden',
@@ -83,6 +83,7 @@ function HomePage({children}) {
                 </Grid2>
                 <Grid2
                     sx={{
+                        paddingLeft: '20px',
                         height: '100%',
                         overflow: 'hidden',
                     }}

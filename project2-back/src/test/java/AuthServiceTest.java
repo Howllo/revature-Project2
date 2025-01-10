@@ -22,7 +22,4 @@ public class AuthServiceTest {
     JwtTokenUtil jwtTokenUtil;
     @Mock
     AuthenticationManager authenticationManager;
-
-
-
 }
