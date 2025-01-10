@@ -9,15 +9,64 @@ export const SettingsProvider = ({ children }) => {
   const [settingsData, setSettingsData] = useState({
     displayName: Cookies.get("display_name") == null || "",
     profilePic:
-      Cookies.get("profile_pic") == null || "https://placehold.co/600x400",
+      Cookies.get("profile_pic") == null || "https://placehold.co/600x400/png",
     bannerPic:
-      Cookies.get("banner_pic") == null || "https://placehold.co/600x400/png",
+      Cookies.get("banner_pic") == null || "https://picsum.photos/1500/500",
     biography: Cookies.get("bio_text") || "",
+    profilePreviewURL: "",
+    bannerPreviewURL: "",
   });
+  const [unapprovedProfilePic, setUnapprovedProfilePic] = useState("");
+  const [unapprovedBannerPic, setUnapprovedBannerPic] = useState("");
 
-  let profilePreviewURL;
-  let bannerPreviewURL;
+  // Strings to be converted to base64 for API
+  let profileMediaString;
+  let bannerMediaString;
 
+  const resetTempImageURLS = () => {
+    if (settingsData.profilePreviewURL) {
+      setSettingsData((prev) => ({
+        ...prev,
+        profilePreviewURL: URL.revokeObjectURL(settingsData.profilePreviewURL),
+      }));
+    }
+    if (settingsData.bannerPreviewURL) {
+      setSettingsData((prev) => ({
+        ...prev,
+        bannerPreviewURL: URL.revokeObjectURL(settingsData.bannerPreviewURL),
+      }));
+    }
+    profileMediaString = "";
+    bannerMediaString = "";
+  };
+
+  const handleProfilePicChange = (event) => {
+    const file = event.target.files[0];
+    if (file && !file.type.startsWith("video/")) {
+      if (settingsData.profilePreviewURL) {
+        URL.revokeObjectURL(settingsData.profilePreviewURL);
+      }
+      setSettingsData((prev) => ({
+        ...prev,
+        profilePreviewURL: URL.createObjectURL(file),
+      }));
+      setUnapprovedProfilePic(file);
+    }
+  };
+  const handleBannerPicChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file && !file.type.startsWith("video/")) {
+      if (settingsData.bannerPreviewURL) {
+        URL.revokeObjectURL(settingsData.bannerPreviewURL);
+      }
+      setSettingsData((prev) => ({
+        ...prev,
+        bannerPreviewURL: URL.createObjectURL(file),
+      }));
+      setUnapprovedBannerPic(file);
+    }
+  };
   const setDisplayName = (event) => {
     const displayName = event.target.value;
     setSettingsData((prev) => ({
@@ -26,41 +75,25 @@ export const SettingsProvider = ({ children }) => {
     }));
   };
 
-  const setProfilePic = (event) => {
-    const file = event.target.files[0];
-    if (file && !file.type.startsWith("video/")) {
-      if (profilePreviewURL) {
-        URL.revokeObjectURL(profilePreviewURL);
-      }
-      profilePreviewURL = URL.createObjectURL(file);
-      setSettingsData((prev) => ({
-        ...prev,
-        profilePic: profilePreviewURL ? profilePreviewURL : null,
-      }));
-    }
+  const setProfilePic = (url) => {
+    setSettingsData((prev) => ({
+      ...prev,
+      profilePic: url,
+    }));
   };
 
-  const setBannerPic = (event) => {
-    const file = event.target.files[0];
-    if (file && !file.type.startsWith("video/")) {
-      if (bannerPreviewURL) {
-        URL.revokeObjectURL(bannerPreviewURL);
-      }
-      bannerPreviewURL = URL.createObjectURL(file);
-      setSettingsData((prev) => ({
-        ...prev,
-        bannerPic: bannerPreviewURL
-          ? bannerPreviewURL
-          : "https://via.placeholder.com/400",
-      }));
-    }
+  const setBannerPic = (url) => {
+    setSettingsData((prev) => ({
+      ...prev,
+      bannerPic: url,
+    }));
   };
 
   const setBioText = (event) => {
     const bioText = event.target.value;
     setSettingsData((prev) => ({
       ...prev,
-      bioText,
+      biography: bioText,
     }));
   };
 
@@ -77,33 +110,25 @@ export const SettingsProvider = ({ children }) => {
 
   const handleSubmitSettings = async () => {
     try {
-      let profileMediaString = null;
-      let bannerMediaString = null;
-      console.log("from settings data");
-      console.log(settingsData.profilePic);
-      console.log(settingsData.bannerPic);
-      console.log("logging from the top of if block to create profile string");
-      if (settingsData.profilePic) {
+      if (unapprovedProfilePic) {
         const reader = new FileReader();
         profileMediaString = await new Promise((resolve) => {
-          console.log("logging from promise to create profile string");
           reader.onload = () => {
             resolve(reader.result);
           };
-          reader.readAsDataURL(settingsData.profilePic);
+          reader.readAsDataURL(unapprovedProfilePic);
         });
       } else {
         console.error("No profile picture provided");
       }
-      console.log("logging from the top of if block to create banner string");
-      if (settingsData.bannerPic) {
+
+      if (unapprovedBannerPic) {
         const reader = new FileReader();
         bannerMediaString = await new Promise((resolve) => {
-          console.log("logging from promise to create banner string");
           reader.onload = () => {
             resolve(reader.result);
           };
-          reader.readAsDataURL(settingsData.bannerPic);
+          reader.readAsDataURL(unapprovedBannerPic);
         });
       } else {
         console.error("No banner picture provided");
@@ -118,8 +143,7 @@ export const SettingsProvider = ({ children }) => {
       };
 
       const token = Cookies.get("jwt");
-      console.log("printing token from settings provider");
-      console.log(token);
+
       if (!token) {
         throw new Error("No authentication token found");
       }
@@ -138,7 +162,7 @@ export const SettingsProvider = ({ children }) => {
       if (!response.ok) {
         console.log("response from api was not okay");
         resetSettingsData();
-        throw new Error("Settings Couldn't be updated");
+        throw new Error("API response was not okay");
       }
 
       setSettingsData(response.data);
@@ -146,8 +170,7 @@ export const SettingsProvider = ({ children }) => {
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
-      URL.revokeObjectURL(profilePreviewURL);
-      URL.revokeObjectURL(bannerPreviewURL);
+      resetTempImageURLS();
     } catch (error) {
       console.error("Error submitting settings:", error);
       throw error;
@@ -162,6 +185,10 @@ export const SettingsProvider = ({ children }) => {
     setBioText,
     resetSettingsData,
     handleSubmitSettings,
+    setUnapprovedProfilePic,
+    setUnapprovedBannerPic,
+    handleProfilePicChange,
+    handleBannerPicChange,
   };
 
   return (

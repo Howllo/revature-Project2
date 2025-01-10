@@ -44,16 +44,14 @@ const ProfileButton = ({ user }) => {
             flexGrow: 1,
           }}
         >
-          <Link>
-            <Button
-              onClick={handleOpenDialogBox}
-              variant="contained"
-              size="small"
-              sx={{ borderRadius: 6, textTransform: "capitalize" }}
-            >
-              Edit
-            </Button>
-          </Link>
+          <Button
+            onClick={handleOpenDialogBox}
+            variant="contained"
+            size="small"
+            sx={{ borderRadius: 6, textTransform: "capitalize" }}
+          >
+            Edit
+          </Button>
 
           <IconButton
             sx={{
