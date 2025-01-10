@@ -28,6 +28,15 @@ const InteractionBar = ({ post, setPost }) => {
             setIsLiked(likeStatus);
         };
         checkLikeStatus();
+
+        const setInitialLikes = async () => {
+            const likes = await getLikes(post.id);
+            setPost({
+                ...post,
+                likes: likes,
+            });
+        }
+        setInitialLikes();
     }, [post.likes, post.id, isUserLike]);
 
     const handleComments =  () => {
