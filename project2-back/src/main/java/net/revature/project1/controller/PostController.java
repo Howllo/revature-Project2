@@ -90,10 +90,10 @@ public class PostController {
     }
 
     @GetMapping("{id}/comments/total")
-    public ResponseEntity<Integer> returnTotalComments(@PathVariable Long id){
-        Integer result = postService.returnTotalComments(id);
+    public ResponseEntity<Long> returnTotalComments(@PathVariable Long id){
+        Long result = postService.returnTotalComments(id);
         if(result == null){
-            return ResponseEntity.badRequest().body(-1);
+            return ResponseEntity.badRequest().body(-1L);
         }
         return ResponseEntity.ok(result);
     }
