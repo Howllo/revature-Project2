@@ -6,7 +6,8 @@ import { useContext, useRef } from "react";
 // import { useSettings } from "../Context/useSettings";
 
 const Banner = () => {
-  const { setBannerPic, settingsData } = useContext(SettingsContext);
+  const { settingsData, handleBannerPicChange, setUnapprovedBannerPic } =
+    useContext(SettingsContext);
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.click();
@@ -17,7 +18,11 @@ const Banner = () => {
       sx={{
         width: "100%",
         height: "30%",
-        backgroundImage: `url(${settingsData.bannerPic})`,
+        backgroundImage: `url(${
+          settingsData.bannerPreviewURL
+            ? settingsData.bannerPreviewURL
+            : settingsData.bannerPic
+        })`,
         borderRadius: "10px",
         marginBottom: "10px",
         backgroundPosition: "center",
@@ -32,7 +37,10 @@ const Banner = () => {
         type="file"
         style={{ display: "none" }}
         ref={inputRef}
-        onChange={setBannerPic}
+        onChange={(e) => {
+          setUnapprovedBannerPic(e);
+          handleBannerPicChange(e);
+        }}
         accept="image/*"
       />
     </Box>
