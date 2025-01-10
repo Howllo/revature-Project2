@@ -17,8 +17,8 @@ const AuthContainer = () => {
         >
             <Box
                 sx={{
-                    paddingBottom: '20px',
-                    paddingRight: '60px',
+                    paddingBottom: '10px',
+                    paddingRight: '42px',
                 }}
             >
                 <UserAvatar username={Cookies.get('username')} image={Cookies.get('profile_pic')}/>

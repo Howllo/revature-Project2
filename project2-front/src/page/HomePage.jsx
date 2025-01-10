@@ -43,7 +43,7 @@ function HomePage({children}) {
                 sx={{
                     height: '100%',
                     display: 'grid',
-                    gridTemplateColumns: '3fr 4fr 3fr',
+                    gridTemplateColumns: '3fr 3fr 3fr',
                     padding: '20px',
                     boxSizing: 'border-box',
                 }}
@@ -86,6 +86,7 @@ function HomePage({children}) {
                         paddingLeft: '20px',
                         height: '100%',
                         overflow: 'hidden',
+                        alignItems: 'left',
                     }}
                 >
                     <RightSidebar />
