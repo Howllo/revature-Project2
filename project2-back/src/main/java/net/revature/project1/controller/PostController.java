@@ -48,6 +48,10 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody Post post,
                                         @RequestHeader("Authorization") String token){
+        if(post == null){
+            return ResponseEntity.badRequest().body("Invalid post");
+        }
+
         PostResult postResult = postService.createPost(post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
