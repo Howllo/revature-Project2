@@ -159,11 +159,12 @@ export const SettingsProvider = ({ children }) => {
         }
       );
 
-      if (!response.ok) {
-        console.log("response from api was not okay");
+      if (response.status !== 200) {
         resetSettingsData();
         throw new Error("API response was not okay");
       }
+      console.log("response from api was okay");
+      console.log(response.data);
 
       setSettingsData((prev) => ({
         ...prev,
