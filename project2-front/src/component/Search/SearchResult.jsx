@@ -21,7 +21,7 @@ const SearchResult = ({user, setSearchTerm}) => {
     }
 
     return (
-        <Link to={`/${user.username.toLowerCase()}`} state={{ userObj: selectedUser }} style={{ textDecoration: 'none' }}>
+        <Link to={`/profile/${user.username.toLowerCase()}`} state={{ userObj: selectedUser }} style={{ textDecoration: 'none' }}>
             <Button
                 disableRipple={true}
 

@@ -200,11 +200,9 @@ export const PostProvider = ({ children }) => {
     }
 
     const getLikes = async (postId) => {
-        const token = Cookies.get('jwt');
         try {
             const response  = await projectApi.get(`/post/${postId}/likes`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             })
