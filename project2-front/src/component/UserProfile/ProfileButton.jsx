@@ -1,8 +1,6 @@
-﻿import { Box, Button, IconButton } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+﻿import { Box, Button } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ProfileButton = ({ user }) => {
@@ -44,7 +42,6 @@ const ProfileButton = ({ user }) => {
             flexGrow: 1,
           }}
         >
-          <Link>
             <Button
               onClick={handleOpenDialogBox}
               variant="contained"
@@ -53,16 +50,6 @@ const ProfileButton = ({ user }) => {
             >
               Edit
             </Button>
-          </Link>
-
-          <IconButton
-            sx={{
-              marginLeft: "5px",
-              backgroundColor: "grey",
-            }}
-          >
-            <MoreHorizIcon />
-          </IconButton>
         </Box>
       </Box>
     );
@@ -97,15 +84,6 @@ const ProfileButton = ({ user }) => {
         >
           {isFollowed ? "Unfollow" : "Follow"}
         </Button>
-
-        <IconButton
-          sx={{
-            marginLeft: "5px",
-            backgroundColor: "grey",
-          }}
-        >
-          <MoreHorizIcon />
-        </IconButton>
       </Box>
     </Box>
   );
