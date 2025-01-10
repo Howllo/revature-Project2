@@ -29,7 +29,8 @@ const ProfileInformationPanel = ({user}) => {
                     fontSize: "34px",
                     color: "black",
                     mt: '-15px',
-                    paddingLeft: '10px'
+                    paddingLeft: '10px',
+                    paddingTop: '15px'
                 }}
             >
                 {user.displayName || user.username}
