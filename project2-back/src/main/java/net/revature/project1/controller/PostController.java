@@ -48,6 +48,10 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody Post post,
                                         @RequestHeader("Authorization") String token){
+        if(post == null){
+            return ResponseEntity.badRequest().body("Invalid post");
+        }
+
         PostResult postResult = postService.createPost(post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
@@ -81,19 +85,19 @@ public class PostController {
     }
 
     @GetMapping("{id}/likes")
-    public ResponseEntity<Integer> returnTotalLikes(@PathVariable Long id){
-        Integer result = postService.returnTotalLikes(id);
+    public ResponseEntity<Long> returnTotalLikes(@PathVariable Long id){
+        Long result = postService.returnTotalLikes(id);
         if(result == null){
-            return ResponseEntity.badRequest().body(-1);
+            return ResponseEntity.badRequest().body(-1L);
         }
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("{id}/comments/total")
-    public ResponseEntity<Integer> returnTotalComments(@PathVariable Long id){
-        Integer result = postService.returnTotalComments(id);
+    public ResponseEntity<Long> returnTotalComments(@PathVariable Long id){
+        Long result = postService.returnTotalComments(id);
         if(result == null){
-            return ResponseEntity.badRequest().body(-1);
+            return ResponseEntity.badRequest().body(-1L);
         }
         return ResponseEntity.ok(result);
     }
