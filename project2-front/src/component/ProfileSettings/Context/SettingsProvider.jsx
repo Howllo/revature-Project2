@@ -165,11 +165,18 @@ export const SettingsProvider = ({ children }) => {
         throw new Error("API response was not okay");
       }
 
-      setSettingsData(response.data);
+      setSettingsData((prev) => ({
+        ...prev,
+        profilePic: response.data.profilePic,
+        bannerPic: response.data.bannerPic,
+        displayName: response.data.displayName,
+        biography: response.data.biography,
+      }));
       Cookies.set("profile_pic", response.data.profilePic);
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
+
       resetTempImageURLS();
     } catch (error) {
       console.error("Error submitting settings:", error);
