@@ -35,7 +35,7 @@ const ProfilePage = () => {
           {userData && <UserDisplay user={userData} />}
           <div style={{mt: '-1px',
                     borderRadius: '0px',
-                    marginTop: '-32px',
+                    marginTop: '-38px',
                     borderStyle: 'solid',
                     borderWidth: 1,
                     borderColor: 'rgb(212, 219, 226)',

@@ -17,7 +17,7 @@ const ProfileBiography = (user) => {
                           paddingLeft: '10px'
                       }}
           >
-              {user.ProfileBiography}
+              {user.biography}
           </Typography>
       </Box>
   )
