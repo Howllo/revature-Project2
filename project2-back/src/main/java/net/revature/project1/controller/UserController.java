@@ -76,9 +76,10 @@ public class UserController {
     }
 
     @PutMapping("/settings/update")
-    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser){
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser, @RequestHeader("Authorization") String receivedToken){
 //        expecting userId, userProfileString, userBannerString, userBio, userDisplayName
-        AppUser receivedAppUser = userService.updateAppUser(appUser);
+        String token = receivedToken.substring(7);
+        AppUser receivedAppUser = userService.updateAppUser(appUser, token);
         if (receivedAppUser == null){
            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

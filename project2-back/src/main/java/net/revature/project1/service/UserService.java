@@ -204,10 +204,14 @@ public class UserService {
      * @params AppUser take in the user who wants to update their profile
      * @return AppUser
      */
-    public AppUser updateAppUser(AppUser appUser){
+    public AppUser updateAppUser(AppUser appUser, String token){
         Long userId = appUser.getId();
+        Boolean isValidUser = isValidToken(token, userId);
         Optional<AppUser> optUser = findUserById(userId);
         if (!optUser.isPresent()){
+            return null;
+        }
+        if (!isValidUser){
             return null;
         }
         AppUser user = optUser.get();
