@@ -41,7 +41,14 @@ const MediaContainer = ({media, isVideo}) => {
     }, [media]);
 
     return (
-        <Box>
+        <Box
+            sx={{
+                position: 'relative',
+                width: '100%',
+                borderRadius: '15px',
+                overflow: 'hidden',
+            }}
+        >
             {
                 mediaType === 'video' ? (
                     <video
@@ -58,12 +65,12 @@ const MediaContainer = ({media, isVideo}) => {
                 ) : null
             }
 
-            <Button
-                disableRipple={true}
-                onClick={handleOpen}
-            >
-                {
-                    mediaType === 'image' ? (
+            {
+                mediaType === 'image' ? (
+                    <Button
+                        disableRipple={true}
+                        onClick={handleOpen}
+                    >
                         <img
                             src={media}
                             alt="Post Image"
@@ -75,13 +82,17 @@ const MediaContainer = ({media, isVideo}) => {
                                 borderRadius: '15px',
                             }}
                         />
-                    ) : null
-                }
-            </Button>
+                    </Button>
+                ) : null
+            }
 
             {
                 mediaType === 'youtube' ? (
-                        <iframe width="560" height="315" src={youtube}
+                        <iframe style={{
+                            width: "100%",
+                            height: "300px",
+                        }}
+                                src={youtube}
                                 title="YouTube video player"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowFullScreen>
