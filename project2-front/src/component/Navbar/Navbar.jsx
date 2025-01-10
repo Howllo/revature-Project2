@@ -1,8 +1,6 @@
 ﻿import {Box, Button, Typography} from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -29,10 +27,6 @@ const Navbar = () => {
 
     const handleHomeClick = () => {
         setCurrentNav('home');
-    }
-
-    const handleNotificationsClick = () => {
-        setCurrentNav('notifications');
     }
 
     const handleProfileClick = () => {
@@ -71,14 +65,7 @@ const Navbar = () => {
                         : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Home</Typography>}
                 </Button>
             </Link>
-            <Link to={'/notification'}>
-                <Button onClick={handleNotificationsClick} variant="text">
-                    {currentNav === 'notifications' ? <NotificationsIcon/> : < NotificationsNoneIcon/>}
-                    {currentNav === 'notifications' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Notification</Typography>
-                        : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Notification</Typography>}
-                </Button>
-            </Link>
-            <Link to={`/profile/${username.toLowerCase()}`} state={{ userObj: user}}>
+            <Link to={`/${username.toLowerCase()}`} state={{ userObj: user}}>
                 <Button onClick={handleProfileClick} variant="text">
                     {currentNav === 'profile' ? <AccountCircleIcon/> : <AccountCircleOutlinedIcon/>}
                     {currentNav === 'profile' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Profile</Typography>
