@@ -14,9 +14,12 @@ import net.revature.project1.result.UserResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -162,7 +165,8 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
-     * @param followingId Take in a following id. AKA who the person that is being followed.
+     * @param username Take in a username. AKA who the person that is being unfollowed.
+     * @param token Takes the token of the user who wants to unfollow
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum followUser(Long followerId, String username, String token){ 
@@ -193,9 +197,42 @@ public class UserService {
     }
 
     /**
+     * used to let the user update their profile
+     * @params AppUser take in the user who wants to update their profile
+     * @return AppUser
+     */
+    public AppUser updateAppUser(AppUser appUser){
+        Long userId = appUser.getId();
+        Optional<AppUser> optUser = findUserById(userId);
+        if (!optUser.isPresent()){
+            return null;
+        }
+        AppUser user = optUser.get();
+        user.setDisplayName(appUser.getDisplayName());
+        user.setBiography(appUser.getBiography());
+        try {
+            String bannerUrl = fileService.createFile(appUser.getBannerPic());
+            user.setBannerPic(bannerUrl);
+            appUser.setBannerPic(bannerUrl);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try {
+            String profileUrl = fileService.createFile(appUser.getProfilePic());
+            user.setProfilePic(profileUrl);
+            appUser.setProfilePic(profileUrl);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        saveAppUser(user);
+        return appUser;
+    }
+
+    /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-     * @param followingId Take in a following id. AKA who the person that is being unfollowed.
+     * @param username Take in a username. AKA who the person that is being unfollowed.
+     * @param token Takes the token of the user who wants to unfollow
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum unfollowUser(Long followerId, String username, String token){
