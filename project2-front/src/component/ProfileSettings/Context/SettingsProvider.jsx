@@ -2,26 +2,30 @@ import Cookies from "js-cookie";
 import { createContext, useState } from "react";
 import { projectApi } from "../../../util/axios.js";
 import PropTypes from "prop-types";
+// import { useNavigate } from "react-router-dom";
+import { useUserProfile } from "../../UserProfile/Context/UseUserProfile.jsx";
 
 const SettingsContext = createContext(null);
 
 export const SettingsProvider = ({ children }) => {
-  const [settingsData, setSettingsData] = useState({
-    displayName: Cookies.get("display_name") == null || "",
-    profilePic:
-      Cookies.get("profile_pic") == null || "https://placehold.co/600x400/png",
-    bannerPic:
-      Cookies.get("banner_pic") == null || "https://picsum.photos/1500/500",
-    biography: Cookies.get("bio_text") || "",
-    profilePreviewURL: "",
-    bannerPreviewURL: "",
-  });
+  // const [settingsData, setSettingsData] = useState({
+  //   displayName: Cookies.get("display_name") == null || "",
+  //   profilePic: Cookies.get("profile_pic"),
+  //   bannerPic: Cookies.get("banner_pic"),
+  //   biography: Cookies.get("bio_text") || "",
+  //   profilePreviewURL: "",
+  //   bannerPreviewURL: "",
+  // });
+  const { settingsData, setSettingsData } = useUserProfile();
+
   const [unapprovedProfilePic, setUnapprovedProfilePic] = useState("");
   const [unapprovedBannerPic, setUnapprovedBannerPic] = useState("");
 
+  // const navigate = useNavigate();
+
   // Strings to be converted to base64 for API
-  let profileMediaString;
-  let bannerMediaString;
+  let profileMediaString = null;
+  let bannerMediaString = null;
 
   const resetTempImageURLS = () => {
     if (settingsData.profilePreviewURL) {
@@ -99,12 +103,10 @@ export const SettingsProvider = ({ children }) => {
 
   const resetSettingsData = () => {
     setSettingsData({
-      displayName: Cookies.get("display_name") == null || "",
-      profilePic:
-        Cookies.get("profile_pic") == null || "https://placehold.co/600x400",
-      bannerPic:
-        Cookies.get("banner_pic") == null || "https://placehold.co/600x400/png",
-      biography: Cookies.get("bio_text") || "",
+      displayName: Cookies.get("display_name"),
+      profilePic: Cookies.get("profile_pic"),
+      bannerPic: Cookies.get("banner_pic"),
+      biography: Cookies.get("bio_text"),
     });
   };
 
@@ -163,8 +165,6 @@ export const SettingsProvider = ({ children }) => {
         resetSettingsData();
         throw new Error("API response was not okay");
       }
-      console.log("response from api was okay");
-      console.log(response.data);
 
       setSettingsData((prev) => ({
         ...prev,
@@ -179,6 +179,8 @@ export const SettingsProvider = ({ children }) => {
       Cookies.set("bio_text", response.data.biography);
 
       resetTempImageURLS();
+
+      // navigate(`/profile/${Cookies.get("username")}`);
     } catch (error) {
       console.error("Error submitting settings:", error);
       throw error;

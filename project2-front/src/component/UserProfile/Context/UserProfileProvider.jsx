@@ -2,6 +2,7 @@
 import PropTypes from "prop-types";
 import { projectApi } from "../../../util/axios.js";
 import Cookies from "js-cookie";
+import { SettingsProvider } from "../../ProfileSettings/Context/SettingsProvider.jsx";
 
 const UserProfileContext = createContext(null);
 
@@ -9,6 +10,14 @@ export const UserProfileProvider = ({ children }) => {
   const [listPostData, setListPostData] = useState([]);
   const [following, setFollowing] = useState();
   const [isOpenDialogBox, setIsOpenDialogBox] = useState(false);
+  const [settingsData, setSettingsData] = useState({
+    displayName: Cookies.get("display_name"),
+    profilePic: Cookies.get("profile_pic"),
+    bannerPic: Cookies.get("banner_pic"),
+    biography: Cookies.get("bio_text") || "",
+    profilePreviewURL: "",
+    bannerPreviewURL: "",
+  });
 
   const handleOpenDialogBox = () => {
     setIsOpenDialogBox(true);
@@ -18,16 +27,16 @@ export const UserProfileProvider = ({ children }) => {
   };
 
   const setFollow = async (follower_id, username) => {
-    const token = Cookies.get('jwt');
+    const token = Cookies.get("jwt");
     try {
       const response = await projectApi.post(
-        `/user/${follower_id}/follow/${username}`, 
+        `/user/${follower_id}/follow/${username}`,
         {
           headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-          }
-      }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.status === 200;
     } catch (e) {
@@ -36,16 +45,16 @@ export const UserProfileProvider = ({ children }) => {
     }
   };
   const removeFollow = async (follower_id, username) => {
-    const token = Cookies.get('jwt');
+    const token = Cookies.get("jwt");
     try {
       const response = await projectApi.delete(
         `/user/${follower_id}/follow/${username}`,
         {
           headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-          }
-      }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       return response.status === 200;
     } catch (e) {
@@ -95,11 +104,13 @@ export const UserProfileProvider = ({ children }) => {
     handleCloseDialogBox,
     isOpenDialogBox,
     getId,
+    settingsData,
+    setSettingsData,
   };
 
   return (
     <UserProfileContext.Provider value={value}>
-      {children}
+      <SettingsProvider>{children}</SettingsProvider>
     </UserProfileContext.Provider>
   );
 };
