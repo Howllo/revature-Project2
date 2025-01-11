@@ -179,6 +179,10 @@ export const PostProvider = ({ children }) => {
 
     const likePost = async (id) => {
         const token = Cookies.get('jwt');
+        if(!token){
+            return false;
+        }
+
         try{
             const response = await projectApi.post(`/post/${id}/like/${Cookies.get('user_id')}`, {
                 headers: {

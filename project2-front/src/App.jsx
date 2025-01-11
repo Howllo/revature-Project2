@@ -15,6 +15,7 @@ import ProfilePage from "./page/ProfilePage.jsx";
 import SettingPage from "./page/SettingPage.jsx";
 import {PostProvider} from "./component/Post/Context/PostProvider.jsx";
 import { SearchProvider } from './component/Search/Context/GetSelectedData.jsx';
+import PostPage from "./page/PostPage.jsx";
 
 
 
@@ -41,14 +42,19 @@ function App() {
                                                 <NotificationsPage/>
                                             </HomePage>
                                         }/>
+                                        <Route path="/setting" element={
+                                            <HomePage>
+                                                <SettingPage/>
+                                            </HomePage>
+                                        }/>
                                         <Route path="/profile/:username" element={
                                             <HomePage>
                                                 <ProfilePage/>
                                             </HomePage>
                                         }/>
-                                        <Route path="/setting" element={
+                                        <Route path="/profile/:username/post/:postId" element={
                                             <HomePage>
-                                                <SettingPage/>
+                                                <PostPage/>
                                             </HomePage>
                                         }/>
                                     </Routes>
