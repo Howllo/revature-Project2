@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -36,8 +37,39 @@ public class PostService {
     // Good luck! I don't have Redis.
     public List<PostResponseDto> getAllPosts() {
         List<Post> getAll = postRepo.findAll();
+        List<PostResponseDto> posts = new ArrayList<>();
         List<Long> postIds = getAll.stream().map(Post::getId).toList();
-        return postRepo.fetchPostsWithComments(postIds);
+        Map<Long, Long> commentCount = postRepo.fetchCommentCounts(postIds).stream()
+                .collect(Collectors.toMap(row -> (Long) row[0], row -> (Long) row[1]));
+
+        for (Post post : getAll) {
+            Long parentPost;
+
+            if(post.getPostParent() == null){
+                parentPost = -1L;
+            } else {
+                parentPost = post.getPostParent().getId();
+            }
+
+            if(parentPost != -1L)
+                continue;
+
+            posts.add(new PostResponseDto(
+                    post.getId(),
+                    parentPost,
+                    post.getUser().getId(),
+                    post.getUser().getUsername(),
+                    post.getUser().getDisplayName(),
+                    post.getUser().getProfilePic(),
+                    post.getComment(),
+                    post.getMedia(),
+                    post.isPostEdited(),
+                    post.getPostAt(),
+                    (long) post.getLikes().size(),
+                    commentCount.getOrDefault(post.getId(), 0L)
+            ));
+        }
+        return posts;
     }
 
     /**
@@ -242,8 +274,17 @@ public class PostService {
      */
     public List<PostResponseDto> getComments(Long postId) {
         List<Post> childPosts = postRepo.findByPostParentIdOrderByPostAtDesc(postId);
+
         List<Long> postIds = childPosts.stream().map(Post::getId).toList();
-        return postRepo.fetchPostsWithComments(postIds);
+
+        Map<Long, Long> commentCounts = postRepo.fetchCommentCounts(postIds).stream()
+                .collect(Collectors.toMap(row -> (Long) row[0], row -> (Long) row[1]));
+
+        return childPosts.stream()
+                .map(post -> {
+                    return getPostResponseDto(post, commentCounts);
+                })
+                .collect(Collectors.toList());
     }
 
     public boolean doesUserLikeThisPost(Long postId, Long userId, String token) {
@@ -275,6 +316,28 @@ public class PostService {
      * @param post Post object to be converted.
      * @return The post response dto.
      */
+    PostResponseDto getPostResponseDto(Post post, Map<Long, Long> commentCounts) {
+        Long postParent = -1L;
+        if(post.getPostParent() != null) {
+            postParent = post.getPostParent().getId();
+        }
+
+        return new PostResponseDto(
+                post.getId(),
+                postParent,
+                post.getUser().getId(),
+                post.getUser().getUsername(),
+                post.getUser().getDisplayName(),
+                post.getUser().getProfilePic(),
+                post.getComment(),
+                post.getMedia(),
+                post.isPostEdited(),
+                post.getPostAt(),
+                (long) post.getLikes().size(),
+                commentCounts.getOrDefault(post.getId(), 0L)
+        );
+    }
+
     PostResponseDto getPostResponseDto(Post post) {
         Long postParent = -1L;
         if(post.getPostParent() != null) {
