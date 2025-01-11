@@ -49,10 +49,9 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                 marginTop: '5px',
                 display: 'flex',
                 flexDirection: 'row',
-                height: '100%',
+                height: 'auto',
                 width: '100%',
                 justifyContent: 'space-evenly',
-                alignItems: 'center',
             }}
         >
             <Box
@@ -142,6 +141,7 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                     </Typography>
                 </Button>
 
+                <Box></Box>
                 {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
             </Box>
         </Box>
