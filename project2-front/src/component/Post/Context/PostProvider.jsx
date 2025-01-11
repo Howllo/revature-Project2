@@ -95,8 +95,6 @@ export const PostProvider = ({ children }) => {
                 media: mediaString
             };
 
-            console.log('Post payload:', JSON.stringify(postPayload));
-
             const token = Cookies.get('jwt');
             if (!token) {
                 throw new Error('No authentication token found');
