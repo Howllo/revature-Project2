@@ -180,7 +180,7 @@ export const PostProvider = ({ children }) => {
     const likePost = async (id) => {
         const token = Cookies.get('jwt');
         try{
-            const response  = await projectApi.post(`/post/${id}/like/${Cookies.get('user_id')}`, {
+            const response = await projectApi.post(`/post/${id}/like/${Cookies.get('user_id')}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -193,25 +193,16 @@ export const PostProvider = ({ children }) => {
                 return false;
             }
         } catch(e) {
-            console.error(`Error liking a post: ${e.status} - ${e.message}`);
-        }
-    }
-
-    const getLikes = async (postId) => {
-        try {
-            const response  = await projectApi.get(`/post/${postId}/likes`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            return response.data;
-        } catch (e) {
-            console.error('Error getting likes for post: ', e.status);
+            console.error(`${e.status} - ${e.message}`);
         }
     }
 
     const isUserLike = async (postId) => {
         const token = Cookies.get('jwt');
+        if(!token) {
+            return false;
+        }
+
         try{
             const response  = await projectApi.get(`/post/check/${postId}/like/${Cookies.get('user_id')}`, {
                 headers: {
@@ -221,7 +212,7 @@ export const PostProvider = ({ children }) => {
             })
             return response.data;
         } catch (e) {
-            console.error('Error getting likes for post: ', e.message);
+            console.error('Error getting likes for post: ', e.status);
         }
     }
 
@@ -235,21 +226,6 @@ export const PostProvider = ({ children }) => {
             return response.data;
         } catch (e) {
             console.error('Error getting likes for post: ', e.status);
-        }
-    }
-
-    const getCommentTotal = async (postId) => {
-        const token = Cookies.get('jwt');
-        try {
-            const response  = await projectApi.get(`/post/${postId}/comments/total`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            })
-            return response.data;
-        } catch (e) {
-            console.error('Error getting comment total for post: ', e.status);
         }
     }
 
@@ -289,10 +265,8 @@ export const PostProvider = ({ children }) => {
         deletePost,
         editPost,
         likePost,
-        getLikes,
         isUserLike,
         getChildren,
-        getCommentTotal,
         getUserPost
     };
 

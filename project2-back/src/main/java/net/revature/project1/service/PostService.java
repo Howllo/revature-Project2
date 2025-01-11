@@ -15,11 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -40,35 +36,8 @@ public class PostService {
     // Good luck! I don't have Redis.
     public List<PostResponseDto> getAllPosts() {
         List<Post> getAll = postRepo.findAll();
-        List<PostResponseDto> posts = new ArrayList<>();
-        for (Post post : getAll) {
-            Long parentPost;
-
-            if(post.getPostParent() == null){
-                parentPost = -1L;
-            } else {
-                parentPost = post.getPostParent().getId();
-            }
-
-            if(parentPost != -1L)
-                continue;
-
-            posts.add(new PostResponseDto(
-                    post.getId(),
-                    parentPost,
-                    post.getUser().getId(),
-                    post.getUser().getUsername(),
-                    post.getUser().getDisplayName(),
-                    post.getUser().getProfilePic(),
-                    post.getComment(),
-                    post.getMedia(),
-                    post.isPostEdited(),
-                    post.getPostAt(),
-                    (long) post.getLikes().size(),
-                    (long) post.getComment().length()
-            ));
-        }
-        return posts;
+        List<Long> postIds = getAll.stream().map(Post::getId).toList();
+        return postRepo.fetchPostsWithComments(postIds);
     }
 
     /**
@@ -273,10 +242,8 @@ public class PostService {
      */
     public List<PostResponseDto> getComments(Long postId) {
         List<Post> childPosts = postRepo.findByPostParentIdOrderByPostAtDesc(postId);
-
-        return childPosts.stream()
-                .map(this::getPostResponseDto)
-                .collect(Collectors.toList());
+        List<Long> postIds = childPosts.stream().map(Post::getId).toList();
+        return postRepo.fetchPostsWithComments(postIds);
     }
 
     public boolean doesUserLikeThisPost(Long postId, Long userId, String token) {
@@ -326,7 +293,7 @@ public class PostService {
                 post.isPostEdited(),
                 post.getPostAt(),
                 (long) post.getLikes().size(),
-                (long) post.getComment().length()
+                0L
         );
     }
 

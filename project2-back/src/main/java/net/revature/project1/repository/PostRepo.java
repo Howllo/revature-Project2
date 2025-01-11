@@ -1,5 +1,6 @@
 package net.revature.project1.repository;
 
+import net.revature.project1.dto.PostResponseDto;
 import net.revature.project1.dto.PostSmallResponseDto;
 import net.revature.project1.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,8 +33,27 @@ public interface PostRepo extends JpaRepository<Post, Long> {
             @Param("lastPostId") Long lastPostId,
             @Param("chunkSize") int chunkSize);
 
-    @Query("SELECT COUNT(p) FROM Post p WHERE p.postParent.id = :postId")
-    Long getPostCommentNumber(@Param("postId") Long postId);
+
+    @Query("SELECT new net.revature.project1.dto.PostResponseDto( " +
+            "p.id, " +
+            "parent.id, " +
+            "u.id, " +
+            "u.username, " +
+            "u.displayName, " +
+            "u.profilePic, " +
+            "p.comment, " +
+            "p.media, " +
+            "p.postEdited, " +
+            "p.postAt, " +
+            "p.likes.size, " +
+            "COUNT(c.id)) " +
+            "FROM Post p " +
+            "LEFT JOIN p.parentPost parent " +
+            "LEFT JOIN p.user u " +
+            "LEFT JOIN Post c ON c.parentPost.id = p.id " +
+            "WHERE p.id IN :postIds " +
+            "GROUP BY p.id, parent.id, u.id")
+    List<PostResponseDto> fetchPostsWithComments(@Param("postIds") List<Long> postIds);
 
     List<Post> findByPostParentIdOrderByPostAtDesc(Long parentId);
 }
