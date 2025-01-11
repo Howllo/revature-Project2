@@ -89,7 +89,7 @@ export const PostProvider = ({ children }) => {
             }
 
             const postPayload = {
-                postParent: parentPost || null,
+                postParent: parentPost ? parentPost.id : null,
                 userId: Number(Cookies.get('user_id')),
                 comment: postData.comment,
                 media: mediaString
