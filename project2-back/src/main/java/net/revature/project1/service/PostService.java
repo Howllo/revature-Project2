@@ -117,9 +117,9 @@ public class PostService {
         post.setMedia(postDto.media());
 
         if(postDto.postParent() != null){
-            Optional<Post> postOptional = postRepo.findById(post.getId());
-            if(postOptional.isPresent()){
-                post = postOptional.get();
+            Optional<Post> postParentOptional = postRepo.findById(postDto.postParent());
+            if(postParentOptional.isPresent()){
+                post.setPostParent(postParentOptional.get());
             } else {
                 post.setPostParent(null);
             }
@@ -130,9 +130,6 @@ public class PostService {
             return new PostResult(PostEnum.INVALID_USER, "User does not exist.", null);
         }
         post.setUser(optionalAppUser.get());
-
-        logger.info("The following post is posted {}", post);
-        logger.info("The following post is posted {}", postDto);
 
         if(post.getComment() == null && post.getMedia() == null) {
             return new PostResult(PostEnum.INVALID_POST, "Post must have a comment, " +
