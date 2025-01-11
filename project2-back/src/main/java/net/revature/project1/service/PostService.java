@@ -113,9 +113,17 @@ public class PostService {
     */
     public PostResult createPost(PostCreateDto postDto, String token) {
         Post post = new Post();
-        post.setPostParent(postRepo.findById(post.getId()).get());
         post.setComment(postDto.comment());
         post.setMedia(postDto.media());
+
+        if(postDto.postParent() != null){
+            Optional<Post> postOptional = postRepo.findById(post.getId());
+            if(postOptional.isPresent()){
+                post = postOptional.get();
+            } else {
+                post.setPostParent(null);
+            }
+        }
 
         Optional<AppUser> optionalAppUser = userService.findUserById(postDto.userId());
         if(optionalAppUser.isEmpty()){
@@ -130,6 +138,10 @@ public class PostService {
 
         if(post.getComment() != null && post.getComment().length() > 255) {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
+        }
+
+        if(post.getComment().isEmpty()){
+            return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }
 
         boolean isValid = isValidToken(token, post);

@@ -50,7 +50,6 @@ public class PostController {
     public ResponseEntity<?> createPost(@RequestBody PostCreateDto post,
                                         @RequestHeader("Authorization") String token){
         logger.info("The post object: {}", post);
-        System.out.println("The post object: " + post);
         if(post == null){
             return ResponseEntity.badRequest().body("Invalid post");
         }
