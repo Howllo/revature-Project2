@@ -11,7 +11,7 @@ export const UserProfileProvider = ({ children }) => {
   const [following, setFollowing] = useState();
   const [isOpenDialogBox, setIsOpenDialogBox] = useState(false);
   const [settingsData, setSettingsData] = useState({
-    displayName: Cookies.get("display_name") == null || "",
+    displayName: Cookies.get("display_name"),
     profilePic: Cookies.get("profile_pic"),
     bannerPic: Cookies.get("banner_pic"),
     biography: Cookies.get("bio_text") || "",

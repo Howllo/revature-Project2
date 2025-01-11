@@ -7,6 +7,7 @@ const AuthContainer = () => {
   console.log("AuthContainer");
   console.log(Cookies.get("username"));
   console.log(Cookies.get("profile_pic"));
+
   return (
     <Box
       sx={{

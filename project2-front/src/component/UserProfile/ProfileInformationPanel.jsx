@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
   const { getId, settingsData } = useUserProfile();
-
+  console.log(settingsData);
   useEffect(() => {
     const x = getId(user.username);
     x.then((value) => {

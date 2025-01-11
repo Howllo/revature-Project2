@@ -24,8 +24,8 @@ export const SettingsProvider = ({ children }) => {
   // const navigate = useNavigate();
 
   // Strings to be converted to base64 for API
-  let profileMediaString;
-  let bannerMediaString;
+  let profileMediaString = null;
+  let bannerMediaString = null;
 
   const resetTempImageURLS = () => {
     if (settingsData.profilePreviewURL) {
