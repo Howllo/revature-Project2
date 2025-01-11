@@ -50,6 +50,7 @@ public class PostController {
     public ResponseEntity<?> createPost(@RequestBody PostCreateDto post,
                                         @RequestHeader("Authorization") String token){
         logger.info("The post object: {}", post);
+        System.out.println("The post object: " + post);
         if(post == null){
             return ResponseEntity.badRequest().body("Invalid post");
         }
@@ -74,15 +75,11 @@ public class PostController {
         return ResponseHandler.returnType(result, null);
     }
 
-    @PostMapping("/{id}/like/{userId}")
-    public ResponseEntity<?> likePost(@PathVariable Long id,
+    @PostMapping("/{postId}/like/{userId}")
+    public ResponseEntity<?> likePost(@PathVariable Long postId,
                                            @PathVariable Long userId,
                                            @RequestHeader("Authorization") String token){
-        if(id.equals(userId)){
-            return ResponseEntity.badRequest().body("You are not allowed to like your own post.");
-        }
-
-        PostEnum result = postService.likePost(id, userId, token.substring(7));
+        PostEnum result = postService.likePost(postId, userId, token.substring(7));
         return ResponseHandler.returnType(result, null);
     }
 

@@ -42,7 +42,7 @@ public class PostService {
         List<Post> getAll = postRepo.findAll();
         List<PostResponseDto> posts = new ArrayList<>();
         for (Post post : getAll) {
-            Long parentPost = 0L;
+            Long parentPost;
 
             if(post.getPostParent() == null){
                 parentPost = -1L;
@@ -156,7 +156,6 @@ public class PostService {
      * @return The updated version of the post.
      */
     public PostResult updatePost(Long id, PostUpdateDto post, String token) {
-
         Optional<Post> postOptional = postRepo.findById(id);
         if(postOptional.isEmpty()) {
             return new PostResult(PostEnum.INVALID_POST, "Post does not exist.", null);
@@ -169,6 +168,11 @@ public class PostService {
             }
         } catch (NullPointerException e) {
             return new PostResult(PostEnum.INVALID_POST, "Post does not exist.", null);
+        }
+
+        boolean isValid = isValidToken(token, postToUpdate);
+        if(!isValid){
+            return new PostResult(PostEnum.INVALID_POST, "User and post are not the same", null);
         }
 
         postToUpdate.setComment(post.comment());
@@ -208,16 +212,20 @@ public class PostService {
 
     /**
      * Allows user to like a post.
-     * @param id The id of the post to be liked.
+     * @param postId The id of the post to be liked.
      * @param userId The id of the user liking the post.
      * @return The status of the like.
      */
-    public PostEnum likePost(Long id, Long userId, String token) {
-        Optional<Post> post = postRepo.findById(id);
+    public PostEnum likePost(Long postId, Long userId, String token) {
+        Optional<Post> post = postRepo.findById(postId);
         if(post.isEmpty()) {
             return PostEnum.INVALID_POST;
         }
         Post postToUpdate = post.get();
+
+        if(!Objects.equals(postToUpdate.getUser().getId(), userId)){
+            return PostEnum.UNAUTHORIZED;
+        }
 
         Optional<AppUser> optionalAppUser = userService.findUserById(userId);
         if(optionalAppUser.isEmpty()) {
