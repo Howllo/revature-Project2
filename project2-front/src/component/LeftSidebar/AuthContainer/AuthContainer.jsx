@@ -4,10 +4,6 @@ import Cookies from "js-cookie";
 import Navbar from "../../Navbar/Navbar.jsx";
 
 const AuthContainer = () => {
-  console.log("AuthContainer");
-  console.log(Cookies.get("username"));
-  console.log(Cookies.get("profile_pic"));
-
   return (
     <Box
       sx={{

@@ -149,9 +149,7 @@ export const SettingsProvider = ({ children }) => {
       if (!token) {
         throw new Error("No authentication token found");
       }
-      console.log(
-        "Console log from Setting Setting Provider Api call being made"
-      );
+
       const response = await projectApi.put(
         "user/settings/update",
         settingsPayload,
@@ -167,8 +165,6 @@ export const SettingsProvider = ({ children }) => {
         resetSettingsData();
         throw new Error("API response was not okay");
       }
-      console.log("response from api was okay");
-      console.log(response.data);
 
       setSettingsData((prev) => ({
         ...prev,
@@ -181,8 +177,7 @@ export const SettingsProvider = ({ children }) => {
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
-      console.log("after cookies were set");
-      console.log(response.data);
+
       resetTempImageURLS();
 
       // navigate(`/profile/${Cookies.get("username")}`);
