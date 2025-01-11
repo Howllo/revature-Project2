@@ -147,7 +147,9 @@ export const SettingsProvider = ({ children }) => {
       if (!token) {
         throw new Error("No authentication token found");
       }
-
+      console.log(
+        "Console log from Setting Setting Provider Api call being made"
+      );
       const response = await projectApi.put(
         "user/settings/update",
         settingsPayload,
