@@ -12,6 +12,7 @@ import SettingsContainer from "../component/ProfileSettings/SettingsContainer.js
 const ProfilePage = () => {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
+  const [settingsData, setSettingsData] = useState();
 
   useEffect(() => {
     if (location.state?.userObj) {
@@ -33,29 +34,39 @@ const ProfilePage = () => {
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
-          <div style={{mt: '-1px',
-                    borderRadius: '0px',
-                    marginTop: '-38px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',
-                    paddingTop: '20px'}} >
-          {userData && <ProfileButton user={userData} />}
-          {userData && <ProfileInformationPanel user={userData} />}
-          {userData && <SettingsContainer user={userData} />}
-          {userData && <ProfileBiography user={userData} />}
+          <div
+            style={{
+              mt: "-1px",
+              borderRadius: "0px",
+              marginTop: "-38px",
+              borderStyle: "solid",
+              borderWidth: 1,
+              borderColor: "rgb(212, 219, 226)",
+              width: "99.7%",
+              paddingTop: "20px",
+            }}
+          >
+            {userData && <ProfileButton user={userData} />}
+            {userData && <ProfileInformationPanel user={userData} />}
+            {userData && <SettingsContainer user={userData} />}
+            {userData && <ProfileBiography user={userData} />}
           </div>
         </Box>
 
         {/* User Post */}
-        <Box sx={{mt: '-1px',
-                    borderRadius: '0px',
-                    marginTop: '-1px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',}}>{userData && <ProfilePost user={userData} />}</Box>
+        <Box
+          sx={{
+            mt: "-1px",
+            borderRadius: "0px",
+            marginTop: "-1px",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderColor: "rgb(212, 219, 226)",
+            width: "99.7%",
+          }}
+        >
+          {userData && <ProfilePost user={userData} />}
+        </Box>
       </Box>
     </UserProfileProvider>
   );

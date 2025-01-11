@@ -1,12 +1,14 @@
 ﻿import { Box } from "@mui/material";
 import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
+import { useUserProfile } from "./Context/UseUserProfile.jsx";
 
 const UserDisplay = ({ user }) => {
+  const { settingsData } = useUserProfile();
   return (
     <Box>
       <Box>
         <img
-          src={user.bannerPic || "https://picsum.photos/1500/500"}
+          src={settingsData.bannerPic || "https://picsum.photos/1500/500"}
           alt="Post Image"
           loading={"lazy"}
           style={{
@@ -17,19 +19,18 @@ const UserDisplay = ({ user }) => {
             maxWidth: "546px",
             maxHeight: "180px",
             minWidth: "546px",
-            minHeight: "180px"
+            minHeight: "180px",
           }}
         />
         <Box
           sx={{
             mt: "-46px",
-            ml: "-30px"
-            
+            ml: "-30px",
           }}
         >
           <UserAvatar
             username={user.username}
-            image={user.profilePic}
+            image={settingsData.profilePic}
             width={64}
             height={64}
           />
