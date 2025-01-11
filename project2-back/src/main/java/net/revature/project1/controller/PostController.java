@@ -1,12 +1,12 @@
 package net.revature.project1.controller;
 
-import jakarta.servlet.http.HttpSession;
 import net.revature.project1.dto.*;
-import net.revature.project1.entity.Post;
 import net.revature.project1.enumerator.PostEnum;
 import net.revature.project1.result.PostResult;
 import net.revature.project1.service.PostService;
 import net.revature.project1.utils.ResponseHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/post")
 public class PostController {
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
     final private PostService postService;
     final Integer CHUNK_SIZE = 100;
 
@@ -48,6 +49,7 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody PostCreateDto post,
                                         @RequestHeader("Authorization") String token){
+        logger.info("The post object: {}", post);
         if(post == null){
             return ResponseEntity.badRequest().body("Invalid post");
         }
