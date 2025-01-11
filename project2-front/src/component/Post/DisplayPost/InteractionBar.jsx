@@ -140,8 +140,6 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                         {currentLikes}
                     </Typography>
                 </Button>
-
-                <Box></Box>
                 {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
             </Box>
         </Box>
