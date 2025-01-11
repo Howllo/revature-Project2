@@ -10,10 +10,15 @@ import net.revature.project1.repository.UserRepo;
 import net.revature.project1.result.UserResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,6 +29,7 @@ public class UserService {
     private final UserRepo userRepo;
     private final FileService fileService;
     final private JwtTokenUtil jwtTokenUtil;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepo userRepo, FileService fileService, JwtTokenUtil jwtTokenUtil){
@@ -173,6 +179,8 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
+     * @param username Take in a username. AKA who the person that is being unfollowed.
+     * @param token Takes the token of the user who wants to unfollow
      * @param username Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
@@ -204,8 +212,47 @@ public class UserService {
     }
 
     /**
+     * used to let the user update their profile
+     * @params AppUser take in the user who wants to update their profile
+     * @return AppUser
+     */
+    public AppUser updateAppUser(AppUser appUser, String token){
+        Long userId = appUser.getId();
+
+        Optional<AppUser> optUser = findUserById(userId);
+        if (!optUser.isPresent()){
+            return null;
+        }
+        Boolean isValidUser = isValidToken(token, userId);
+        if (!isValidUser){
+            return null;
+        }
+        AppUser user = optUser.get();
+        user.setDisplayName(appUser.getDisplayName());
+        user.setBiography(appUser.getBiography());
+        try {
+            String bannerUrl = fileService.createFile(appUser.getBannerPic());
+            user.setBannerPic(bannerUrl);
+            appUser.setBannerPic(bannerUrl);
+        } catch (IOException e){
+            logger.error("Error while creating Banner file: ", e);
+        }
+        try {
+            String profileUrl = fileService.createFile(appUser.getProfilePic());
+            user.setProfilePic(profileUrl);
+            appUser.setProfilePic(profileUrl);
+        } catch (IOException e){
+            logger.error("Error while creating profile file: ", e);
+        }
+        saveAppUser(user);
+        return appUser;
+    }
+
+    /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
+     * @param username Take in a username. AKA who the person that is being unfollowed.
+     * @param token Takes the token of the user who wants to unfollow
      * @param username Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */

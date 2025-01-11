@@ -6,7 +6,8 @@ import SettingsContext from "../Context/SettingsProvider";
 // import { display, margin } from "@mui/system";
 
 const ProfilePictureInput = ({ width = 42, height = 42 }) => {
-  let { setProfilePic, settingsData } = useContext(SettingsContext);
+  let { settingsData, setUnapprovedProfilePic, handleProfilePicChange } =
+    useContext(SettingsContext);
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.click();
@@ -16,7 +17,11 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
     <Box style={{ display: "flex", marginBottom: "10px" }}>
       <Avatar
         alt="Profile Picture"
-        src={settingsData.profilePic}
+        src={
+          settingsData.profilePreviewURL
+            ? settingsData.profilePreviewURL
+            : settingsData.profilePic
+        }
         sx={{
           borderColor: "rgb(212,217,225)",
           borderStyle: "solid",
@@ -33,7 +38,10 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
         type="file"
         // inputProps={{ accept: "images/*" }}
         style={{ display: "none" }}
-        onChange={setProfilePic}
+        onChange={(e) => {
+          setUnapprovedProfilePic(e);
+          handleProfilePicChange(e);
+        }}
         ref={inputRef}
         accept="image/*"
       />
