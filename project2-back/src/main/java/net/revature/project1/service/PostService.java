@@ -131,6 +131,9 @@ public class PostService {
         }
         post.setUser(optionalAppUser.get());
 
+        logger.info("The following post is posted {}", post);
+        logger.info("The following post is posted {}", postDto);
+
         if(post.getComment() == null && post.getMedia() == null) {
             return new PostResult(PostEnum.INVALID_POST, "Post must have a comment, " +
                  "image, or video.", null);
@@ -140,7 +143,7 @@ public class PostService {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
         }
 
-        if(post.getComment().isEmpty()){
+        if(post.getComment() != null && post.getComment().isEmpty() && post.getMedia() == null) {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }
 
@@ -214,7 +217,6 @@ public class PostService {
         Post postToDelete = post.get();
 
         boolean isValid =  isValidToken(token, postToDelete);
-
         if(!isValid) {
             return PostEnum.UNAUTHORIZED;
         }
@@ -236,7 +238,7 @@ public class PostService {
         }
         Post postToUpdate = post.get();
 
-        if(!Objects.equals(postToUpdate.getUser().getId(), userId)){
+        if(Objects.equals(postToUpdate.getUser().getId(), userId)){
             return PostEnum.UNAUTHORIZED;
         }
 
@@ -252,7 +254,7 @@ public class PostService {
         }
         AppUser appUser2 = optionalAppUser2.get();
 
-        if(!appUser2.getUsername().equals(appUser.getUsername())){
+        if(!Objects.equals(appUser2.getId(), appUser.getId())){
             return PostEnum.UNAUTHORIZED;
         }
 
@@ -278,20 +280,6 @@ public class PostService {
         return childPosts.stream()
                 .map(this::getPostResponseDto)
                 .collect(Collectors.toList());
-    }
-
-    public Long returnTotalLikes(Long postId) {
-        Optional<Post> optionalPost = postRepo.findById(postId);
-        if(optionalPost.isEmpty()) {
-            return null;
-        }
-        Post post = optionalPost.get();
-
-        return (long) post.getLikes().size();
-    }
-
-    public Long returnTotalComments(Long postId) {
-        return postRepo.getPostCommentNumber(postId);
     }
 
     public boolean doesUserLikeThisPost(Long postId, Long userId, String token) {
@@ -360,10 +348,7 @@ public class PostService {
 
         AppUser appUser = optionalAppUser.get();
 
-        if(!Objects.equals(post.getUser().getId(), appUser.getId())){
-            return false;
-        }
-        return true;
+        return Objects.equals(post.getUser().getId(), appUser.getId());
     }
 
     /**
