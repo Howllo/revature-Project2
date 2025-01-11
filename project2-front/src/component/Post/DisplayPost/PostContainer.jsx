@@ -5,12 +5,10 @@ import PostInformationText from "./PostInformationText.jsx";
 import InteractionBar from "./InteractionBar.jsx";
 import PropTypes from "prop-types";
 import MediaContainer from "./MediaContainer.jsx";
-import Cookies from "js-cookie";
 import { useState } from "react";
 
 const PostContainer = ({ key, post, commentChildren }) => {
   const [savedPost, setSavedPost] = useState(post);
-  console.log(post[0]);
 
   return (
     <Card
@@ -36,10 +34,7 @@ const PostContainer = ({ key, post, commentChildren }) => {
         }}
         key={key}
       >
-        <UserAvatar
-          username={post.username}
-          image={Cookies.get("profile_pic")}
-        />
+        <UserAvatar username={post.username} image={post.profilePic} />
       </Box>
 
       <Box
@@ -137,8 +132,9 @@ PostContainer.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     username: PropTypes.string.isRequired,
     profile_pic: PropTypes.string,
+    profilePic: PropTypes.string,
     displayName: PropTypes.string,
-    post_at: PropTypes.string,
+    postAt: PropTypes.string,
     comment: PropTypes.string.isRequired,
     commentsNum: PropTypes.number,
     likesNum: PropTypes.number,

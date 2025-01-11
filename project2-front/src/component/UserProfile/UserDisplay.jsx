@@ -1,13 +1,14 @@
 ﻿import { Box } from "@mui/material";
 import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
-import Cookies from "js-cookie";
+import { useUserProfile } from "./Context/UseUserProfile.jsx";
 
 const UserDisplay = ({ user }) => {
+  const { settingsData } = useUserProfile();
   return (
     <Box>
       <Box>
         <img
-          src={Cookies.get("banner_pic") || "https://picsum.photos/1500/500"}
+          src={settingsData.bannerPic || "https://picsum.photos/1500/500"}
           alt="Post Image"
           loading={"lazy"}
           style={{
@@ -28,8 +29,8 @@ const UserDisplay = ({ user }) => {
           }}
         >
           <UserAvatar
-            username={Cookies.get("username")}
-            image={Cookies.get("profile_pic")}
+            username={user.username}
+            image={settingsData.profilePic}
             width={64}
             height={64}
           />
