@@ -1,6 +1,8 @@
 ﻿import { Box, Avatar } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import "./UserDisplay.css";
+import PropTypes from "prop-types";
+import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 
 const UserDisplay = ({ user }) => {
   const { settingsData } = useUserProfile();
@@ -15,6 +17,12 @@ const UserDisplay = ({ user }) => {
         </Box>
     </Box>
   );
+};
+
+UserDisplay.propTypes = {
+    user: PropTypes.shape({
+        username: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default UserDisplay;
