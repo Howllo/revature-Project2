@@ -13,7 +13,7 @@ const ProfileBiography = ({user}) => {
         y.then(value =>{
             setUserData(value)
         })
-    });
+    }, [user]);
   return (
     <Box
       sx={{
