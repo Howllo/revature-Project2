@@ -6,12 +6,17 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import {useEffect, useState} from "react";
 import {usePost} from "../Context/UsePost.jsx";
 import CreatePost from "../CreatePost/CreatePost.jsx";
+import PostDialog from "./PostDialog.jsx";
+import Cookies from "js-cookie";
+import useAuth from "../../../util/auth/UseAuth.jsx";
 
 const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
+    const {user} = useAuth()
     const [showCommentMenu, setShowCommentMenu] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [currentLikes, setCurrentLikes] = useState(likesCount);
     const {likePost, isUserLike } = usePost();
+    const [handleDropdownMenu, setHandleDropdownMenu] = useState(false);
 
     const handleLike = async () => {
         const liked = await likePost(post.id);
@@ -30,6 +35,14 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
             commentCount: commentsCount,
         });
     };
+
+    useEffect(() => {
+        handleCheckIfAuthorized()
+    }, [user]);
+
+    const handleCheckIfAuthorized = () => {
+        setHandleDropdownMenu(Cookies.get('user_id') === post.userId.toString())
+    }
 
     useEffect(() => {
         const checkLikeStatus = async () => {
@@ -142,6 +155,8 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                 </Button>
                 {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
             </Box>
+
+            {handleDropdownMenu ? <PostDialog post={post}/> : null }
         </Box>
     )
 }

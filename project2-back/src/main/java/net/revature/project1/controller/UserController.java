@@ -1,6 +1,7 @@
 package net.revature.project1.controller;
 
 import net.revature.project1.dto.EmailData;
+import net.revature.project1.dto.UserDto;
 import net.revature.project1.dto.UserRequestPicDto;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -111,6 +113,7 @@ public class UserController {
         UserEnum result = userService.unfollowUser(followerId, username, token.substring(7));
         return resultResponse(result);
     }
+
 
     @GetMapping("/{id}/follow/{user}")
     public ResponseEntity<Boolean> checkIfFollowing(@PathVariable("id") Long followerId,

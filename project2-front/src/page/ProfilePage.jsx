@@ -71,7 +71,9 @@ const ProfilePage = () => {
                     borderStyle: 'solid',
                     borderWidth: 1,
                     borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',}}>{userData && <ProfilePost user={userData} />}</Box>
+                    width: '99.7%',}}>
+            {userData && <ProfilePost user={userData} />}
+        </Box>
       </Box>
     </UserProfileProvider>
   );
