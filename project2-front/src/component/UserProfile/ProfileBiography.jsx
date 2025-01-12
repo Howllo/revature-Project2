@@ -2,9 +2,17 @@
 import { useUserProfile } from "./Context/UseUserProfile";
 import PropTypes from "prop-types";
 import SignupSignIn from "../ReminderDialogBox/SignupSignIn.jsx";
+import { useEffect, useState } from "react";
 
 const ProfileBiography = () => {
-  const { settingsData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+
+  useEffect(() => {
+        const y = getUserData(user.username)
+        y.then(value =>{
+            setUserData(value)
+        })
+    }, [user]);
   return (
     <Box
       sx={{
@@ -24,7 +32,7 @@ const ProfileBiography = () => {
             paddingLeft: "5px",
         }}
       >
-        {settingsData.biography}
+        {userData.biography}
       </Typography>
     </Box>
   );
