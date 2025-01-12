@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext} from "react";
 import PropTypes from 'prop-types';
 import Cookies from "js-cookie";
 import { projectApi } from "../../../util/axios";
@@ -6,7 +6,6 @@ import { projectApi } from "../../../util/axios";
 const GetSelectedData = createContext(null);
 
 export const SearchProvider = ({children}) => {
-
     const getUser = async (userId) => {
         const token = Cookies.get('jwt');    
         try {

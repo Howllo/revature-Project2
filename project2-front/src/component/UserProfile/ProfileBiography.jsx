@@ -1,8 +1,20 @@
 ﻿import { Box, Typography } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile";
+import PropTypes from "prop-types";
+import SignupSignIn from "../ReminderDialogBox/SignupSignIn.jsx";
+import { useEffect, useState } from "react";
 
 const ProfileBiography = ({ user }) => {
-  const { settingsData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
+
+  useEffect(() => {
+    const y = getUserData(user.username);
+    y.then((value) => {
+      setUserData(value);
+    });
+  });
+
   return (
     <Box
       sx={{
@@ -14,14 +26,15 @@ const ProfileBiography = ({ user }) => {
         color="secondary"
         sx={{
           marginLeft: "5px",
+          marginBottom: "5px",
           fontFamily: "Inter, sans-serif",
-          fontWeight: "300",
-          fontSize: "13px",
+          fontWeight: "400",
+          fontSize: "15px",
           color: "rgb(11, 15, 20)",
-          paddingLeft: "10px",
+          paddingLeft: "5px",
         }}
       >
-        {settingsData.biography}
+        {userData.biography}
       </Typography>
     </Box>
   );

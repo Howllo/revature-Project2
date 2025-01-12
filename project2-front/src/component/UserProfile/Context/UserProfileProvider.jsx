@@ -11,15 +11,6 @@ export const UserProfileProvider = ({ children }) => {
   const [following, setFollowing] = useState();
   const [isOpenDialogBox, setIsOpenDialogBox] = useState(false);
 
-  const [settingsData, setSettingsData] = useState({
-    displayName: Cookies.get("display_name"),
-    profilePic: Cookies.get("profile_pic"),
-    bannerPic: Cookies.get("banner_pic"),
-    biography: Cookies.get("bio_text") || "",
-    profilePreviewURL: "",
-    bannerPreviewURL: "",
-  });
-
   const handleOpenDialogBox = () => {
     setIsOpenDialogBox(true);
   };
@@ -93,6 +84,19 @@ export const UserProfileProvider = ({ children }) => {
     }
   };
 
+  const getUserData = async (username) => {
+    try {
+      const response = await projectApi.get(`/user/username/${username}`);
+      const respData = response.data;
+
+      return respData;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
+  };
+
   const value = {
     listPostData,
     setListPostData,
@@ -105,8 +109,7 @@ export const UserProfileProvider = ({ children }) => {
     handleCloseDialogBox,
     isOpenDialogBox,
     getId,
-    settingsData,
-    setSettingsData,
+    getUserData,
   };
 
   return (

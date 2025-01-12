@@ -17,7 +17,6 @@ const SearchResult = ({user, setSearchTerm}) => {
 
     const handleProfileClick = () => {
         setSearchTerm("");
-        console.log(user)
     }
 
     return (

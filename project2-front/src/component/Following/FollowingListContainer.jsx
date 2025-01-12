@@ -2,9 +2,12 @@ import { Box, Button, List, Typography } from "@mui/material";
 import FollowingList from "./FollowingList";
 // import { useSettings } from "../Context/useSettings";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import FollowingListContext from "./Context/FollowingListProvider";
 
 const FollowingListContainer = () => {
   const navigate = useNavigate();
+  //   const { followingList } = useContext(FollowingListContext);
 
   const handleBack = () => {
     navigate(-1);
