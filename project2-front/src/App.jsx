@@ -40,7 +40,7 @@ function App() {
                         }
                       />
                       <Route
-                        path="/followers"
+                        path="/profile/:username/followers"
                         element={
                           <HomePage>
                             <FollowerPage />
@@ -48,7 +48,7 @@ function App() {
                         }
                       />
                       <Route
-                        path="/following"
+                        path="/profile/:username/following"
                         element={
                           <HomePage>
                             <FollowingPage />

@@ -91,20 +91,21 @@ const ProfileInformationPanel = ({ user }) => {
           >
             {user.followerCount}
           </Typography>
-
-          <Typography
-            variant="h6"
-            color="secondary"
-            sx={{
-              marginLeft: "5px",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: "300",
-              fontSize: "13px",
-              color: "rgb(66, 87, 108)",
-            }}
-          >
-            <Link to="/followers">followers</Link>
-          </Typography>
+          <Link to="/profile/:username/followers">
+            <Typography
+              variant="h6"
+              color="secondary"
+              sx={{
+                marginLeft: "5px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "300",
+                fontSize: "13px",
+                color: "rgb(66, 87, 108)",
+              }}
+            >
+              followers
+            </Typography>
+          </Link>
         </Box>
 
         <Box
@@ -138,7 +139,7 @@ const ProfileInformationPanel = ({ user }) => {
               color: "rgb(66, 87, 108)",
             }}
           >
-            <Link to="/following">following</Link>
+            <Link to="/profile/:username/following">following</Link>
           </Typography>
         </Box>
 
