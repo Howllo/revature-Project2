@@ -16,10 +16,12 @@ import net.revature.project1.utils.RegisterRequirementsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -162,7 +164,7 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
-     * @param followingId Take in a following id. AKA who the person that is being followed.
+     * @param username Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum followUser(Long followerId, String username, String token){ 
@@ -195,7 +197,7 @@ public class UserService {
     /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-     * @param followingId Take in a following id. AKA who the person that is being unfollowed.
+     * @param username Take in a token. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum unfollowUser(Long followerId, String username, String token){
@@ -305,6 +307,36 @@ public class UserService {
         userRepo.save(sender);
 
         return UserEnum.SUCCESS;
+    }
+
+    public Set<UserDto> getFollowing(Long userId, String token){
+        boolean isValidUser = isValidToken(token, userId);
+        if(!isValidUser){
+            return null;
+        }
+        Optional<AppUser> optUser = userRepo.findById(userId);
+        if (optUser.isEmpty()){
+            return null;
+        }
+        AppUser appUser =  optUser.get();
+        Set<AppUser> setOfFollowers = appUser.getFollowing();
+        Set<UserDto> returnedFollowing = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
+        return returnedFollowing;
+    }
+
+    public Set<UserDto> getFollowers(Long userId, String token){
+        boolean isValidUser = isValidToken(token, userId);
+        if(!isValidUser){
+            return null;
+        }
+        Optional<AppUser> optUser = userRepo.findById(userId);
+        if (optUser.isEmpty()){
+            return null;
+        }
+        AppUser appUser =  optUser.get();
+        Set<AppUser> setOfFollowers = appUser.getFollower();
+        Set<UserDto> returnedFollowers = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
+        return returnedFollowers;
     }
 
     /**

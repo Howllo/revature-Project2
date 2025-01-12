@@ -1,9 +1,6 @@
 package net.revature.project1.controller;
 
-import net.revature.project1.dto.EmailData;
-import net.revature.project1.dto.PostSmallResponseDto;
-import net.revature.project1.dto.UserRequestPicDto;
-import net.revature.project1.dto.UserSearchDto;
+import net.revature.project1.dto.*;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.result.UserResult;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -124,6 +122,26 @@ public class UserController {
                                                   @RequestBody AppUser appUser) {
         UserEnum result = userService.updateBiography(id, appUser);
         return resultResponse(result);
+    }
+
+    @GetMapping("following/{id}")
+    public ResponseEntity<Set<UserDto>> getFollowing(@PathVariable Long id, @RequestHeader("Authorization") String receivedToken){
+        String token = receivedToken.substring(7);
+        Set<UserDto> setOfFollowing = userService.getFollowing(id, token);
+        if (setOfFollowing == null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        }
+        return new ResponseEntity<>(setOfFollowing, HttpStatus.OK);
+    }
+    @GetMapping("followers/{id}")
+    public ResponseEntity<Set<UserDto>> getFollowers(@PathVariable Long id, @RequestHeader("Authorization") String receivedToken){
+        String token = receivedToken.substring(7);
+        Set<UserDto> setOfFollowers = userService.getFollowers(id, token);
+        if (setOfFollowers == null){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(setOfFollowers, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/follow/{user}") 
