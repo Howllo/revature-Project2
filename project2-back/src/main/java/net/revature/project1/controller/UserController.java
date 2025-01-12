@@ -124,7 +124,7 @@ public class UserController {
         return resultResponse(result);
     }
 
-    @GetMapping("following/{id}")
+    @GetMapping("/following/{id}")
     public ResponseEntity<Set<UserDto>> getFollowing(@PathVariable Long id, @RequestHeader("Authorization") String receivedToken){
         String token = receivedToken.substring(7);
         Set<UserDto> setOfFollowing = userService.getFollowing(id, token);
@@ -134,7 +134,7 @@ public class UserController {
         }
         return new ResponseEntity<>(setOfFollowing, HttpStatus.OK);
     }
-    @GetMapping("followers/{id}")
+    @GetMapping("/followers/{id}")
     public ResponseEntity<Set<UserDto>> getFollowers(@PathVariable Long id, @RequestHeader("Authorization") String receivedToken){
         String token = receivedToken.substring(7);
         Set<UserDto> setOfFollowers = userService.getFollowers(id, token);
