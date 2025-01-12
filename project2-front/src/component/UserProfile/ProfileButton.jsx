@@ -33,7 +33,7 @@ const ProfileButton = ({ user }) => {
           flexDirection: "column",
           borderColor: "gray",
           borderWidth: "1px",
-          mt: "-20px",
+          marginTop: '-10px',
           paddingRight: "10px",
         }}
       >

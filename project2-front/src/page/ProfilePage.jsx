@@ -51,7 +51,7 @@ const ProfilePage = () => {
           {userData && <UserDisplay user={userData} />}
           <Box sx={{mt: '-1px',
                     borderRadius: '0px',
-                    marginTop: '-38px',
+                    marginTop: '-60px',
                     borderStyle: 'solid',
                     borderWidth: 1,
                     borderColor: 'rgb(212, 219, 226)',

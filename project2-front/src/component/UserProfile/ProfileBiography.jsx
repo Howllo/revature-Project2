@@ -1,8 +1,7 @@
 ﻿import { Box, Typography } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile";
-import PropTypes from "prop-types";
-import SignupSignIn from "../ReminderDialogBox/SignupSignIn.jsx";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const ProfileBiography = ({ user }) => {
   const [userData, setUserData] = useState(user);
@@ -18,7 +17,8 @@ const ProfileBiography = ({ user }) => {
   return (
     <Box
       sx={{
-        marginTop: "10px",
+        marginTop: "5px",
+        padding: "5px",
       }}
     >
       <Typography
@@ -38,6 +38,12 @@ const ProfileBiography = ({ user }) => {
       </Typography>
     </Box>
   );
+};
+
+ProfileBiography.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default ProfileBiography;

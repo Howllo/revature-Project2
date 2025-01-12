@@ -23,10 +23,8 @@ const UserDisplay = ({ user }) => {
           alt="Post Image"
           loading={"lazy"}
           style={{
-            marginTop: "10px",
             width: "100%",
             height: "100%",
-            borderRadius: "0px",
             maxWidth: "546px",
             maxHeight: "180px",
             minWidth: "546px",
@@ -35,15 +33,15 @@ const UserDisplay = ({ user }) => {
         />
         <Box
           sx={{
-            mt: "-76px",
+            mt: "-60px",
             ml: "-30px",
           }}
         >
           <UserAvatar
             username={user.username}
             image={userData.profilePic}
-            width={64}
-            height={64}
+            width={92}
+            height={92}
           />
         </Box>
       </Box>

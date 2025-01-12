@@ -32,6 +32,8 @@ const ProfileInformationPanel = ({ user }) => {
       sx={{
         flexDirection: "column",
         display: "flex",
+        marginTop: '10px',
+        padding: '5px',
       }}
     >
       <Typography
