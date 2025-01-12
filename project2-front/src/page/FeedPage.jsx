@@ -12,6 +12,7 @@ const FeedPage = () => {
         getPost();
     }, []);
 
+    /*
     useEffect(() => {
         const loadComments = async () => {
             if (!listPostData) return;
@@ -40,7 +41,7 @@ const FeedPage = () => {
 
         loadComments();
     }, [listPostData, getChildren]);
-
+*/
     const renderComments = (postId) => {
         const comments = postComments[postId] || [];
         if (!comments.length) return null;

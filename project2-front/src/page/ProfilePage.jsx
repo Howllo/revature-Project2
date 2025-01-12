@@ -44,7 +44,7 @@ const ProfilePage = () => {
           maxWidth: "85%",
           width: "100%",
           flexDirection: "column",
-            mt: '-10px'
+          mt: '-10px'
         }}
       >
         {/* User Profile Information */}

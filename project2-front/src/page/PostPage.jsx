@@ -1,23 +1,18 @@
-import {Box, IconButton, Typography} from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {Box} from "@mui/material";
+import PostBackBar from "../component/UserPostPage/PostBackBar.jsx";
 
 const PostPage = () => {
-    return (
-        <Box>
-            <Box
-                sx={{
+  return (
+    <Box>
+      <Box
+        sx={{
 
-                }}
-            >
-                <IconButton>
-                    <ArrowBackIcon />
-                    <Typography variant="body2" color="textSecondary">
-                        Post
-                    </Typography>
-                </IconButton>
-            </Box>
-        </Box>
-    )
+        }}
+      >
+        <PostBackBar />
+      </Box>
+    </Box>
+  )
 }
 
 export default PostPage;

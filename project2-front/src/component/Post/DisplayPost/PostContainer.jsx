@@ -15,7 +15,9 @@ const PostContainer = ({ key, post, commentChildren }) => {
   const handleNavigation = (e) => {
       e.preventDefault();
       e.stopPropagation();
-    navigate(`/profile/${post.username}/post/${post.id}`);
+    if(e.target === e.currentTarget) {
+      navigate(`/profile/${post.username}/post/${post.id}`);
+    }
   }
 
   return (
@@ -31,7 +33,7 @@ const PostContainer = ({ key, post, commentChildren }) => {
         maxWidth: "650px",
         width: "90%",
         padding: "13px",
-          cursor: "pointer",
+        cursor: "pointer",
       }}
       key={key}
       onClick={(e) => handleNavigation(e)}

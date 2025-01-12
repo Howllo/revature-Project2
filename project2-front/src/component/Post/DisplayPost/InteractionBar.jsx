@@ -19,21 +19,21 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
     const [handleDropdownMenu, setHandleDropdownMenu] = useState(false);
 
     const handleLike = async () => {
-        const liked = await likePost(post.id);
+      const liked = await likePost(post.id);
 
-        if(!liked) {
-            setIsLiked(false);
-            return;
-        }
+      if(!liked) {
+          setIsLiked(false);
+          return;
+      }
 
-        let newLikeTotal = likesCount + 1;
-        setCurrentLikes(newLikeTotal);
-        setIsLiked(liked);
-        setPost({
-            ...post,
-            likeCount: newLikeTotal,
-            commentCount: commentsCount,
-        });
+      let newLikeTotal = likesCount + 1;
+      setCurrentLikes(newLikeTotal);
+      setIsLiked(liked);
+      setPost({
+          ...post,
+          likeCount: newLikeTotal,
+          commentCount: commentsCount,
+      });
     };
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
     }, [post.id, isUserLike]);
 
     const handleComments = async () => {
-        setShowCommentMenu(true)
+      setShowCommentMenu(true);
     }
 
     return (
@@ -153,7 +153,8 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                         {currentLikes}
                     </Typography>
                 </Button>
-                {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
+                {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu}
+                                               child={post} isReply={true} post={post}/> : null }
             </Box>
 
             {handleDropdownMenu ? <PostDialog post={post}/> : null }

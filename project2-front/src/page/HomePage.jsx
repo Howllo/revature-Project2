@@ -43,7 +43,7 @@ function HomePage({children}) {
                     height: '100%',
                     display: 'grid',
                     gridTemplateColumns: '3fr 3fr 3fr',
-                    padding: '20px',
+
                     boxSizing: 'border-box',
                 }}
             >
@@ -52,6 +52,7 @@ function HomePage({children}) {
                         height: '100%',
                         overflow: 'hidden',
                         paddingRight: '50px',
+                      padding: '20px',
                     }}
                 >
                     <AuthBarHandle handleScrollUp={handleScrollUp} showFAB={showFAB} />
@@ -81,6 +82,7 @@ function HomePage({children}) {
                 </Grid2>
                 <Grid2
                     sx={{
+                        padding: '20px',
                         paddingLeft: '20px',
                         height: '100%',
                         overflow: 'hidden',
