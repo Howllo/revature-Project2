@@ -17,11 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -181,6 +183,7 @@ public class UserService {
     /**
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
+     * @param username Take in a following id. AKA who the person that is being followed.
      * @param username Take in a username. AKA who the person that is being unfollowed.
      * @param token Takes the token of the user who wants to unfollow
      * @param username Take in a following id. AKA who the person that is being followed.
