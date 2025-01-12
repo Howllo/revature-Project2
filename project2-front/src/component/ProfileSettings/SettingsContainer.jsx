@@ -25,6 +25,10 @@ const SettingsContainer = () => {
             width: '600px',
             height: 'auto',
             borderRadius: "8px",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+              paddingBottom: "15px",
+              paddingTop: "5px",
           },
             overflow: 'hidden',
         }}
