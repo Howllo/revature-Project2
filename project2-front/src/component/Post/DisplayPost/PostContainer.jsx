@@ -7,9 +7,17 @@ import PropTypes from "prop-types";
 import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
 import "./PostContainer.css"
+import {useNavigate} from "react-router-dom";
 
 const PostContainer = ({ key, post, commentChildren }) => {
   const [savedPost, setSavedPost] = useState(post);
+  const navigate = useNavigate();
+
+  const handleNavigation = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    navigate(`/profile/${post.username}/post/${post.id}`);
+  }
 
   return (
     <Card className="PostContainerCard" elevation={0} key={key}>

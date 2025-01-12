@@ -7,9 +7,9 @@ import PropTypes from "prop-types";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
-  const { getId, settingsData, getUserData } = useUserProfile();
+  const { getId, getUserData } = useUserProfile();
   const [userData, setUserData] = useState(user);
-    const [time, setTime] = useState(null);
+  const [time, setTime] = useState(null);
 
   useEffect(() => {
       const options = { year: "numeric", month: "long" };
