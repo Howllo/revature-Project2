@@ -4,7 +4,7 @@ import SettingsContext from "../Context/SettingsProvider";
 import { useContext, useRef } from "react";
 import ProfilePictureInput from "./ProfilePictureInput.jsx";
 
-const Banner = () => {
+const Banner = ({ user }) => {
   const { settingsData, handleBannerPicChange, setUnapprovedBannerPic } =
     useContext(SettingsContext);
   const inputRef = useRef(null);

@@ -13,7 +13,7 @@ import { useUserProfile } from "../UserProfile/Context/UseUserProfile";
 import SubmitButton from "./ProfileSettingsFields/SubmitButton";
 import CancelButton from "./ProfileSettingsFields/CancelButton";
 
-const SettingsContainer = () => {
+const SettingsContainer = ({ user }) => {
   const { isOpenDialogBox, handleCloseDialogBox } = useUserProfile();
 
   return (
@@ -22,32 +22,34 @@ const SettingsContainer = () => {
         open={isOpenDialogBox}
         sx={{
           "& .MuiPaper-root": {
-            width: '600px',
-            height: 'auto',
+            width: "600px",
+            height: "auto",
             borderRadius: "8px",
-              paddingLeft: "15px",
-              paddingRight: "15px",
-              paddingBottom: "15px",
-              paddingTop: "5px",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+            paddingBottom: "15px",
+            paddingTop: "5px",
           },
-            overflow: 'hidden',
+          overflow: "hidden",
         }}
         onClose={handleCloseDialogBox}
       >
-        <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", fontSize: "23px" }}>
+        <DialogTitle
+          sx={{ textAlign: "center", fontWeight: "bold", fontSize: "23px" }}
+        >
           Edit my profile
         </DialogTitle>
         <DialogContent>
-          <Banner />
-          <DisplayNameField />
-          <BioTextField />
+          <Banner user={user} />
+          {/* <ProfilePictureInput user={user} /> */}
+          <DisplayNameField user={user} />
+          <BioTextField user={user} />
         </DialogContent>
-        <DialogActions sx={{
-            flexDirection: "column",
-            justifyContent: "center"
-        }}>
-            <SubmitButton />
-            <CancelButton />
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <SubmitButton user={user} />
+        </DialogActions>
+        <DialogActions sx={{ justifyContent: "center" }}>
+          <CancelButton />
         </DialogActions>
       </Dialog>
     </SettingsProvider>

@@ -10,14 +10,6 @@ export const UserProfileProvider = ({ children }) => {
   const [listPostData, setListPostData] = useState([]);
   const [following, setFollowing] = useState();
   const [isOpenDialogBox, setIsOpenDialogBox] = useState(false);
-  const [settingsData, setSettingsData] = useState({
-    displayName: Cookies.get("display_name"),
-    profilePic: Cookies.get("profile_pic"),
-    bannerPic: Cookies.get("banner_pic"),
-    biography: Cookies.get("bio_text") || "",
-    profilePreviewURL: "",
-    bannerPreviewURL: "",
-  });
 
   const handleOpenDialogBox = () => {
     setIsOpenDialogBox(true);
@@ -118,8 +110,6 @@ export const UserProfileProvider = ({ children }) => {
     isOpenDialogBox,
     getId,
     getUserData,
-    settingsData,
-    setSettingsData,
   };
 
   return (
