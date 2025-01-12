@@ -30,7 +30,6 @@ export const useSignInValidation = () => {
 
   const validateAll = async (email, password) => {
     if (email === "" || password === "") {
-      console.log(`Email: ${email} - Password: ${password}`);
       return false;
     }
 
