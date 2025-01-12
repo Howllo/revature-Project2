@@ -4,28 +4,37 @@ import MediaContainer from "./MediaContainer.jsx";
 import PropTypes from 'prop-types';
 
 const MediaBackdrop = ({media, open, handleClose}) => {
-    return (
-        <Box>
-            <Backdrop
-                open={open}
-                onClick={handleClose}
-                sx={{
-                    zIndex: 9999,
-                    backgroundColor: 'black'
-                }}
+  const handleBackdropClick = (e) => {
+    e.stopPropagation();
+    handleClose();
+  };
+
+  return (
+    <Box>
+        <Backdrop
+            open={open}
+            onClick={handleBackdropClick}
+            sx={{
+              zIndex: 9999,
+              backgroundColor: 'black',
+              cursor: 'default'
+            }}
+        >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '80%',
+                height: '80%',
+                cursor: 'default'
+              }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    <MediaContainer media={media}/>
-                </Box>
-            </Backdrop>
-        </Box>
+                <MediaContainer media={media} isInBackdrop={true}/>
+            </Box>
+        </Backdrop>
+    </Box>
     )
 }
 

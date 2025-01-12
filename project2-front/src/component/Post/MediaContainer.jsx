@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import MediaBackdrop from "./MediaBackdrop.jsx";
 import {usePost} from "./Context/UsePost.jsx";
 
-const MediaContainer = ({ media, isVideo }) => {
+const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
     const { resetPost } = usePost();
     const [youtube, setYoutube] = useState("");
     const [mediaType, setMediaType] = useState("");
@@ -15,12 +15,14 @@ const MediaContainer = ({ media, isVideo }) => {
         setOpen(false);
     };
 
-    const toggleMedia = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        console.log(`The current boolean is ${open}.`)
-        setOpen((prev) => !prev);
-    };
+  const toggleMedia = (e) => {
+    if (isInBackdrop) return;
+
+    e.stopPropagation();
+    e.preventDefault();
+    console.log(`The current boolean is ${open}.`)
+    setOpen((prev) => !prev);
+  };
 
     useEffect(() => {
         if (!media) return;
@@ -44,10 +46,11 @@ const MediaContainer = ({ media, isVideo }) => {
     return (
         <Box
             sx={{
-                position: "relative",
-                width: "100%",
-                height: "100%",
-                borderRadius: "15px",
+              position: "relative",
+              width: "100%",
+              height: "100%",
+              borderRadius: "15px",
+              overflow: "hidden",
             }}
         >
             {mediaType === "video" && (
@@ -74,7 +77,7 @@ const MediaContainer = ({ media, isVideo }) => {
                         height: "auto",
                         width: "95%",
                         borderRadius: "15px",
-                        cursor: "pointer",
+                        cursor: isInBackdrop  ? 'default' : "pointer",
                     }}
                 />
             )}
@@ -98,8 +101,9 @@ const MediaContainer = ({ media, isVideo }) => {
 };
 
 MediaContainer.propTypes = {
-    media: PropTypes.string.isRequired,
-    isVideo: PropTypes.bool
+  media: PropTypes.string.isRequired,
+  isVideo: PropTypes.bool,
+  isInBackdrop: PropTypes.bool,
 };
 
 export default MediaContainer;
