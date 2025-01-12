@@ -17,7 +17,6 @@ function Search() {
 
     const searchUsername = async (username) => {
         if(username === undefined) {
-            console.log(`This username was: ${username}`);
             return [];
         }
 

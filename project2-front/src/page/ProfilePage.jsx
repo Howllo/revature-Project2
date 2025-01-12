@@ -51,23 +51,24 @@ const ProfilePage = () => {
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
-          <div
-            style={{
-              mt: "-1px",
-              borderRadius: "0px",
-              marginTop: "-38px",
-              borderStyle: "solid",
-              borderWidth: 1,
-              borderColor: "rgb(212, 219, 226)",
-              width: "99.7%",
-              paddingTop: "20px",
-            }}
-          >
-            {userData && <ProfileButton user={userData} />}
-            {userData && <ProfileInformationPanel user={userData} />}
-            {userData && <SettingsContainer user={userData} />}
-            {userData && <ProfileBiography user={userData} />}
-          </div>
+      
+          <Box 
+               sx={{mt: '-1px',
+                    mt: "-1px",
+                    borderRadius: "0px",
+                    marginTop: "-38px",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderColor: "rgb(212, 219, 226)",
+                    width: "99.7%",
+                    paddingTop: "20px",
+               }} 
+             >
+              {userData && <ProfileButton user={userData} />}
+              {userData && <ProfileInformationPanel user={userData} />}
+              {userData && <SettingsContainer user={userData} />}
+              {userData && <ProfileBiography user={userData} />}
+          </Box>
         </Box>
 
         {/* User Post */}
