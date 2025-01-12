@@ -3,9 +3,20 @@ import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import "./UserDisplay.css";
 import PropTypes from "prop-types";
 import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
+import { useEffect, useState } from "react";
 
 const UserDisplay = ({ user }) => {
-  const { settingsData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
+    
+
+    useEffect(() => {
+        const y = getUserData(user.username)
+        y.then(value =>{
+            setUserData(value)
+        })
+    }, [user]);
+  
   return (
     <Box className="UserDisplayContainer">
         <img className="BannerImg"
