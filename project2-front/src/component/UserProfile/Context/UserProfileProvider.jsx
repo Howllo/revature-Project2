@@ -92,6 +92,19 @@ export const UserProfileProvider = ({ children }) => {
     }
   };
 
+  const getUserData = async (username) => {
+    try {
+      const response = await projectApi.get(`/user/username/${username}`);
+      const respData = response.data;
+
+      return respData;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
+  };
+
   const value = {
     listPostData,
     setListPostData,
@@ -104,6 +117,7 @@ export const UserProfileProvider = ({ children }) => {
     handleCloseDialogBox,
     isOpenDialogBox,
     getId,
+    getUserData,
     settingsData,
     setSettingsData,
   };
