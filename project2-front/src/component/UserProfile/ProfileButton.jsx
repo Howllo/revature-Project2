@@ -2,6 +2,8 @@
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check';
 import PropTypes from "prop-types";
 
 const ProfileButton = ({ user }) => {
@@ -84,13 +86,21 @@ const ProfileButton = ({ user }) => {
           onClick={handleFollow}
           variant="contained"
           size="small"
+          disableElevation={true}
           sx={{
-            borderRadius: 6,
-            textTransform: "capitalize",
-            mt: "5px"
+              color: isFollowed ? "rgb(65,86,119)" : "white",
+              borderRadius: '20px',
+              textTransform: "capitalize",
+              mt: "5px",
+              backgroundColor: isFollowed ? "rgb(239,241,243)" : "rgb(25,117,208)",
           }}
         >
-          {isFollowed ? "Unfollow" : "Follow"}
+            {isFollowed ? <CheckIcon sx={{
+                color: "rgb(65,86,119)",
+                width: '20px',
+                height: '20px',
+            }}/> : <AddIcon /> }
+            {isFollowed ? "Unfollow" : "Follow"}
         </Button>
       </Box>
     </Box>

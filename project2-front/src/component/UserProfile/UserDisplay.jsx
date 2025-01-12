@@ -3,14 +3,25 @@ import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import PropTypes from "prop-types";
 import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
+import { useEffect, useState } from "react";
 
 const UserDisplay = ({ user }) => {
-  const { settingsData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
+    
+
+    useEffect(() => {
+        const y = getUserData(user.username)
+        y.then(value =>{
+            setUserData(value)
+        })
+    }, [user]);
+  
   return (
     <Box>
       <Box>
         <img
-          src={settingsData.bannerPic || "https://picsum.photos/1500/500"}
+          src={userData.bannerPic || "https://picsum.photos/1500/500"}
           alt="Post Image"
           loading={"lazy"}
           style={{
@@ -32,7 +43,7 @@ const UserDisplay = ({ user }) => {
         >
           <UserAvatar
             username={user.username}
-            image={settingsData.profilePic}
+            image={userData.profilePic}
             width={92}
             height={92}
           />
