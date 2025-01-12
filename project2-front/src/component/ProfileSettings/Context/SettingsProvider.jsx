@@ -3,7 +3,6 @@ import { createContext, useState } from "react";
 import { projectApi } from "../../../util/axios.js";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-// import { useUserProfile } from "../../UserProfile/Context/UseUserProfile.jsx";
 
 const SettingsContext = createContext(null);
 
@@ -149,7 +148,7 @@ export const SettingsProvider = ({ children }) => {
       if (!token) {
         throw new Error("No authentication token found");
       }
-
+      console.log("API was called");
       const response = await projectApi.put(
         "user/settings/update",
         settingsPayload,
@@ -179,6 +178,7 @@ export const SettingsProvider = ({ children }) => {
       Cookies.set("bio_text", response.data.biography);
 
       resetTempImageURLS();
+      console.log("Settings updated successfully");
 
       navigate(`/profile/${Cookies.get("username")}`.toLowerCase());
     } catch (error) {
