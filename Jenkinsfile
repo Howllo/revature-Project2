@@ -100,9 +100,8 @@ pipeline {
     post {
         always {
             cleanWs()
-
             sh '''
-                docker system prune -af
+                docker system prune --all --volumes --force
                 docker volume prune -f
                 docker builder prune -af
             '''

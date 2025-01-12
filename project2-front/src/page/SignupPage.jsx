@@ -11,7 +11,6 @@ import Cookies from "js-cookie";
 export function SignupPage() {
   const { step } = useSignup();
   const navigate = useNavigate();
-  console.log(Cookies.get("userId"));
 
   useEffect(() => {
     if (step !== 1 && step !== 2 && step !== 3) {

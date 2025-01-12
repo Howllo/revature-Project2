@@ -1,9 +1,9 @@
 ﻿import {Box, Button} from "@mui/material";
 import PropTypes from 'prop-types';
-import {allowedImageTypes, allowedVideoTypes} from "../../../util/MediaSupport.js";
+import {allowedImageTypes, allowedVideoTypes} from "../../util/MediaSupport.js";
 import {useEffect, useState} from "react";
-import MediaBackdrop from "../MediaBackdrop.jsx";
-import {usePost} from "../Context/UsePost.jsx";
+import MediaBackdrop from "./MediaBackdrop.jsx";
+import {usePost} from "./Context/UsePost.jsx";
 
 const MediaContainer = ({media, isVideo}) => {
     const {resetPost} = usePost();
@@ -38,7 +38,7 @@ const MediaContainer = ({media, isVideo}) => {
         } else {
             resetPost();
         }
-    }, [media]);
+    }, [media, isVideo, resetPost]);
 
     return (
         <Box

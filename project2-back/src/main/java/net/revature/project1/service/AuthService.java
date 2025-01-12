@@ -63,7 +63,7 @@ public class AuthService {
         }
 
         String hashPassword = passwordEncoder.encode(user.password());
-        AppUser newUser = new AppUser(user.email(), user.username(), hashPassword);
+        AppUser newUser = new AppUser(user.email().toLowerCase(), user.username().toLowerCase(), hashPassword);
 
         AppUser returnUser = authRepo.save(newUser);
 
