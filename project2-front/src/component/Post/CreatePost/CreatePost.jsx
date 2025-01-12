@@ -3,7 +3,7 @@ import {Backdrop} from "@mui/material";
 import UserAvatar from "../../AvatarComponent/UserAvatar.jsx";
 import Cookies from "js-cookie";
 import PostTextField from "./PostTextField.jsx";
-import MediaContainer from "../DisplayPost/MediaContainer.jsx";
+import MediaContainer from "../MediaContainer.jsx";
 import PostInteractiveBar from "./PostInteractiveBar.jsx";
 import {usePost} from "../Context/UsePost.jsx";
 import PropTypes from "prop-types";

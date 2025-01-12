@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,8 +38,12 @@ public class PostService {
     public List<PostResponseDto> getAllPosts() {
         List<Post> getAll = postRepo.findAll();
         List<PostResponseDto> posts = new ArrayList<>();
+        List<Long> postIds = getAll.stream().map(Post::getId).toList();
+        Map<Long, Long> commentCount = postRepo.fetchCommentCounts(postIds).stream()
+                .collect(Collectors.toMap(row -> (Long) row[0], row -> (Long) row[1]));
+
         for (Post post : getAll) {
-            Long parentPost = 0L;
+            Long parentPost;
 
             if(post.getPostParent() == null){
                 parentPost = -1L;
@@ -59,12 +60,13 @@ public class PostService {
                     post.getUser().getId(),
                     post.getUser().getUsername(),
                     post.getUser().getDisplayName(),
+                    post.getUser().getProfilePic(),
                     post.getComment(),
                     post.getMedia(),
                     post.isPostEdited(),
                     post.getPostAt(),
-                    post.getLikes().size(),
-                    (long) post.getComment().length()
+                    (long) post.getLikes().size(),
+                    commentCount.getOrDefault(post.getId(), 0L)
             ));
         }
         return posts;
@@ -107,10 +109,29 @@ public class PostService {
 
     /**
     * Create a post.
-    * @param post The post to be created.
+    * @param postDto The post to be created.
     * @return The created post.
     */
-    public PostResult createPost(Post post, String token) {
+    public PostResult createPost(PostCreateDto postDto, String token) {
+        Post post = new Post();
+        post.setComment(postDto.comment());
+        post.setMedia(postDto.media());
+
+        if(postDto.postParent() != null){
+            Optional<Post> postParentOptional = postRepo.findById(postDto.postParent());
+            if(postParentOptional.isPresent()){
+                post.setPostParent(postParentOptional.get());
+            } else {
+                post.setPostParent(null);
+            }
+        }
+
+        Optional<AppUser> optionalAppUser = userService.findUserById(postDto.userId());
+        if(optionalAppUser.isEmpty()){
+            return new PostResult(PostEnum.INVALID_USER, "User does not exist.", null);
+        }
+        post.setUser(optionalAppUser.get());
+
         if(post.getComment() == null && post.getMedia() == null) {
             return new PostResult(PostEnum.INVALID_POST, "Post must have a comment, " +
                  "image, or video.", null);
@@ -118,6 +139,10 @@ public class PostService {
 
         if(post.getComment() != null && post.getComment().length() > 255) {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
+        }
+
+        if(post.getComment() != null && post.getComment().isEmpty() && post.getMedia() == null) {
+            return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }
 
         boolean isValid = isValidToken(token, post);
@@ -145,7 +170,6 @@ public class PostService {
      * @return The updated version of the post.
      */
     public PostResult updatePost(Long id, PostUpdateDto post, String token) {
-
         Optional<Post> postOptional = postRepo.findById(id);
         if(postOptional.isEmpty()) {
             return new PostResult(PostEnum.INVALID_POST, "Post does not exist.", null);
@@ -158,6 +182,11 @@ public class PostService {
             }
         } catch (NullPointerException e) {
             return new PostResult(PostEnum.INVALID_POST, "Post does not exist.", null);
+        }
+
+        boolean isValid = isValidToken(token, postToUpdate);
+        if(!isValid){
+            return new PostResult(PostEnum.INVALID_POST, "User and post are not the same", null);
         }
 
         postToUpdate.setComment(post.comment());
@@ -186,7 +215,6 @@ public class PostService {
         Post postToDelete = post.get();
 
         boolean isValid =  isValidToken(token, postToDelete);
-
         if(!isValid) {
             return PostEnum.UNAUTHORIZED;
         }
@@ -197,16 +225,20 @@ public class PostService {
 
     /**
      * Allows user to like a post.
-     * @param id The id of the post to be liked.
+     * @param postId The id of the post to be liked.
      * @param userId The id of the user liking the post.
      * @return The status of the like.
      */
-    public PostEnum likePost(Long id, Long userId, String token) {
-        Optional<Post> post = postRepo.findById(id);
+    public PostEnum likePost(Long postId, Long userId, String token) {
+        Optional<Post> post = postRepo.findById(postId);
         if(post.isEmpty()) {
             return PostEnum.INVALID_POST;
         }
         Post postToUpdate = post.get();
+
+        if(Objects.equals(postToUpdate.getUser().getId(), userId)){
+            return PostEnum.UNAUTHORIZED;
+        }
 
         Optional<AppUser> optionalAppUser = userService.findUserById(userId);
         if(optionalAppUser.isEmpty()) {
@@ -220,7 +252,7 @@ public class PostService {
         }
         AppUser appUser2 = optionalAppUser2.get();
 
-        if(!appUser2.getUsername().equals(appUser.getUsername())){
+        if(!Objects.equals(appUser2.getId(), appUser.getId())){
             return PostEnum.UNAUTHORIZED;
         }
 
@@ -243,19 +275,16 @@ public class PostService {
     public List<PostResponseDto> getComments(Long postId) {
         List<Post> childPosts = postRepo.findByPostParentIdOrderByPostAtDesc(postId);
 
+        List<Long> postIds = childPosts.stream().map(Post::getId).toList();
+
+        Map<Long, Long> commentCounts = postRepo.fetchCommentCounts(postIds).stream()
+                .collect(Collectors.toMap(row -> (Long) row[0], row -> (Long) row[1]));
+
         return childPosts.stream()
-                .map(this::getPostResponseDto)
+                .map(post -> {
+                    return getPostResponseDto(post, commentCounts);
+                })
                 .collect(Collectors.toList());
-    }
-
-    public Integer returnTotalLikes(Long postId) {
-        Optional<Post> optionalPost = postRepo.findById(postId);
-        if(optionalPost.isEmpty()) {
-            return null;
-        }
-        Post post = optionalPost.get();
-
-        return post.getLikes().size();
     }
 
     public boolean doesUserLikeThisPost(Long postId, Long userId, String token) {
@@ -287,6 +316,28 @@ public class PostService {
      * @param post Post object to be converted.
      * @return The post response dto.
      */
+    PostResponseDto getPostResponseDto(Post post, Map<Long, Long> commentCounts) {
+        Long postParent = -1L;
+        if(post.getPostParent() != null) {
+            postParent = post.getPostParent().getId();
+        }
+
+        return new PostResponseDto(
+                post.getId(),
+                postParent,
+                post.getUser().getId(),
+                post.getUser().getUsername(),
+                post.getUser().getDisplayName(),
+                post.getUser().getProfilePic(),
+                post.getComment(),
+                post.getMedia(),
+                post.isPostEdited(),
+                post.getPostAt(),
+                (long) post.getLikes().size(),
+                commentCounts.getOrDefault(post.getId(), 0L)
+        );
+    }
+
     PostResponseDto getPostResponseDto(Post post) {
         Long postParent = -1L;
         if(post.getPostParent() != null) {
@@ -299,12 +350,13 @@ public class PostService {
                 post.getUser().getId(),
                 post.getUser().getUsername(),
                 post.getUser().getDisplayName(),
+                post.getUser().getProfilePic(),
                 post.getComment(),
                 post.getMedia(),
                 post.isPostEdited(),
                 post.getPostAt(),
-                post.getLikes().size(),
-                postRepo.getPostCommentNumber(post.getId())
+                (long) post.getLikes().size(),
+                0L
         );
     }
 
@@ -323,10 +375,7 @@ public class PostService {
 
         AppUser appUser = optionalAppUser.get();
 
-        if(!Objects.equals(post.getUser().getId(), appUser.getId())){
-            return false;
-        }
-        return true;
+        return Objects.equals(post.getUser().getId(), appUser.getId());
     }
 
     /**

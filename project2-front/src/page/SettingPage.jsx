@@ -10,7 +10,6 @@ const SettingsPage = () => {
 
   const changeName = async (username) => {
     if (displayName === undefined) {
-      console.log(`This username was: ${displayName}`);
       return [];
     }
 

@@ -1,7 +1,6 @@
 import { SettingsProvider } from "./Context/SettingsProvider";
 import BioTextField from "./ProfileSettingsFields/BioTextField";
 import Banner from "./ProfileSettingsFields/Banner";
-import ProfilePictureInput from "./ProfileSettingsFields/ProfilePictureInput";
 import DisplayNameField from "./ProfileSettingsFields/DisplayNameField";
 
 import {
@@ -14,7 +13,7 @@ import { useUserProfile } from "../UserProfile/Context/UseUserProfile";
 import SubmitButton from "./ProfileSettingsFields/SubmitButton";
 import CancelButton from "./ProfileSettingsFields/CancelButton";
 
-const SettingsContainer = () => {
+const SettingsContainer = ({ user }) => {
   const { isOpenDialogBox, handleCloseDialogBox } = useUserProfile();
 
   return (
@@ -23,24 +22,31 @@ const SettingsContainer = () => {
         open={isOpenDialogBox}
         sx={{
           "& .MuiPaper-root": {
-            width: { xs: "90%", sm: "50%" },
-            height: { xs: "300px", sm: "80%" },
-            borderRadius: "50px",
+            width: "600px",
+            height: "auto",
+            borderRadius: "8px",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+            paddingBottom: "15px",
+            paddingTop: "5px",
           },
+          overflow: "hidden",
         }}
         onClose={handleCloseDialogBox}
       >
-        <DialogTitle sx={{ textAlign: "center" }}>
-          Edit Your Profile
+        <DialogTitle
+          sx={{ textAlign: "center", fontWeight: "bold", fontSize: "23px" }}
+        >
+          Edit my profile
         </DialogTitle>
         <DialogContent>
-          <Banner />
-          <ProfilePictureInput />
-          <DisplayNameField />
-          <BioTextField />
+          <Banner user={user} />
+          {/* <ProfilePictureInput user={user} /> */}
+          <DisplayNameField user={user} />
+          <BioTextField user={user} />
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
-          <SubmitButton />
+          <SubmitButton user={user} />
         </DialogActions>
         <DialogActions sx={{ justifyContent: "center" }}>
           <CancelButton />

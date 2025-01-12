@@ -1,12 +1,12 @@
 package net.revature.project1.controller;
 
-import jakarta.servlet.http.HttpSession;
 import net.revature.project1.dto.*;
-import net.revature.project1.entity.Post;
 import net.revature.project1.enumerator.PostEnum;
 import net.revature.project1.result.PostResult;
 import net.revature.project1.service.PostService;
 import net.revature.project1.utils.ResponseHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/post")
 public class PostController {
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
     final private PostService postService;
     final Integer CHUNK_SIZE = 100;
 
@@ -46,8 +47,12 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@RequestBody Post post,
+    public ResponseEntity<?> createPost(@RequestBody PostCreateDto post,
                                         @RequestHeader("Authorization") String token){
+        if(post == null){
+            return ResponseEntity.badRequest().body("Invalid post");
+        }
+
         PostResult postResult = postService.createPost(post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
@@ -56,7 +61,7 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody PostUpdateDto post,
                                         @RequestHeader("Authorization") String token){
-        PostResult postResult = postService.updatePost(id, post, token);
+        PostResult postResult = postService.updatePost(id, post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
     }
@@ -68,25 +73,12 @@ public class PostController {
         return ResponseHandler.returnType(result, null);
     }
 
-    @PostMapping("/{id}/like/{userId}")
-    public ResponseEntity<?> likePost(@PathVariable Long id,
+    @PostMapping("/{postId}/like/{userId}")
+    public ResponseEntity<?> likePost(@PathVariable Long postId,
                                            @PathVariable Long userId,
                                            @RequestHeader("Authorization") String token){
-        if(id.equals(userId)){
-            return ResponseEntity.badRequest().body("You are not allowed to like your own post.");
-        }
-
-        PostEnum result = postService.likePost(id, userId, token.substring(7));
+        PostEnum result = postService.likePost(postId, userId, token.substring(7));
         return ResponseHandler.returnType(result, null);
-    }
-
-    @GetMapping("{id}/likes")
-    public ResponseEntity<Integer> returnTotalLikes(@PathVariable Long id){
-        Integer result = postService.returnTotalLikes(id);
-        if(result == null){
-            return ResponseEntity.badRequest().body(-1);
-        }
-        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/check/{postId}/like/{user}")

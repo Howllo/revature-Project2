@@ -50,8 +50,6 @@ const FeedPage = () => {
                 key={comment.id}
                 sx={{
                     width: '100%',
-                    pl: 4,
-                    borderLeft: '2px solid #f0f0f0',
                 }}
             >
                 <PostContainer
@@ -68,11 +66,11 @@ const FeedPage = () => {
     return (
         <Box
             sx={{
-                maxWidth: "85%",
+                maxWidth: "650px",
                 width: "100%",
+                height: "auto",
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 2
             }}
         >
             {listPostData.map((post) => (

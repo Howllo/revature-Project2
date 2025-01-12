@@ -17,7 +17,6 @@ function Search() {
 
     const searchUsername = async (username) => {
         if(username === undefined) {
-            console.log(`This username was: ${username}`);
             return [];
         }
 
@@ -47,7 +46,7 @@ function Search() {
     useEffect(() => {
         const checkUsernameDebounced = setTimeout(async () => {
             if (searchTerm && searchTerm.length >= 3) {
-                const results = await searchUsername(searchTerm);
+                const results = await searchUsername(searchTerm.toLowerCase());
                 setSearchResults(results || []);
             }
         }, 500);

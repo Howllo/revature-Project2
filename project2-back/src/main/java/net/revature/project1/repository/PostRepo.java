@@ -35,5 +35,11 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     @Query("SELECT COUNT(p) FROM Post p WHERE p.postParent.id = :postId")
     Long getPostCommentNumber(@Param("postId") Long postId);
 
+    @Query("SELECT p.id, COUNT(c.id) " +
+            "FROM Post p LEFT JOIN Post c ON c.postParent.id = p.id " +
+            "WHERE p.id IN :postIds " +
+            "GROUP BY p.id")
+    List<Object[]> fetchCommentCounts(@Param("postIds") List<Long> postIds);
+
     List<Post> findByPostParentIdOrderByPostAtDesc(Long parentId);
 }

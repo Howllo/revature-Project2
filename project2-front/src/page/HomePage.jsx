@@ -1,7 +1,6 @@
 ﻿import { Box, Grid2 } from '@mui/material';
 import RightSidebar from "../component/RightSidebar/RightSidebar.jsx";
 import {AuthBarHandle} from "../component/Navbar/AuthBarHandle.jsx";
-import FAB_ScrollReset from "../component/LeftSidebar/AuthContainer/FAB_ScrollReset.jsx";
 import {useEffect, useRef, useState} from "react";
 import PropTypes from 'prop-types';
 
@@ -43,8 +42,7 @@ function HomePage({children}) {
                 sx={{
                     height: '100%',
                     display: 'grid',
-                    gridTemplateColumns: '2fr 3fr 2fr',
-                    gap: '20px',
+                    gridTemplateColumns: '3fr 3fr 3fr',
                     padding: '20px',
                     boxSizing: 'border-box',
                 }}
@@ -53,16 +51,16 @@ function HomePage({children}) {
                     sx={{
                         height: '100%',
                         overflow: 'hidden',
+                        paddingRight: '50px',
                     }}
                 >
-                    <AuthBarHandle />
-                    { showFAB && <FAB_ScrollReset handleScrollUp={handleScrollUp}/> }
+                    <AuthBarHandle handleScrollUp={handleScrollUp} showFAB={showFAB} />
                 </Grid2>
                 <Grid2
                     ref={containerRef}
                     sx={{
-                        maxWidth: '90%',
-                        minWidth: '90%',
+                        maxWidth: '650px',
+                        minWidth: '650px',
                         height: '100%',
                         overflowY: 'auto',
                         overflowX: 'hidden',
@@ -83,8 +81,10 @@ function HomePage({children}) {
                 </Grid2>
                 <Grid2
                     sx={{
+                        paddingLeft: '20px',
                         height: '100%',
                         overflow: 'hidden',
+                        alignItems: 'left',
                     }}
                 >
                     <RightSidebar />

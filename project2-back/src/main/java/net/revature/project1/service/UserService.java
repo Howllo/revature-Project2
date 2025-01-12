@@ -4,24 +4,28 @@ import net.revature.project1.dto.UserDto;
 import net.revature.project1.dto.UserRequestPicDto;
 import net.revature.project1.dto.UserSearchDto;
 import net.revature.project1.entity.AppUser;
-import net.revature.project1.entity.Post;
 import net.revature.project1.enumerator.PicUploadType;
-import net.revature.project1.enumerator.PostEnum;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.repository.UserRepo;
-import net.revature.project1.result.PostResult;
 import net.revature.project1.result.UserResult;
 import net.revature.project1.security.JwtTokenUtil;
 import net.revature.project1.utils.RegisterRequirementsUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.Collectors;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,6 +33,7 @@ public class UserService {
     private final UserRepo userRepo;
     private final FileService fileService;
     final private JwtTokenUtil jwtTokenUtil;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepo userRepo, FileService fileService, JwtTokenUtil jwtTokenUtil){
@@ -44,6 +49,20 @@ public class UserService {
      */
     public UserResult getUser(Long id){
         Optional<AppUser> optionalAppUser = userRepo.findById(id);
+        return getUserResult(optionalAppUser);
+    }
+
+    /**
+     * Returns a user DTO of the information that is need to display an accocunt information.
+     * @param username Take in an id that will be searched for the user information.
+     * @return A {@code UserResult} object that contains information about service status, and DTO.
+     */
+    public UserResult getUser(String username){
+        Optional<AppUser> optionalAppUser = userRepo.findAppUserByUsername(username);
+        return getUserResult(optionalAppUser);
+    }
+
+    private UserResult getUserResult(Optional<AppUser> optionalAppUser) {
         if(optionalAppUser.isEmpty()){
             return new UserResult(UserEnum.UNKNOWN_USER, "Unknown user id.", null);
         }
@@ -165,6 +184,9 @@ public class UserService {
      * Used to create a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the following.
      * @param username Take in a following id. AKA who the person that is being followed.
+     * @param username Take in a username. AKA who the person that is being unfollowed.
+     * @param token Takes the token of the user who wants to unfollow
+     * @param username Take in a following id. AKA who the person that is being followed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum followUser(Long followerId, String username, String token){ 
@@ -195,9 +217,48 @@ public class UserService {
     }
 
     /**
+     * used to let the user update their profile
+     * @params AppUser take in the user who wants to update their profile
+     * @return AppUser
+     */
+    public AppUser updateAppUser(AppUser appUser, String token){
+        Long userId = appUser.getId();
+
+        Optional<AppUser> optUser = findUserById(userId);
+        if (!optUser.isPresent()){
+            return null;
+        }
+        Boolean isValidUser = isValidToken(token, userId);
+        if (!isValidUser){
+            return null;
+        }
+        AppUser user = optUser.get();
+        user.setDisplayName(appUser.getDisplayName());
+        user.setBiography(appUser.getBiography());
+        try {
+            String bannerUrl = fileService.createFile(appUser.getBannerPic());
+            user.setBannerPic(bannerUrl);
+            appUser.setBannerPic(bannerUrl);
+        } catch (IOException e){
+            logger.error("Error while creating Banner file: ", e);
+        }
+        try {
+            String profileUrl = fileService.createFile(appUser.getProfilePic());
+            user.setProfilePic(profileUrl);
+            appUser.setProfilePic(profileUrl);
+        } catch (IOException e){
+            logger.error("Error while creating profile file: ", e);
+        }
+        saveAppUser(user);
+        return appUser;
+    }
+
+    /**
      * Used to remove a relationship between following and follower.
      * @param followerId Take in a follower id. AKA who started the unfollowing.
-     * @param username Take in a token. AKA who the person that is being unfollowed.
+     * @param username Take in a username. AKA who the person that is being unfollowed.
+     * @param token Takes the token of the user who wants to unfollow
+     * @param username Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
     public UserEnum unfollowUser(Long followerId, String username, String token){
@@ -242,11 +303,49 @@ public class UserService {
 
         AppUser follower = optionalFollower.get();
         AppUser following = optionalFollowing.get();
-        if(follower.getFollowing().contains(following)){
-            return true;
-        }
+        return follower.getFollowing().contains(following);
+    }
 
-        return false;
+    /**
+     * Used to get the list of all the users following the current user
+     * @param userId takes the id of the current user.
+     * @param token takes the token of the current user to validate the user
+     * @return Set<UserDto> returns the list of users following the current user
+     */
+    public Set<UserDto> getFollowing(Long userId, String token){
+        boolean isValidUser = isValidToken(token, userId);
+        if(!isValidUser){
+            return null;
+        }
+        Optional<AppUser> optUser = userRepo.findById(userId);
+        if (optUser.isEmpty()){
+            return null;
+        }
+        AppUser appUser =  optUser.get();
+        Set<AppUser> setOfFollowers = appUser.getFollowing();
+        Set<UserDto> returnedFollowing = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
+        return returnedFollowing;
+    }
+
+    /**
+     * Used to get the list of all the users follower the current user follows
+     * @param userId takes the id of the current user.
+     * @param token takes the token of the current user to validate the user
+     * @return Set<UserDto> returns the list of users following the current user
+     */
+    public Set<UserDto> getFollowers(Long userId, String token){
+        boolean isValidUser = isValidToken(token, userId);
+        if(!isValidUser){
+            return null;
+        }
+        Optional<AppUser> optUser = userRepo.findById(userId);
+        if (optUser.isEmpty()){
+            return null;
+        }
+        AppUser appUser =  optUser.get();
+        Set<AppUser> setOfFollowers = appUser.getFollower();
+        Set<UserDto> returnedFollowers = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
+        return returnedFollowers;
     }
 
     /**
@@ -309,36 +408,6 @@ public class UserService {
         return UserEnum.SUCCESS;
     }
 
-    public Set<UserDto> getFollowing(Long userId, String token){
-        boolean isValidUser = isValidToken(token, userId);
-        if(!isValidUser){
-            return null;
-        }
-        Optional<AppUser> optUser = userRepo.findById(userId);
-        if (optUser.isEmpty()){
-            return null;
-        }
-        AppUser appUser =  optUser.get();
-        Set<AppUser> setOfFollowers = appUser.getFollowing();
-        Set<UserDto> returnedFollowing = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
-        return returnedFollowing;
-    }
-
-    public Set<UserDto> getFollowers(Long userId, String token){
-        boolean isValidUser = isValidToken(token, userId);
-        if(!isValidUser){
-            return null;
-        }
-        Optional<AppUser> optUser = userRepo.findById(userId);
-        if (optUser.isEmpty()){
-            return null;
-        }
-        AppUser appUser =  optUser.get();
-        Set<AppUser> setOfFollowers = appUser.getFollower();
-        Set<UserDto> returnedFollowers = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
-        return returnedFollowers;
-    }
-
     /**
      * Used to get check if an email already exist.
      * @param appUser .
@@ -399,7 +468,7 @@ public class UserService {
     }
 
     public boolean isValidToken(String token, Long userId) {
-        Optional<AppUser> optionalAppUser = getUser(token);
+        Optional<AppUser> optionalAppUser = getUserToken(token);
         if(optionalAppUser.isEmpty()){
             return false;
         }
@@ -417,7 +486,7 @@ public class UserService {
      * @param token Take in the JWT token to be processed.
      * @return The AppUser that is associated with the token.
      */
-    private Optional<AppUser> getUser(String token) {
+    private Optional<AppUser> getUserToken(String token) {
         return findByUsername(jwtTokenUtil.getUsernameFromToken(token));
     }
 }

@@ -2,26 +2,28 @@ import Cookies from "js-cookie";
 import { createContext, useState } from "react";
 import { projectApi } from "../../../util/axios.js";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const SettingsContext = createContext(null);
 
 export const SettingsProvider = ({ children }) => {
   const [settingsData, setSettingsData] = useState({
     displayName: Cookies.get("display_name") == null || "",
-    profilePic:
-      Cookies.get("profile_pic") == null || "https://placehold.co/600x400/png",
-    bannerPic:
-      Cookies.get("banner_pic") == null || "https://picsum.photos/1500/500",
+    profilePic: Cookies.get("profile_pic"),
+    bannerPic: Cookies.get("banner_pic"),
     biography: Cookies.get("bio_text") || "",
     profilePreviewURL: "",
     bannerPreviewURL: "",
   });
+
+  const navigate = useNavigate();
+
   const [unapprovedProfilePic, setUnapprovedProfilePic] = useState("");
   const [unapprovedBannerPic, setUnapprovedBannerPic] = useState("");
 
   // Strings to be converted to base64 for API
-  let profileMediaString;
-  let bannerMediaString;
+  let profileMediaString = null;
+  let bannerMediaString = null;
 
   const resetTempImageURLS = () => {
     if (settingsData.profilePreviewURL) {
@@ -99,16 +101,15 @@ export const SettingsProvider = ({ children }) => {
 
   const resetSettingsData = () => {
     setSettingsData({
-      displayName: Cookies.get("display_name") == null || "",
-      profilePic:
-        Cookies.get("profile_pic") == null || "https://placehold.co/600x400",
-      bannerPic:
-        Cookies.get("banner_pic") == null || "https://placehold.co/600x400/png",
-      biography: Cookies.get("bio_text") || "",
+      displayName: Cookies.get("display_name"),
+      profilePic: Cookies.get("profile_pic"),
+      bannerPic: Cookies.get("banner_pic"),
+      biography: Cookies.get("bio_text"),
     });
   };
 
   const handleSubmitSettings = async () => {
+    console.log("Handle submit was called");
     try {
       if (unapprovedProfilePic) {
         const reader = new FileReader();
@@ -147,7 +148,7 @@ export const SettingsProvider = ({ children }) => {
       if (!token) {
         throw new Error("No authentication token found");
       }
-
+      console.log("API was called");
       const response = await projectApi.put(
         "user/settings/update",
         settingsPayload,
@@ -159,18 +160,27 @@ export const SettingsProvider = ({ children }) => {
         }
       );
 
-      if (!response.ok) {
-        console.log("response from api was not okay");
+      if (response.status !== 200) {
         resetSettingsData();
         throw new Error("API response was not okay");
       }
 
-      setSettingsData(response.data);
+      setSettingsData((prev) => ({
+        ...prev,
+        profilePic: response.data.profilePic,
+        bannerPic: response.data.bannerPic,
+        displayName: response.data.displayName,
+        biography: response.data.biography,
+      }));
       Cookies.set("profile_pic", response.data.profilePic);
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
+
       resetTempImageURLS();
+      console.log("Settings updated successfully");
+
+      navigate(`/profile/${Cookies.get("username")}`.toLowerCase());
     } catch (error) {
       console.error("Error submitting settings:", error);
       throw error;

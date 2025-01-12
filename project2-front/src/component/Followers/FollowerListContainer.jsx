@@ -1,13 +1,12 @@
 import { Box, Button, List, Typography } from "@mui/material";
-import FollowingList from "./FollowingList";
-// import { useSettings } from "../Context/useSettings";
+import FollowerList from "./FollowerList";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import FollowingListContext from "./Context/FollowingListProvider";
+import FollowerListContext from "./Context/FollowerListProvider";
 
-const FollowingListContainer = () => {
+const FollowerListContainer = () => {
   const navigate = useNavigate();
-  //   const { followingList } = useContext(FollowingListContext);
+  const { followerList } = useContext(FollowerListContext);
 
   const handleBack = () => {
     navigate(-1);
@@ -15,14 +14,14 @@ const FollowingListContainer = () => {
   return (
     <Box>
       <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
-        People Following
+        Followers
       </Typography>
       <Button onClick={handleBack}>Back</Button>
       <List>
-        <FollowingList />
-        <FollowingList />
+        <FollowerList />
+        <FollowerList />
       </List>
     </Box>
   );
 };
-export default FollowingListContainer;
+export default FollowerListContainer;

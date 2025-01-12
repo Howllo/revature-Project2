@@ -2,17 +2,15 @@
 import {Box, Fab} from "@mui/material";
 import PropTypes from "prop-types";
 
-const FAB_ScrollReset = ({handleScrollUp}) => {
+const FAB_ScrollReset = ({handleScrollUp, showFAB}) => {
     return (
         <Box
             sx={{
-                paddingRight: '20px',
-                display: 'flex',
-                height: '65%',
-                width: '100%',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-                marginBottom: '50px'
+                height: '100vh',
+                zIndex: 1000,
+                display: showFAB ? 'flex' : 'none',
+                justifyContent: 'end',
+                alignItems: 'center',
             }}
         >
             <Fab elevation={0}
@@ -46,6 +44,7 @@ const FAB_ScrollReset = ({handleScrollUp}) => {
 
 FAB_ScrollReset.propTypes = {
     handleScrollUp: PropTypes.func.isRequired,
+    showFAB: PropTypes.bool.isRequired,
 };
 
 export default FAB_ScrollReset;

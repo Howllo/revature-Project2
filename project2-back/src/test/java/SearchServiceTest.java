@@ -41,12 +41,5 @@ public class SearchServiceTest {
         List<UserSearchDto> userSearchDtos = searchService.getSearchUser(username);
 
         Assertions.assertThat(userSearchDtos).isNotNull();
-
     }
-
 }
-
-
-
-
-

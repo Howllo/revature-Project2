@@ -1,5 +1,5 @@
 ﻿import {Backdrop, Box} from "@mui/material";
-import MediaContainer from "./DisplayPost/MediaContainer.jsx";
+import MediaContainer from "./MediaContainer.jsx";
 
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,8 @@ const MediaBackdrop = ({media, open, handleClose}) => {
                 open={open}
                 onClick={handleClose}
                 sx={{
-                    zIndex: 9999
+                    zIndex: 9999,
+                    backgroundColor: 'black'
                 }}
             >
                 <Box
@@ -19,8 +20,6 @@ const MediaBackdrop = ({media, open, handleClose}) => {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        height: '70%',
-                        width: '70%',
                     }}
                 >
                     <MediaContainer media={media}/>

@@ -17,11 +17,10 @@ const SearchResult = ({user, setSearchTerm}) => {
 
     const handleProfileClick = () => {
         setSearchTerm("");
-        console.log(user)
     }
 
     return (
-        <Link to={`/${user.username.toLowerCase()}`} state={{ userObj: selectedUser }} style={{ textDecoration: 'none' }}>
+        <Link to={`/profile/${user.username}`} state={{ userObj: selectedUser }} style={{ textDecoration: 'none' }}>
             <Button
                 disableRipple={true}
 
