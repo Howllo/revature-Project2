@@ -110,6 +110,7 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const handleSubmitSettings = async () => {
+    console.log("Handle submit was called");
     try {
       if (unapprovedProfilePic) {
         const reader = new FileReader();

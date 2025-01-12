@@ -1,8 +1,18 @@
 ﻿import { Box, Typography } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile";
+import { useEffect, useState } from "react";
 
 const ProfileBiography = ({ user }) => {
-  // const { settingsData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
+
+  useEffect(() => {
+    const y = getUserData(user.username);
+    y.then((value) => {
+      setUserData(value);
+    });
+  });
+
   return (
     <Box
       sx={{
@@ -21,7 +31,7 @@ const ProfileBiography = ({ user }) => {
           paddingLeft: "10px",
         }}
       >
-        {user.biography}
+        {userData.biography}
       </Typography>
     </Box>
   );

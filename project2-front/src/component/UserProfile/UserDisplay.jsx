@@ -1,14 +1,23 @@
 ﻿import { Box } from "@mui/material";
 import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
+import { useEffect, useState } from "react";
 
 const UserDisplay = ({ user }) => {
-  // const { settingsData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
+
+  useEffect(() => {
+    const y = getUserData(user.username);
+    y.then((value) => {
+      setUserData(value);
+    });
+  });
   return (
     <Box>
       <Box>
         <img
-          src={user.bannerPic || "https://picsum.photos/1500/500"}
+          src={userData.bannerPic || "https://picsum.photos/1500/500"}
           alt="Post Image"
           loading={"lazy"}
           style={{
@@ -30,7 +39,7 @@ const UserDisplay = ({ user }) => {
         >
           <UserAvatar
             username={user.username}
-            image={user.profilePic}
+            image={userData.profilePic}
             width={64}
             height={64}
           />
