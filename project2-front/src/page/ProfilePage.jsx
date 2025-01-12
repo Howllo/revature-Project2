@@ -13,29 +13,29 @@ import { projectApi } from "../util/axios.js";
 const ProfilePage = () => {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
-  const {username} = useParams(); 
+  const { username } = useParams();
 
   const getUser = async (user) => {
     try {
-          const response = await projectApi.get(`/user/username/${user}`);
-          const respData = response.data;
-    
-          return respData;
-        } catch (e) {
-          console.error(`Error Status: ${e.status}`);
-    
-          throw e;
-        }
-  }
+      const response = await projectApi.get(`/user/username/${user}`);
+      const respData = response.data;
+
+      return respData;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
+  };
 
   useEffect(() => {
     if (location.state?.userObj) {
       setUserData(location.state?.userObj);
     } else {
       const x = getUser(username);
-      x.then(value => {
+      x.then((value) => {
         setUserData(value);
-      })
+      });
     }
   }, [location]);
 
@@ -51,14 +51,19 @@ const ProfilePage = () => {
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
-          <Box sx={{mt: '-1px',
-                    borderRadius: '0px',
-                    marginTop: '-38px',
-                    borderStyle: 'solid',
+      
+          <Box 
+               sx={{mt: '-1px',
+                    mt: "-1px",
+                    borderRadius: "0px",
+                    marginTop: "-38px",
+                    borderStyle: "solid",
                     borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',
-                    paddingTop: '20px'}} >
+                    borderColor: "rgb(212, 219, 226)",
+                    width: "99.7%",
+                    paddingTop: "20px",
+               }} 
+             >
               {userData && <ProfileButton user={userData} />}
               {userData && <ProfileInformationPanel user={userData} />}
               {userData && <SettingsContainer user={userData} />}
@@ -67,13 +72,19 @@ const ProfilePage = () => {
         </Box>
 
         {/* User Post */}
-        <Box sx={{mt: '-1px',
-                    borderRadius: '0px',
-                    marginTop: '-1px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',}}>{userData && <ProfilePost user={userData} />}</Box>
+        <Box
+          sx={{
+            mt: "-1px",
+            borderRadius: "0px",
+            marginTop: "-1px",
+            borderStyle: "solid",
+            borderWidth: 1,
+            borderColor: "rgb(212, 219, 226)",
+            width: "99.7%",
+          }}
+        >
+          {userData && <ProfilePost user={userData} />}
+        </Box>
       </Box>
     </UserProfileProvider>
   );

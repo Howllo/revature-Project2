@@ -3,6 +3,7 @@ import { usePost } from "../Post/Context/UsePost.jsx";
 import { useEffect } from "react";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
@@ -34,7 +35,8 @@ const ProfileInformationPanel = ({ user }) => {
           paddingTop: "15px",
         }}
       >
-        {settingsData.displayName || user.username}
+        {/* {settingsData.displayName || user.username} */}
+        {user.username}
       </Typography>
 
       <Typography
@@ -89,20 +91,21 @@ const ProfileInformationPanel = ({ user }) => {
           >
             {user.followerCount}
           </Typography>
-
-          <Typography
-            variant="h6"
-            color="secondary"
-            sx={{
-              marginLeft: "5px",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: "300",
-              fontSize: "13px",
-              color: "rgb(66, 87, 108)",
-            }}
-          >
-            followers
-          </Typography>
+          <Link to="/profile/:username/followers">
+            <Typography
+              variant="h6"
+              color="secondary"
+              sx={{
+                marginLeft: "5px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "300",
+                fontSize: "13px",
+                color: "rgb(66, 87, 108)",
+              }}
+            >
+              followers
+            </Typography>
+          </Link>
         </Box>
 
         <Box
@@ -136,7 +139,7 @@ const ProfileInformationPanel = ({ user }) => {
               color: "rgb(66, 87, 108)",
             }}
           >
-            following
+            <Link to="/profile/:username/following">following</Link>
           </Typography>
         </Box>
 
