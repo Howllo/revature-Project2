@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-// export const FollowerListContext = createContext(null);
+const FollowerListContext = createContext(null);
 
 export const FollowerListProvider = ({ children }) => {
   const [followerList, setFollowerList] = useState([]);
