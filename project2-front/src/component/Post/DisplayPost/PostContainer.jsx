@@ -106,8 +106,8 @@ const PostContainer = ({ key, post, commentChildren }) => {
           <InteractionBar
             post={savedPost}
             setPost={setSavedPost}
-            likesNum={post.likesNum ? post.likesNum : 0}
-            commentsNum={post.commentsNum ? post.commentsNum : 0}
+            commentsCount={post.commentCount}
+            likesCount={post.likeCount}
           />
         </Box>
 
@@ -136,8 +136,8 @@ PostContainer.propTypes = {
     displayName: PropTypes.string,
     postAt: PropTypes.string,
     comment: PropTypes.string.isRequired,
-    commentsNum: PropTypes.number,
-    likesNum: PropTypes.number,
+    commentCount: PropTypes.number,
+    likeCount: PropTypes.number,
     media: PropTypes.string,
   }).isRequired,
   commentChildren: PropTypes.node,

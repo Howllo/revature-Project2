@@ -81,24 +81,6 @@ public class PostController {
         return ResponseHandler.returnType(result, null);
     }
 
-    @GetMapping("{id}/likes")
-    public ResponseEntity<Long> returnTotalLikes(@PathVariable Long id){
-        Long result = postService.returnTotalLikes(id);
-        if(result == null){
-            return ResponseEntity.badRequest().body(-1L);
-        }
-        return ResponseEntity.ok(result);
-    }
-
-    @GetMapping("{id}/comments/total")
-    public ResponseEntity<Long> returnTotalComments(@PathVariable Long id){
-        Long result = postService.returnTotalComments(id);
-        if(result == null){
-            return ResponseEntity.badRequest().body(-1L);
-        }
-        return ResponseEntity.ok(result);
-    }
-
     @GetMapping("/check/{postId}/like/{user}")
     public ResponseEntity<?> checkLike(@PathVariable Long postId,
                                        @PathVariable Long user,

@@ -3,6 +3,7 @@ package net.revature.project1.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,10 @@ public class JwtTokenUtil {
     }
 
     public Boolean validateToken(String token, String username) {
+        if(token == null || username == null){
+            return false;
+        }
+
         try {
             String tokenUsername = getUsernameFromToken(token);
             return (tokenUsername.equals(username) && !isTokenExpired(token));

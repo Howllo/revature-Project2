@@ -18,6 +18,7 @@ import { SearchProvider } from "./component/Search/Context/GetSelectedData.jsx";
 import { Home } from "@mui/icons-material";
 import FollowerPage from "./page/FollowersPage.jsx";
 import FollowingPage from "./page/FollowingPage.jsx";
+import PostPage from "./page/PostPage.jsx";
 
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
                         }
                       />
                       <Route
+                        path="/setting"
+                        element={
+                          <HomePage>
+                            <SettingPage />
+                          </HomePage>
+                        }
+                      />
+                      <Route
                         path="/profile/:username"
                         element={
                           <HomePage>
@@ -72,11 +81,12 @@ function App() {
                           </HomePage>
                         }
                       />
+
                       <Route
-                        path="/setting"
+                        path="/profile/:username/post/:postId"
                         element={
                           <HomePage>
-                            <SettingPage />
+                            <PostPage />
                           </HomePage>
                         }
                       />

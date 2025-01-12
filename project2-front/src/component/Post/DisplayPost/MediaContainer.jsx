@@ -45,8 +45,8 @@ const MediaContainer = ({media, isVideo}) => {
             sx={{
                 position: 'relative',
                 width: '100%',
+                height: '100%',
                 borderRadius: '15px',
-                overflow: 'hidden',
             }}
         >
             {
@@ -70,6 +70,12 @@ const MediaContainer = ({media, isVideo}) => {
                     <Button
                         disableRipple={true}
                         onClick={handleOpen}
+                        sx={{
+                            "&:hover": {
+                                backgroundColor: "transparent",
+                                boxShadow: "none",
+                            },
+                        }}
                     >
                         <img
                             src={media}
@@ -77,6 +83,7 @@ const MediaContainer = ({media, isVideo}) => {
                             loading={"lazy"}
                             style={{
                                 marginTop: '10px',
+                                height: 'auto',
                                 width: '100%',
                                 borderRadius: '15px',
                             }}
