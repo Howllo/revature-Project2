@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -301,48 +299,6 @@ public class UserService {
         AppUser follower = optionalFollower.get();
         AppUser following = optionalFollowing.get();
         return follower.getFollowing().contains(following);
-    }
-
-    /**
-     * Used to get the list of all the users following the current user
-     * @param userId takes the id of the current user.
-     * @param token takes the token of the current user to validate the user
-     * @return Set<UserDto> returns the list of users following the current user
-     */
-    public Set<UserDto> getFollowing(Long userId, String token){
-        boolean isValidUser = isValidToken(token, userId);
-        if(!isValidUser){
-            return null;
-        }
-        Optional<AppUser> optUser = userRepo.findById(userId);
-        if (optUser.isEmpty()){
-            return null;
-        }
-        AppUser appUser =  optUser.get();
-        Set<AppUser> setOfFollowers = appUser.getFollowing();
-        Set<UserDto> returnedFollowing = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
-        return returnedFollowing;
-    }
-
-    /**
-     * Used to get the list of all the users follower the current user follows
-     * @param userId takes the id of the current user.
-     * @param token takes the token of the current user to validate the user
-     * @return Set<UserDto> returns the list of users following the current user
-     */
-    public Set<UserDto> getFollowers(Long userId, String token){
-        boolean isValidUser = isValidToken(token, userId);
-        if(!isValidUser){
-            return null;
-        }
-        Optional<AppUser> optUser = userRepo.findById(userId);
-        if (optUser.isEmpty()){
-            return null;
-        }
-        AppUser appUser =  optUser.get();
-        Set<AppUser> setOfFollowers = appUser.getFollower();
-        Set<UserDto> returnedFollowers = setOfFollowers.stream().map(follower -> new UserDto(follower.getUsername(), follower.getDisplayName(), follower.getProfilePic(), follower.getBannerPic(), follower.getBiography(), follower.getFollower().size(), follower.getFollowing().size(), follower.getCreatedAt())).collect(Collectors.toSet());
-        return returnedFollowers;
     }
 
     /**

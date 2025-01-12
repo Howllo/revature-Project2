@@ -1,5 +1,5 @@
 ﻿import {Backdrop, Box} from "@mui/material";
-import MediaContainer from "./DisplayPost/MediaContainer.jsx";
+import MediaContainer from "./MediaContainer.jsx";
 
 import PropTypes from 'prop-types';
 

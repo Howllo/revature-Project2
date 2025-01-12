@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-// import { useSettings } from "../Context/useSettings";
 import { useContext } from "react";
 import SettingsContext from "../Context/SettingsProvider";
 import { useUserProfile } from "../../UserProfile/Context/UseUserProfile";
@@ -11,17 +10,19 @@ const SubmitButton = () => {
     <Button
       variant="contained"
       sx={{
-        backgroundColor: "rgb(29, 161, 242)",
+        background: "linear-gradient(45deg, rgb(0, 161, 242) 30%, rgb(29, 140, 242) 70%)",
         color: "white",
         fontWeight: 600,
         textTransform: "capitalize",
+        borderRadius: '20px',
+        width: '100%',
       }}
       onClick={() => {
         handleSubmitSettings();
         handleCloseDialogBox();
       }}
     >
-      Submit Changes
+      Save Changes
     </Button>
   );
 };
