@@ -8,7 +8,7 @@ const PostText = ({comment}) => {
                 variant="body2"
                 fontFamily="Inter, sans-serif"
                 sx={{
-                    fontSize: '14px',
+                    fontSize: '15px',
                     wordWrap: 'break-word',
                     overflow: 'hidden',
                     fontWeight: 400,

@@ -1,5 +1,11 @@
 .AuthContainerLeftBar {
     width: 100%;
-    padding-right: 20%;
+    padding-left: 30%;
+}
 
+@media (max-width: 1280px) {
+    .AuthContainerLeftBar {
+        width: 100%;
+        padding-left: 20%;
+    }
 }

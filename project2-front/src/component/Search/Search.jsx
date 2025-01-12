@@ -57,8 +57,7 @@ function Search() {
     return (
         <Box sx={{
             minHeight: '100vh',
-            maxWidth: '250px',
-            width: 'auto',
+            width: '100%',
             margin: 0,
             padding: 0
         }}>

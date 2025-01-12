@@ -4,27 +4,51 @@
     background-color: #ffffff;
     display: flex;
     overflow: hidden;
+    justify-content: center;
     margin: auto;
 }
 
 .AuthContainer {
     height: 100%;
-    width: 20%;
+    width: 15%;
     margin-top: 5%;
-    margin-left: 5%;
 }
 
 .ChildrenContainer {
     height: 100%;
     width: 50%;
+    min-width: 685px;
+    max-width: 685px;
     overflow-x: hidden;
     overflow-y: scroll;
 }
 
 .RightSidebarContainer {
     height: 100%;
-    width: 20%;
+    width: 15%;
     margin-top: 5%;
-    margin-right: 5%;
     margin-left: 1%;
+}
+
+@media (max-width: 1280px) {
+    .ChildrenContainer {
+        height: 100%;
+        width: 50%;
+        min-width: 485px;
+        max-width: 485px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+    }
+}
+@media (min-width: 1920px) {
+    .ChildrenContainer {
+        height: 100%;
+        width: 50%;
+        min-width: 785px;
+        max-width: 785px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        font-size: 200px !important;
+    }
 }
