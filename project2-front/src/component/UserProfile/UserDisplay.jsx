@@ -15,7 +15,7 @@ const UserDisplay = ({ user }) => {
         y.then(value =>{
             setUserData(value)
         })
-    });
+    }, [user]);
   
   return (
     <Box>

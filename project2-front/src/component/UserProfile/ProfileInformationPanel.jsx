@@ -25,7 +25,7 @@ const ProfileInformationPanel = ({ user }) => {
     y.then(value =>{
         setUserData(value)
     });
-  });
+  }, [user]);
 
   return (
     <Box
