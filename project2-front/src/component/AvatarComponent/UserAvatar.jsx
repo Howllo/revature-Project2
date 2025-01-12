@@ -47,11 +47,11 @@ const UserAvatar = ({ username, image, width = 42, height = 42 }) => {
         alt={name}
         src={image}
         sx={{
-          borderColor: "rgb(212,217,225)",
-          borderStyle: "solid",
-          borderWidth: "1px",
-          width: { width },
-          height: { height },
+            borderColor: "white",
+            borderStyle: "solid",
+            borderWidth: "2px",
+            width: { width },
+            height: { height },
         }}
       />
     </Button>

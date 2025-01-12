@@ -1,14 +1,14 @@
-﻿import { Box } from "@mui/material";
+﻿import {Box} from "@mui/material";
 import UserDisplay from "../component/UserProfile/UserDisplay.jsx";
 import ProfileButton from "../component/UserProfile/ProfileButton.jsx";
 import ProfileInformationPanel from "../component/UserProfile/ProfileInformationPanel.jsx";
 import ProfileBiography from "../component/UserProfile/ProfileBiography.jsx";
 import ProfilePost from "../component/UserProfile/ProfilePost.jsx";
-import { useEffect, useState } from "react";
-import { UserProfileProvider } from "../component/UserProfile/Context/UserProfileProvider.jsx";
-import { useLocation, useParams } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {UserProfileProvider} from "../component/UserProfile/Context/UserProfileProvider.jsx";
+import {useLocation, useParams} from "react-router-dom";
 import SettingsContainer from "../component/ProfileSettings/SettingsContainer.jsx";
-import { projectApi } from "../util/axios.js";
+import {projectApi} from "../util/axios.js";
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -18,12 +18,9 @@ const ProfilePage = () => {
   const getUser = async (user) => {
     try {
           const response = await projectApi.get(`/user/username/${user}`);
-          const respData = response.data;
-    
-          return respData;
+          return response.data;
         } catch (e) {
           console.error(`Error Status: ${e.status}`);
-    
           throw e;
         }
   }
@@ -37,7 +34,7 @@ const ProfilePage = () => {
         setUserData(value);
       })
     }
-  }, [location]);
+  }, [location, username]);
 
   return (
     <UserProfileProvider>
@@ -46,6 +43,7 @@ const ProfilePage = () => {
           maxWidth: "85%",
           width: "100%",
           flexDirection: "column",
+            mt: '-10px'
         }}
       >
         {/* User Profile Information */}
