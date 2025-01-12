@@ -65,7 +65,7 @@ const Navbar = () => {
                         : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Home</Typography>}
                 </Button>
             </Link>
-            <Link to={`/profile/${username.toLowerCase()}`} state={{ userObj: user}}>
+            <Link to={`/profile/${username}`} state={{ userObj: user}}>
                 <Button onClick={handleProfileClick} variant="text">
                     {currentNav === 'profile' ? <AccountCircleIcon/> : <AccountCircleOutlinedIcon/>}
                     {currentNav === 'profile' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Profile</Typography>
