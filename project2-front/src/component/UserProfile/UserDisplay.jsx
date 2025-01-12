@@ -9,8 +9,7 @@ const UserDisplay = ({ user }) => {
   return (
     <Box className="UserDisplayContainer">
         <img className="BannerImg"
-             // src={settingsData.bannerPic || "https://picsum.photos/1500/500"}
-             src={"https://picsum.photos/1500/500"}
+             src={settingsData.bannerPic || "https://picsum.photos/1500/500"}
              alt="Post Image" loading={"lazy"}/>
         <Box>
           <Avatar className="UserDisplayUserAvatar" image={settingsData.profilePic}/>
