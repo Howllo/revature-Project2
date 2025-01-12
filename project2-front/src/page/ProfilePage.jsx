@@ -43,7 +43,7 @@ const ProfilePage = () => {
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
-          <Box sx={{mt: '-1px',
+          <Box className="ProfilePageUserContainer" sx={{mt: '-1px',
                     borderRadius: '0px',
                     marginTop: '-38px',
                     marginBottom: '3%',

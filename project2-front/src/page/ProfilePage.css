@@ -8,3 +8,7 @@
     border-color: rgb(212, 219, 226);
     width: 98% !important;
 }
+
+.ProfilePageUserContainer {
+    margin-top: 10px !important;
+}

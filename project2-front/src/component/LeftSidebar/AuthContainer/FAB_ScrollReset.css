@@ -1,6 +1,8 @@
 .FABScrollResetContainer {
-    height: 50vh !important;
-    padding-top: 150% !important;
+    height: 62vh !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: right !important;
 }
 
 .FABScrollContainer {
@@ -13,4 +15,13 @@
     color: #000000;
     font-weight: 800;
     font-size: 35px;
+}
+
+@media (max-width: 1280px) {
+    .FABScrollResetContainer {
+        height: 92vh !important;
+        display: flex !important;
+        align-items: flex-end !important;
+        justify-content: right !important;
+    }
 }

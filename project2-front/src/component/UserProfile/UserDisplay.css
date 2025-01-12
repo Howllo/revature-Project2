@@ -1,14 +1,17 @@
 .UserDisplayContainer {
+    height: 200px;
+    width: 100%;
 }
 
 .BannerImg {
-    max-width: 100% !important;
-    max-height: 100% !important;
-    margin-bottom: -6% !important;
+    margin-bottom: -50px !important;
+    object-fit: fill !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .UserDisplayUserAvatar {
     height: 82px !important;
     width: 82px !important;
-    margin-left: 2% !important;
+    margin-left: 10px !important;
 }

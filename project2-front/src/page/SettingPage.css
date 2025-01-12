@@ -12,6 +12,6 @@
 }
 
 .SettingPageChangeNameButton {
-    margin-top: 2%;
+    margin-top: 2% !important;
     width: 27% !important;
 }

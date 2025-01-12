@@ -32,16 +32,16 @@ function HomePage({children}) {
 
     return (
         <Box className="HomePageContainer">
-                <Box className="AuthContainer">
-                    <AuthBarHandle handleScrollUp={handleScrollUp} showFAB={showFAB}/>
-                </Box>
-                <Box className="ChildrenContainer" ref={containerRef}>
-                    {/* Main content */}
-                    {children}
-                </Box>
-                <Box className="RightSidebarContainer">
-                    <RightSidebar />
-                </Box>
+            <Box className="AuthContainer">
+                <AuthBarHandle handleScrollUp={handleScrollUp} showFAB={showFAB}/>
+            </Box>
+            <Box className="ChildrenContainer" ref={containerRef}>
+                {/* Main content */}
+                {children}
+            </Box>
+            <Box className="RightSidebarContainer">
+                <RightSidebar />
+            </Box>
         </Box>
     );
 }
