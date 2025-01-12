@@ -50,8 +50,6 @@ const FeedPage = () => {
                 key={comment.id}
                 sx={{
                     width: '100%',
-                    pl: 4,
-                    borderLeft: '2px solid #f0f0f0',
                 }}
             >
                 <PostContainer
