@@ -2,14 +2,13 @@
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
 import PropTypes from "prop-types";
 
-const ProfileButton = ({ user }) => {
+const ProfileButton = ({ user, update}) => {
   const { setFollow, checkFollow, removeFollow, handleOpenDialogBox } =
     useUserProfile();
   const [isFollowed, setIsFollowed] = useState();
+  
 
   useEffect(() => {
     const x = checkFollow(Cookies.get("user_id"), user.username);
@@ -23,6 +22,7 @@ const ProfileButton = ({ user }) => {
       ? removeFollow(Cookies.get("user_id"), user.username)
       : setFollow(Cookies.get("user_id"), user.username);
     setIsFollowed(!isFollowed);
+    update()
   };
 
   if (Cookies.get("username") === user.username) {
@@ -33,7 +33,7 @@ const ProfileButton = ({ user }) => {
           flexDirection: "column",
           borderColor: "gray",
           borderWidth: "1px",
-          marginTop: '-10px',
+          mt: "-20px",
           paddingRight: "10px",
         }}
       >
@@ -86,21 +86,13 @@ const ProfileButton = ({ user }) => {
           onClick={handleFollow}
           variant="contained"
           size="small"
-          disableElevation={true}
           sx={{
-              color: isFollowed ? "rgb(65,86,119)" : "white",
-              borderRadius: '20px',
-              textTransform: "capitalize",
-              mt: "5px",
-              backgroundColor: isFollowed ? "rgb(239,241,243)" : "rgb(25,117,208)",
+            borderRadius: 6,
+            textTransform: "capitalize",
+            mt: "5px"
           }}
         >
-            {isFollowed ? <CheckIcon sx={{
-                color: "rgb(65,86,119)",
-                width: '20px',
-                height: '20px',
-            }}/> : <AddIcon /> }
-            {isFollowed ? "Unfollow" : "Follow"}
+          {isFollowed ? "Unfollow" : "Follow"}
         </Button>
       </Box>
     </Box>
