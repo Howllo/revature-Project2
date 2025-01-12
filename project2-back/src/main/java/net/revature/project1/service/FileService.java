@@ -128,6 +128,10 @@ public class FileService {
 
 
     public String createFile(String post) throws IOException {
+        if(post.isEmpty()){
+            return "";
+        }
+
         String[] parts = post.split(",");
 
         String imageType = parts[0].split(";")[0].split(":")[1];
