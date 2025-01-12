@@ -4,7 +4,7 @@ import PostText from "../PostText.jsx";
 import PostInformationText from "./PostInformationText.jsx";
 import InteractionBar from "./InteractionBar.jsx";
 import PropTypes from "prop-types";
-import MediaContainer from "./MediaContainer.jsx";
+import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
 
 const PostContainer = ({ key, post, commentChildren }) => {

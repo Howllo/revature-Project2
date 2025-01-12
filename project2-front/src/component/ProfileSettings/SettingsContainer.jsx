@@ -1,7 +1,6 @@
 import { SettingsProvider } from "./Context/SettingsProvider";
 import BioTextField from "./ProfileSettingsFields/BioTextField";
 import Banner from "./ProfileSettingsFields/Banner";
-import ProfilePictureInput from "./ProfileSettingsFields/ProfilePictureInput";
 import DisplayNameField from "./ProfileSettingsFields/DisplayNameField";
 
 import {
@@ -23,27 +22,28 @@ const SettingsContainer = () => {
         open={isOpenDialogBox}
         sx={{
           "& .MuiPaper-root": {
-            width: { xs: "90%", sm: "50%" },
-            height: { xs: "300px", sm: "80%" },
-            borderRadius: "50px",
+            width: '600px',
+            height: 'auto',
+            borderRadius: "8px",
           },
+            overflow: 'hidden',
         }}
         onClose={handleCloseDialogBox}
       >
-        <DialogTitle sx={{ textAlign: "center" }}>
-          Edit Your Profile
+        <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", fontSize: "23px" }}>
+          Edit my profile
         </DialogTitle>
         <DialogContent>
           <Banner />
-          <ProfilePictureInput />
           <DisplayNameField />
           <BioTextField />
         </DialogContent>
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <SubmitButton />
-        </DialogActions>
-        <DialogActions sx={{ justifyContent: "center" }}>
-          <CancelButton />
+        <DialogActions sx={{
+            flexDirection: "column",
+            justifyContent: "center"
+        }}>
+            <SubmitButton />
+            <CancelButton />
         </DialogActions>
       </Dialog>
     </SettingsProvider>
