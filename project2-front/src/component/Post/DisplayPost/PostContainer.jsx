@@ -6,25 +6,13 @@ import InteractionBar from "./InteractionBar.jsx";
 import PropTypes from "prop-types";
 import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
+import "./PostContainer.css"
 
 const PostContainer = ({ key, post, commentChildren }) => {
   const [savedPost, setSavedPost] = useState(post);
 
   return (
-    <Card
-      elevation={0}
-      sx={{
-        mt: "-1px",
-        borderRadius: "0px",
-        display: "flex",
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "rgb(212, 219, 226)",
-        width: "100%",
-        padding: "13px",
-      }}
-      key={key}
-    >
+    <Card className="PostContainerCard" elevation={0} key={key}>
       <Box
         sx={{
           display: "flex",
@@ -76,6 +64,7 @@ const PostContainer = ({ key, post, commentChildren }) => {
             flexDirection: "column",
             justifyContent: "left",
             alignItems: "left",
+              marginBottom: '2%',
           }}
         >
           <PostText comment={post.comment} />

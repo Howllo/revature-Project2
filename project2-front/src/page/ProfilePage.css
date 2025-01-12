@@ -1,0 +1,10 @@
+.ProfilePageProfilePostContainer {
+    border-style: solid;
+    border-width: thin;
+    border-left: thin;
+    border-top: thin;
+    border-bottom: 0 !important;
+    border-right: thin;
+    border-color: rgb(212, 219, 226);
+    width: 98% !important;
+}

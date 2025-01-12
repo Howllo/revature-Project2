@@ -7,6 +7,7 @@ import MediaContainer from "../MediaContainer.jsx";
 import PostInteractiveBar from "./PostInteractiveBar.jsx";
 import {usePost} from "../Context/UsePost.jsx";
 import PropTypes from "prop-types";
+import "./CreatePost.css"
 
 const CreatePost = ({handleOpen, child}) => {
     const {resetPost, previewUrl, isVideo, submitPost, getPost} = usePost();
@@ -38,10 +39,7 @@ const CreatePost = ({handleOpen, child}) => {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    minWidth: '550px',
-                    maxWidth: '550px',
-                    minHeight: '300px',
-                    maxHeight: '90vh',
+                    width: '50vw',
                     height: 'auto',
                     borderRadius: '15px',
                     backgroundColor: 'white',
@@ -102,18 +100,16 @@ const CreatePost = ({handleOpen, child}) => {
 
                 <Box
                     sx={{
-                        maxWidth: '350px',
-                        maxHeight: '350px',
-                        margin: '0 auto',
+                        width: '100%',
+                        height: 'fit-content',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         overflow: 'hidden',
-                        position: 'relative',
                         borderRadius: '50px',
                     }}
                 >
-                    {previewUrl ? <MediaContainer media={previewUrl} isVideo={isVideo}/> : null}
+                    {previewUrl ? <MediaContainer className="MediaContainerCreatePost" media={previewUrl} isVideo={isVideo}/> : null}
                 </Box>
                 <PostInteractiveBar/>
             </Box>

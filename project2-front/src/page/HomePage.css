@@ -4,6 +4,7 @@
     background-color: #ffffff;
     display: flex;
     overflow: hidden;
+    margin: auto;
 }
 
 .AuthContainer {
@@ -15,8 +16,7 @@
 
 .ChildrenContainer {
     height: 100%;
-    width: 60%;
-    background-color: lightgray;
+    width: 50%;
     overflow-x: hidden;
     overflow-y: scroll;
 }

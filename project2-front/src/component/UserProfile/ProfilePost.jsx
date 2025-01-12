@@ -56,8 +56,9 @@ const ProfilePost = ({user}) => {
                     <Box
                         key={comment.id}
                         sx={{
-                            width: '100%',
-                            pl: 4,
+                            width: '98%',
+                            marginTop: '2%',
+                            pl: 1,
                             borderLeft: '2px solid #f0f0f0',
                         }}
                     >
@@ -75,12 +76,10 @@ const ProfilePost = ({user}) => {
             return (
                 <Box
                     sx={{
-                        maxWidth: "104.7%",
-                        width: "104.7%",
+                        maxWidth: "100%",
+                        width: "100%",
                         display: 'flex',
                         flexDirection: 'column',
-                        
-                        marginLeft: '-1px'
                     }}
                 >
                     {listPostData.map((post) => (

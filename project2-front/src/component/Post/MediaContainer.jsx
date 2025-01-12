@@ -95,7 +95,7 @@ const MediaContainer = ({media, isVideo}) => {
             {
                 mediaType === 'youtube' ? (
                         <iframe style={{
-                            width: "100%",
+                            width: "95%",
                             height: "300px",
                         }}
                                 src={youtube}

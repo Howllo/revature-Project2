@@ -1,8 +1,12 @@
+.FABScrollResetContainer {
+    height: 50vh !important;
+    padding-top: 150% !important;
+}
+
 .FABScrollContainer {
     float: right;
-    margin-right: 20px;
-    margin-top: 49vh;
-    background-color: #ffffff;
+    margin-right: 20px !important;
+    background-color: #ffffff !important;
 }
 
 .ExpandLessIcon {

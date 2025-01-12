@@ -1,0 +1,9 @@
+.PostContainerCard {
+    border-radius: 0px;
+    display: flex;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgb(212, 219, 226);
+    width: 100%;
+    padding-bottom: 2%;
+}

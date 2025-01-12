@@ -50,8 +50,9 @@ const FeedPage = () => {
             <Box
                 key={comment.id}
                 sx={{
-                    width: '100%',
-                    pl: 4,
+                    width: '98%',
+                    marginTop: '2%',
+                    pl: 1,
                     borderLeft: '2px solid #f0f0f0',
                 }}
             >

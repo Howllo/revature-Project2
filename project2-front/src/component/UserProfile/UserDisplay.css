@@ -1,0 +1,14 @@
+.UserDisplayContainer {
+}
+
+.BannerImg {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin-bottom: -6% !important;
+}
+
+.UserDisplayUserAvatar {
+    height: 82px !important;
+    width: 82px !important;
+    margin-left: 2% !important;
+}

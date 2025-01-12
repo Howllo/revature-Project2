@@ -6,7 +6,7 @@ import "./FAB_ScrollReset.css";
 const FAB_ScrollReset = ({handleScrollUp, showFAB}) => {
 
     return (
-        <Box>
+        <Box className="FABScrollResetContainer">
             <Fab className="FABScrollContainer" elevation={0} onClick={handleScrollUp} disableRipple={true}>
                 <ExpandLessIcon className="ExpandLessIcon"/>
             </Fab>

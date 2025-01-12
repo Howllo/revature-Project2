@@ -9,6 +9,7 @@ import { UserProfileProvider } from "../component/UserProfile/Context/UserProfil
 import { useLocation, useParams } from "react-router-dom";
 import SettingsContainer from "../component/ProfileSettings/SettingsContainer.jsx";
 import { projectApi } from "../util/axios.js";
+import "./ProfilePage.css"
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -41,22 +42,14 @@ const ProfilePage = () => {
 
   return (
     <UserProfileProvider>
-      <Box
-        sx={{
-          maxWidth: "85%",
-          width: "100%",
-          flexDirection: "column",
-        }}
-      >
+      <Box sx={{ flexDirection: "column", }}>
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
           <Box sx={{mt: '-1px',
                     borderRadius: '0px',
                     marginTop: '-38px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
+                    marginBottom: '3%',
                     width: '99.7%',
                     paddingTop: '20px'}} >
               {userData && <ProfileButton user={userData} />}
@@ -67,13 +60,9 @@ const ProfilePage = () => {
         </Box>
 
         {/* User Post */}
-        <Box sx={{mt: '-1px',
-                    borderRadius: '0px',
-                    marginTop: '-1px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',}}>{userData && <ProfilePost user={userData} />}</Box>
+        <Box className="ProfilePageProfilePostContainer">
+            {userData && <ProfilePost user={userData} />}
+        </Box>
       </Box>
     </UserProfileProvider>
   );
