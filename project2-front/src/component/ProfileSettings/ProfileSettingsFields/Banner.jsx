@@ -13,12 +13,15 @@ const Banner = () => {
   };
 
   return (
-    <Box>
+    <Box
+        sx={{
+            cursor: 'pointer',
+        }}
+    >
         <Box
             onClick={handleClick}
             sx={{
                 display: "flex",
-                cursor: 'pointer',
                 width: "100%",
                 height: "150px",
                 backgroundImage: `url(${
@@ -31,6 +34,7 @@ const Banner = () => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
+                backgroundColor: 'rgb(239,241,243)',
                 justifyContent: "end",
                 alignItems: "end",
                 padding: "10px",
