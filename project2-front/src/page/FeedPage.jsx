@@ -2,6 +2,7 @@
 import { usePost } from "../component/Post/Context/UsePost.jsx";
 import { useEffect, useState } from "react";
 import PostContainer from "../component/Post/DisplayPost/PostContainer.jsx";
+import "./FeedPage.css";
 
 const FeedPage = () => {
     const { listPostData, getPost, getChildren} = usePost();
@@ -66,15 +67,7 @@ const FeedPage = () => {
     if (!listPostData) return null;
 
     return (
-        <Box
-            sx={{
-                maxWidth: "650px",
-                width: "100%",
-                height: "auto",
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
+        <Box className="FeedContainer">
             {listPostData.map((post) => (
                 <Box key={post.id}>
                     <PostContainer

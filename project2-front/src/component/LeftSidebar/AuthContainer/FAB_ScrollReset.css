@@ -1,0 +1,12 @@
+.FABScrollContainer {
+    float: right;
+    margin-right: 20px;
+    margin-top: 49vh;
+    background-color: #ffffff;
+}
+
+.ExpandLessIcon {
+    color: #000000;
+    font-weight: 800;
+    font-size: 35px;
+}

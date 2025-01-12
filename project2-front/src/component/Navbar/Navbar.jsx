@@ -11,6 +11,7 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import {useEffect, useState} from "react";
 import CreatePost from "../Post/CreatePost/CreatePost.jsx";
 import Cookies from "js-cookie";
+import "./Navbar.css";
 
 const Navbar = () => {
     const {currentNav, setCurrentNav, getUser} = useNav();
@@ -46,18 +47,8 @@ const Navbar = () => {
     }
 
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.paper',
-                display: 'flex',
-                flexDirection: 'column',
-                height: 224,
-                justifyContent: 'left',
-                alignItems: 'left',
-        }}>
+        <Box className="NavbarContainer">
             {openPostPopup &&  <CreatePost handleOpen={handleOpeningPost}/>}
-
-
             <Link to={'/'}>
                 <Button onClick={handleHomeClick} variant="text">
                     {currentNav === 'home' ? <HomeIcon/> : <HomeOutlinedIcon/>}
@@ -81,23 +72,8 @@ const Navbar = () => {
             </Link>
 
 
-            <Button
-                size="large"
-                onClick={handleOpeningPost}
-                sx={{
-                    fontSize: '16px',
-                    marginTop: '25px',
-                    color: 'white',
-                    backgroundColor: 'rgb(56,154,251)',
-                    borderRadius: '30px',
-                    textTransform: 'capitalize',
-            }}>
-                <PostAddIcon
-                    sx={{
-                        paddingRight: '2px',
-                        paddingBottom: '2px'
-                    }}
-                />
+            <Button className="NewPostButton" size="large" onClick={handleOpeningPost}>
+                <PostAddIcon className="PostAddIcon"/>
                 New Post
             </Button>
         </Box>

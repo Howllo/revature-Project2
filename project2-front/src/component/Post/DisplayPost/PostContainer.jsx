@@ -20,8 +20,7 @@ const PostContainer = ({ key, post, commentChildren }) => {
         borderStyle: "solid",
         borderWidth: 1,
         borderColor: "rgb(212, 219, 226)",
-        maxWidth: "650px",
-        width: "90%",
+        width: "100%",
         padding: "13px",
       }}
       key={key}

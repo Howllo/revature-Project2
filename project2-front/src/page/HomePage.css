@@ -1,0 +1,30 @@
+.HomePageContainer {
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+    display: flex;
+    overflow: hidden;
+}
+
+.AuthContainer {
+    height: 100%;
+    width: 20%;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.ChildrenContainer {
+    height: 100%;
+    width: 60%;
+    background-color: lightgray;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.RightSidebarContainer {
+    height: 100%;
+    width: 20%;
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 1%;
+}

@@ -1,0 +1,15 @@
+.UnauthContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.ParticipateTitle {
+    margin-top: 10% !important;
+    font-size: 2.4vw !important;
+    font-weight: 800 !important;
+    color: #000000;
+}
+
+.SelectLanguageContainer {
+    margin-top: 15%;
+}
