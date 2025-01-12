@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
-  const { getId, settingsData } = useUserProfile();
+  const { getId, settingsData, getUserData } = useUserProfile();
   const [userData, setUserData] = useState(user);
     const [time, setTime] = useState(null);
 
@@ -25,7 +25,7 @@ const ProfileInformationPanel = ({ user }) => {
     y.then(value =>{
         setUserData(value)
     });
-  }, [user]);
+  });
 
   return (
     <Box
@@ -201,7 +201,7 @@ ProfileInformationPanel.propTypes = {
     user: PropTypes.shape({
         username: PropTypes.string.isRequired,
         followingCount: PropTypes.number.isRequired,
-        followerCount: PropTypes.bool.isRequired,
+        followerCount: PropTypes.number.isRequired,
         joinDate: PropTypes.string.isRequired,
     }).isRequired,
 };

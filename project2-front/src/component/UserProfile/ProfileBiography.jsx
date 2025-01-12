@@ -4,15 +4,16 @@ import PropTypes from "prop-types";
 import SignupSignIn from "../ReminderDialogBox/SignupSignIn.jsx";
 import { useEffect, useState } from "react";
 
-const ProfileBiography = () => {
+const ProfileBiography = ({user}) => {
   const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
 
   useEffect(() => {
         const y = getUserData(user.username)
         y.then(value =>{
             setUserData(value)
         })
-    }, [user]);
+    });
   return (
     <Box
       sx={{

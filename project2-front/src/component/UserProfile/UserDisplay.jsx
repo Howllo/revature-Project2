@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 const UserDisplay = ({ user }) => {
   const [userData, setUserData] = useState(user);
+  const { getUserData } = useUserProfile();
     
 
     useEffect(() => {
@@ -14,7 +15,7 @@ const UserDisplay = ({ user }) => {
         y.then(value =>{
             setUserData(value)
         })
-    }, [user]);
+    });
   
   return (
     <Box>
