@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
-  const { getId, settingsData } = useUserProfile();
+  const { getId } = useUserProfile();
   useEffect(() => {
     const x = getId(user.username);
     x.then((value) => {
@@ -36,7 +36,7 @@ const ProfileInformationPanel = ({ user }) => {
         }}
       >
         {/* {settingsData.displayName || user.username} */}
-        {user.username}
+        {user.displayName}
       </Typography>
 
       <Typography
@@ -127,20 +127,21 @@ const ProfileInformationPanel = ({ user }) => {
           >
             {user.followingCount}
           </Typography>
-
-          <Typography
-            variant="h6"
-            color="secondary"
-            sx={{
-              marginLeft: "5px",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: "300",
-              fontSize: "13px",
-              color: "rgb(66, 87, 108)",
-            }}
-          >
-            <Link to="/profile/:username/following">following</Link>
-          </Typography>
+          <Link to="/profile/:username/following">
+            <Typography
+              variant="h6"
+              color="secondary"
+              sx={{
+                marginLeft: "5px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "300",
+                fontSize: "13px",
+                color: "rgb(66, 87, 108)",
+              }}
+            >
+              following
+            </Typography>
+          </Link>
         </Box>
 
         <Box

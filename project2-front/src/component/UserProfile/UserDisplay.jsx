@@ -3,12 +3,12 @@ import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 
 const UserDisplay = ({ user }) => {
-  const { settingsData } = useUserProfile();
+  // const { settingsData } = useUserProfile();
   return (
     <Box>
       <Box>
         <img
-          src={settingsData.bannerPic || "https://picsum.photos/1500/500"}
+          src={user.bannerPic || "https://picsum.photos/1500/500"}
           alt="Post Image"
           loading={"lazy"}
           style={{
@@ -30,7 +30,7 @@ const UserDisplay = ({ user }) => {
         >
           <UserAvatar
             username={user.username}
-            image={settingsData.profilePic}
+            image={user.profilePic}
             width={64}
             height={64}
           />

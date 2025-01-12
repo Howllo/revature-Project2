@@ -2,7 +2,7 @@
 import { useUserProfile } from "./Context/UseUserProfile";
 
 const ProfileBiography = ({ user }) => {
-  const { settingsData } = useUserProfile();
+  // const { settingsData } = useUserProfile();
   return (
     <Box
       sx={{
@@ -21,7 +21,7 @@ const ProfileBiography = ({ user }) => {
           paddingLeft: "10px",
         }}
       >
-        {settingsData.biography}
+        {user.biography}
       </Typography>
     </Box>
   );

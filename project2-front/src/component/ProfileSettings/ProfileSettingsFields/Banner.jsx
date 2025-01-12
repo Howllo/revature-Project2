@@ -5,7 +5,7 @@ import { useContext, useRef } from "react";
 
 // import { useSettings } from "../Context/useSettings";
 
-const Banner = () => {
+const Banner = ({ user }) => {
   const { settingsData, handleBannerPicChange, setUnapprovedBannerPic } =
     useContext(SettingsContext);
   const inputRef = useRef(null);

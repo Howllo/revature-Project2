@@ -3,12 +3,12 @@ import { createContext } from "react";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-const FollowerListContext = createContext(null);
+const FollowingListContext = createContext(null);
 
-export const FollowerListProvider = ({ children }) => {
-  const [followerList, setFollowerList] = useState([]);
+export const FollowingListProvider = ({ children }) => {
+  const [followingList, setFollowingList] = useState([]);
 
-  const handleDeleteFollower = async (follower_id, username) => {
+  const handleDeleteFollowing = async (follower_id, username) => {
     try {
       const response = await axios.delete(
         `/user/${follower_id}/follow/${username}`
@@ -24,18 +24,18 @@ export const FollowerListProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      const fetchFollowerList = async () => {
+      const fetchFollowingList = async () => {
         const user_id = Cookies.get("user_id");
-        const response = await axios.get(`/user/followers/${user_id}`);
+        const response = await axios.get(`/user/following/${user_id}`);
 
         if (response.status !== 200) {
           throw new Error("API response was not okay");
         }
 
-        setFollowerList(response.data);
+        setFollowingList(response.data);
       };
 
-      fetchFollowerList();
+      fetchFollowingList();
     } catch (e) {
       console.error(`Error Status: ${e.status}`);
       throw e;
@@ -43,11 +43,11 @@ export const FollowerListProvider = ({ children }) => {
   }, []);
 
   return (
-    <FollowerListContext.Provider
-      value={{ followerList, setFollowerList, handleDeleteFollower }}
+    <FollowingListContext.Provider
+      value={{ followingList, setFollowingList, handleDeleteFollowing }}
     >
       {children}
-    </FollowerListContext.Provider>
+    </FollowingListContext.Provider>
   );
 };
-export default FollowerListContext;
+export default FollowingListContext;

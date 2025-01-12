@@ -2,26 +2,25 @@ import Cookies from "js-cookie";
 import { createContext, useState } from "react";
 import { projectApi } from "../../../util/axios.js";
 import PropTypes from "prop-types";
-// import { useNavigate } from "react-router-dom";
-import { useUserProfile } from "../../UserProfile/Context/UseUserProfile.jsx";
+import { useNavigate } from "react-router-dom";
+// import { useUserProfile } from "../../UserProfile/Context/UseUserProfile.jsx";
 
 const SettingsContext = createContext(null);
 
 export const SettingsProvider = ({ children }) => {
-  // const [settingsData, setSettingsData] = useState({
-  //   displayName: Cookies.get("display_name") == null || "",
-  //   profilePic: Cookies.get("profile_pic"),
-  //   bannerPic: Cookies.get("banner_pic"),
-  //   biography: Cookies.get("bio_text") || "",
-  //   profilePreviewURL: "",
-  //   bannerPreviewURL: "",
-  // });
-  const { settingsData, setSettingsData } = useUserProfile();
+  const [settingsData, setSettingsData] = useState({
+    displayName: Cookies.get("display_name") == null || "",
+    profilePic: Cookies.get("profile_pic"),
+    bannerPic: Cookies.get("banner_pic"),
+    biography: Cookies.get("bio_text") || "",
+    profilePreviewURL: "",
+    bannerPreviewURL: "",
+  });
+
+  const navigate = useNavigate();
 
   const [unapprovedProfilePic, setUnapprovedProfilePic] = useState("");
   const [unapprovedBannerPic, setUnapprovedBannerPic] = useState("");
-
-  // const navigate = useNavigate();
 
   // Strings to be converted to base64 for API
   let profileMediaString = null;
@@ -180,7 +179,7 @@ export const SettingsProvider = ({ children }) => {
 
       resetTempImageURLS();
 
-      // navigate(`/profile/${Cookies.get("username")}`);
+      navigate(`/profile/${Cookies.get("username")}`.toLowerCase());
     } catch (error) {
       console.error("Error submitting settings:", error);
       throw error;

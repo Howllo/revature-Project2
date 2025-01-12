@@ -14,7 +14,7 @@ import { useUserProfile } from "../UserProfile/Context/UseUserProfile";
 import SubmitButton from "./ProfileSettingsFields/SubmitButton";
 import CancelButton from "./ProfileSettingsFields/CancelButton";
 
-const SettingsContainer = () => {
+const SettingsContainer = ({ user }) => {
   const { isOpenDialogBox, handleCloseDialogBox } = useUserProfile();
 
   return (
@@ -34,13 +34,13 @@ const SettingsContainer = () => {
           Edit Your Profile
         </DialogTitle>
         <DialogContent>
-          <Banner />
-          <ProfilePictureInput />
-          <DisplayNameField />
-          <BioTextField />
+          <Banner user={user} />
+          <ProfilePictureInput user={user} />
+          <DisplayNameField user={user} />
+          <BioTextField user={user} />
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
-          <SubmitButton />
+          <SubmitButton user={user} />
         </DialogActions>
         <DialogActions sx={{ justifyContent: "center" }}>
           <CancelButton />
