@@ -6,9 +6,17 @@ import InteractionBar from "./InteractionBar.jsx";
 import PropTypes from "prop-types";
 import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 const PostContainer = ({ key, post, commentChildren }) => {
   const [savedPost, setSavedPost] = useState(post);
+  const navigate = useNavigate();
+
+  const handleNavigation = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    navigate(`/profile/${post.username}/post/${post.id}`);
+  }
 
   return (
     <Card
@@ -23,8 +31,10 @@ const PostContainer = ({ key, post, commentChildren }) => {
         maxWidth: "650px",
         width: "90%",
         padding: "13px",
+          cursor: "pointer",
       }}
       key={key}
+      onClick={(e) => handleNavigation(e)}
     >
       <Box
         sx={{
