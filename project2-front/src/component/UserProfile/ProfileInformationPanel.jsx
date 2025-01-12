@@ -7,8 +7,9 @@ import PropTypes from "prop-types";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
-  const { getId, settingsData } = useUserProfile();
-    const [time, setTime] = useState(null);
+  const { getId, getUserData } = useUserProfile();
+  const [userData, setUserData] = useState(user);
+  const [time, setTime] = useState(null);
 
   useEffect(() => {
       const options = { year: "numeric", month: "long" };
@@ -19,6 +20,10 @@ const ProfileInformationPanel = ({ user }) => {
     const x = getId(user.username);
     x.then((value) => {
       getUserPost(value);
+    });
+    const y = getUserData(user.username)
+    y.then(value =>{
+        setUserData(value)
     });
   }, [user]);
 
@@ -41,7 +46,7 @@ const ProfileInformationPanel = ({ user }) => {
           paddingTop: "15px",
         }}
       >
-        {settingsData.displayName || user.username}
+        {userData.displayName || user.username}
       </Typography>
 
       <Typography
@@ -81,7 +86,7 @@ const ProfileInformationPanel = ({ user }) => {
               paddingLeft: "10px",
             }}
           >
-            {user.followerCount}
+            {userData.followerCount}
           </Typography>
 
           <Typography
@@ -115,7 +120,7 @@ const ProfileInformationPanel = ({ user }) => {
               color: "rgb(11, 15, 20)",
             }}
           >
-            {user.followingCount}
+            {userData.followingCount}
           </Typography>
 
           <Typography
@@ -196,7 +201,7 @@ ProfileInformationPanel.propTypes = {
     user: PropTypes.shape({
         username: PropTypes.string.isRequired,
         followingCount: PropTypes.number.isRequired,
-        followerCount: PropTypes.bool.isRequired,
+        followerCount: PropTypes.number.isRequired,
         joinDate: PropTypes.string.isRequired,
     }).isRequired,
 };
