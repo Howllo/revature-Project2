@@ -3,6 +3,7 @@ import { usePost } from "../Post/Context/UsePost.jsx";
 import { useEffect } from "react";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
@@ -34,7 +35,8 @@ const ProfileInformationPanel = ({ user }) => {
           paddingTop: "15px",
         }}
       >
-        {settingsData.displayName || user.username}
+        {/* {settingsData.displayName || user.username} */}
+        {user.username}
       </Typography>
 
       <Typography
@@ -101,7 +103,7 @@ const ProfileInformationPanel = ({ user }) => {
               color: "rgb(66, 87, 108)",
             }}
           >
-            followers
+            <Link to="/followers">followers</Link>
           </Typography>
         </Box>
 
@@ -136,7 +138,7 @@ const ProfileInformationPanel = ({ user }) => {
               color: "rgb(66, 87, 108)",
             }}
           >
-            following
+            <Link to="/following">following</Link>
           </Typography>
         </Box>
 

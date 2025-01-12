@@ -12,7 +12,7 @@ import SettingsContainer from "../component/ProfileSettings/SettingsContainer.js
 const ProfilePage = () => {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
-  const [settingsData, setSettingsData] = useState();
+  // const [settingsData, setSettingsData] = useState();
 
   useEffect(() => {
     if (location.state?.userObj) {
