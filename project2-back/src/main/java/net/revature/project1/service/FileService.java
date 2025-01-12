@@ -125,8 +125,6 @@ public class FileService {
      * @param post Take in the post to set the new media URL.
      * @throws IOException If it fails to create a file it throws the exception.
      */
-
-
     public String createFile(String post) throws IOException {
         if(post.isEmpty()){
             return "";
