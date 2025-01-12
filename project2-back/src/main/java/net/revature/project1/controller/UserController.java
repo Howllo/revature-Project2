@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PutMapping("/settings/update")
-    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser, @RequestHeader("Authorization") String receivedToken){
+    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser, @RequestHeader("Authorization")sta String receivedToken){
 
         String token = receivedToken.substring(7);
         AppUser receivedAppUser = userService.updateAppUser(appUser, token);
