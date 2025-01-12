@@ -1,9 +1,8 @@
-import { Avatar, Box, IconButton } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-// import { useSettings } from "../Context/useSettings";
 import { useContext, useRef } from "react";
 import SettingsContext from "../Context/SettingsProvider";
-// import { display, margin } from "@mui/system";
+import PropTypes from "prop-types";
 
 const ProfilePictureInput = ({ width = 42, height = 42 }) => {
   let { settingsData, setUnapprovedProfilePic, handleProfilePicChange } =
@@ -14,7 +13,12 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
   };
 
   return (
-    <Box style={{ display: "flex", marginBottom: "10px" }}>
+    <Box
+        onClick={handleClick}
+        sx={{
+            display: "flex",
+            marginBottom: "10px"
+    }}>
       <Avatar
         alt="Profile Picture"
         src={
@@ -23,17 +27,41 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
             : settingsData.profilePic
         }
         sx={{
-          borderColor: "rgb(212,217,225)",
-          borderStyle: "solid",
-          borderWidth: "1px",
-          width: { width },
-          height: { height },
+            cursor: "pointer",
+            borderColor: "white",
+            borderStyle: "solid",
+            borderWidth: "2px",
+            width: { width },
+            height: { height },
+            backgroundColor: "rgb(29,160,240)",
         }}
       />
 
-      <IconButton onClick={handleClick}>
-        <PhotoCameraIcon />
-      </IconButton>
+      <Box
+          zIndex={50}
+        onClick={handleClick}
+        sx={{
+            display: "flex",
+            cursor: "pointer",
+            width: '28px',
+            height: '28px',
+            backgroundColor: "rgb(239,241,243)",
+            mt: '58px',
+            ml: '-25px',
+            borderRadius: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }}
+      >
+        <PhotoCameraIcon
+            sx={{
+                width: '16px',
+                height: '16px',
+                opacity: '1',
+                color: 'black',
+            }} />
+      </Box>
+
       <input
         type="file"
         // inputProps={{ accept: "images/*" }}
@@ -47,6 +75,11 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
       />
     </Box>
   );
+};
+
+ProfilePictureInput.propTypes = {
+    width: PropTypes.number,
+    height: PropTypes.number,
 };
 
 export default ProfilePictureInput;
