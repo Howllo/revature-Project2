@@ -6,19 +6,36 @@ import ProfileBiography from "../component/UserProfile/ProfileBiography.jsx";
 import ProfilePost from "../component/UserProfile/ProfilePost.jsx";
 import { useEffect, useState } from "react";
 import { UserProfileProvider } from "../component/UserProfile/Context/UserProfileProvider.jsx";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import SettingsContainer from "../component/ProfileSettings/SettingsContainer.jsx";
+import { projectApi } from "../util/axios.js";
 
 const ProfilePage = () => {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
-  // const [settingsData, setSettingsData] = useState();
+  const { username } = useParams();
+
+  const getUser = async (user) => {
+    try {
+      const response = await projectApi.get(`/user/username/${user}`);
+      const respData = response.data;
+
+      return respData;
+    } catch (e) {
+      console.error(`Error Status: ${e.status}`);
+
+      throw e;
+    }
+  };
 
   useEffect(() => {
     if (location.state?.userObj) {
       setUserData(location.state?.userObj);
     } else {
-      setUserData(null);
+      const x = getUser(username);
+      x.then((value) => {
+        setUserData(value);
+      });
     }
   }, [location]);
 
