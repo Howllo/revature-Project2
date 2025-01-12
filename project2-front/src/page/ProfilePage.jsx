@@ -14,6 +14,7 @@ const ProfilePage = () => {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
   const {username} = useParams(); 
+  const [key, setKey] = useState(0)
 
   const getUser = async (user) => {
     try {
@@ -57,8 +58,8 @@ const ProfilePage = () => {
                     borderColor: 'rgb(212, 219, 226)',
                     width: '99.7%',
                     paddingTop: '20px'}} >
-              {userData && <ProfileButton user={userData} />}
-              {userData && <ProfileInformationPanel user={userData} />}
+              {userData && <ProfileButton update={() => setKey(key + 1)} user={userData} />}
+              {userData && <ProfileInformationPanel key={key} user={userData} />}
               {userData && <SettingsContainer user={userData} />}
               {userData && <ProfileBiography user={userData} />}
           </Box>
