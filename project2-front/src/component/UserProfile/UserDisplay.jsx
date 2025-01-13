@@ -1,12 +1,11 @@
-﻿import { Box, Avatar } from "@mui/material";
+﻿import { Box } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import "./UserDisplay.css";
 import PropTypes from "prop-types";
-// import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 import { useEffect, useState } from "react";
 import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 
-const UserDisplay = ({ user }) => {
+const UserDisplay = ({ user, avWidth, avHeight }) => {
   const [userData, setUserData] = useState(user);
   const { getUserData } = useUserProfile();
 
@@ -26,8 +25,8 @@ const UserDisplay = ({ user }) => {
             className="UserDisplayUserAvatar" 
             username={user.username} 
             image={userData.profilePic} 
-            width={92}
-            height={92}/>
+            width={avWidth}
+            height={avHeight}/>
         </Box>
     </Box>
   );
@@ -37,6 +36,8 @@ UserDisplay.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
   }).isRequired,
+  avWidth: PropTypes.number,
+  avHeight: PropTypes.number,
 };
 
 export default UserDisplay;

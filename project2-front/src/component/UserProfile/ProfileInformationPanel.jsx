@@ -33,7 +33,10 @@ const ProfileInformationPanel = ({ user }) => {
         flexDirection: "column",
         display: "flex",
         marginTop: '10px',
-        padding: '5px',
+        paddingTop: '0px',
+          paddingLeft: '5px',
+          paddingRight: '5px',
+          paddingBottom: '5px',
       }}
     >
       <Typography
@@ -43,9 +46,8 @@ const ProfileInformationPanel = ({ user }) => {
           fontWeight: "600",
           fontSize: "35px",
           color: "black",
-          mt: "-15px",
+          mt: "-23px",
           paddingLeft: "10px",
-          paddingTop: "15px",
         }}
       >
         {userData.displayName || user.username}

@@ -9,7 +9,7 @@
 }
 
 .ProfilePageUserContainer {
-    margin-top: 10px !important;
+    padding-top: 0px !important;
 }
 
 .ProfilePageFullContainer {
@@ -18,4 +18,8 @@
     border-bottom: none !important;
     border-top: none !important;
     border-color: lightgray !important;
+}
+
+.MuiAvatar-root.MuiAvatar-circular.MuiAvatar-colorDefault.css-abs6k6-MuiAvatar-root {
+    margin-left: 55px;
 }

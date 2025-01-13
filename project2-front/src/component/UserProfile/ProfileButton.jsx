@@ -55,7 +55,7 @@ const ProfileButton = ({ user, update}) => {
                 color: "rgb(65,86,119)",
                 borderRadius: '20px',
                 textTransform: "capitalize",
-                mt: "5px",
+                mt: "25px",
                 backgroundColor: "rgb(239,241,243)",
           }}>
             Edit Profile

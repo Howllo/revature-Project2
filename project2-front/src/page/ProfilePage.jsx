@@ -43,10 +43,9 @@ const ProfilePage = () => {
       <Box className="ProfilePageFullContainer" sx={{ flexDirection: "column", }}>
         {/* User Profile Information */}
         <Box>
-          {userData && <UserDisplay user={userData} />}
+          {userData && <UserDisplay user={userData} avWidth={92} avHeight={92}/>}
           <Box className="ProfilePageUserContainer" sx={{mt: '-1px',
                     borderRadius: '0px',
-                    marginTop: '-38px',
                     marginBottom: '3%',
                     width: '99.7%',
                     paddingTop: '20px'}} >
