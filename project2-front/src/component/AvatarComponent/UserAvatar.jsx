@@ -26,9 +26,7 @@ const UserAvatar = ({ username, image, width = 42, height = 42 }) => {
   const handleSubmit = async () => {
     await getUserData();
     if (userData) {
-      navigate(`/profile/${userData.username.toLowerCase()}`, {
-        state: { userObj: userData },
-      });
+      navigate(`/profile/${userData.username.toLowerCase()}`);
     }
   };
 
