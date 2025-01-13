@@ -21,7 +21,12 @@ const UserDisplay = ({ user }) => {
              src={userData.bannerPic || "https://picsum.photos/1500/500"}
              alt="Post Image" loading={"lazy"}/>
         <Box>
-          <UserAvatar className="UserDisplayUserAvatar" username={user.username} image={userData.profilePic}/>
+          <UserAvatar 
+            className="UserDisplayUserAvatar" 
+            username={user.username} 
+            image={userData.profilePic} 
+            width={92}
+            height={92}/>
         </Box>
     </Box>
   );
