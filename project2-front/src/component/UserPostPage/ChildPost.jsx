@@ -26,9 +26,8 @@ const ChildPostPage = ({ parentId }) => {
         height: "auto",
         display: "flex",
         flexDirection: "column",
-        width: "99.80%",
+        width: "100.2%",
         alignItems: "center",
-        paddingLeft: '36px'
       }}
     >
       {listChildPost.length > 0 &&
