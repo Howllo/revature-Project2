@@ -39,7 +39,7 @@ const CreatePost = ({handleOpen, child}) => {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '50vw',
+                    width: '600px',
                     height: 'auto',
                     borderRadius: '15px',
                     backgroundColor: 'white',
