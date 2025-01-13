@@ -1,16 +1,15 @@
 ﻿import {Box, Button, Typography} from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import useNav from "./NavContext/UseNav.jsx";
 import {Link} from "react-router-dom";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import {useEffect, useState} from "react";
 import CreatePost from "../Post/CreatePost/CreatePost.jsx";
 import Cookies from "js-cookie";
+import "./Navbar.css";
+import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 
 const Navbar = () => {
     const {currentNav, setCurrentNav, getUser} = useNav();
@@ -46,59 +45,32 @@ const Navbar = () => {
     }
 
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.paper',
-                display: 'flex',
-                flexDirection: 'column',
-                height: 224,
-                justifyContent: 'left',
-                alignItems: 'left',
-        }}>
+        <Box className="NavbarContainer">
+            <UserAvatar username={Cookies.get("username")} image={Cookies.get("profile_pic")}/>
             {openPostPopup &&  <CreatePost handleOpen={handleOpeningPost}/>}
-
-
             <Link to={'/'}>
-                <Button onClick={handleHomeClick} variant="text">
-                    {currentNav === 'home' ? <HomeIcon/> : <HomeOutlinedIcon/>}
-                    {currentNav === 'home' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Home</Typography>
-                        : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Home</Typography>}
+                <Button className="NavbarTextSizing" onClick={handleHomeClick} variant="text">
+                    <HomeIcon/>
+                    <Typography className="NavBarIconButton" sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Home</Typography>
                 </Button>
             </Link>
             <Link to={`/profile/${username}`} state={{ userObj: user}}>
-                <Button onClick={handleProfileClick} variant="text">
-                    {currentNav === 'profile' ? <AccountCircleIcon/> : <AccountCircleOutlinedIcon/>}
-                    {currentNav === 'profile' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Profile</Typography>
-                        : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Profile</Typography>}
+                <Button className="NavbarTextSizing" onClick={handleProfileClick} variant="text">
+                    <AccountCircleIcon/>
+                    <Typography className="NavBarIconButton" sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Profile</Typography>
                 </Button>
             </Link>
             <Link to={'/setting'}>
-                <Button onClick={handleSettingsClick} variant="text">
-                    {currentNav === 'settings' ? <SettingsIcon/> : <SettingsOutlinedIcon/>}
-                    {currentNav === 'settings' ? <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Setting</Typography>
-                        : <Typography sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} variant="body1">Setting</Typography>}
+                <Button className="NavbarTextSizing" onClick={handleSettingsClick} variant="text">
+                    <SettingsIcon/>
+                    <Typography className="NavBarIconButton" sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Setting</Typography>
                 </Button>
             </Link>
 
 
-            <Button
-                size="large"
-                onClick={handleOpeningPost}
-                sx={{
-                    fontSize: '16px',
-                    marginTop: '25px',
-                    color: 'white',
-                    backgroundColor: 'rgb(56,154,251)',
-                    borderRadius: '30px',
-                    textTransform: 'capitalize',
-            }}>
-                <PostAddIcon
-                    sx={{
-                        paddingRight: '2px',
-                        paddingBottom: '2px'
-                    }}
-                />
-                New Post
+            <Button className="NewPostButton"  onClick={handleOpeningPost}>
+                <PostAddIcon className="PostAddIcon"/>
+                <div className="NewPostDiv">New Post</div>
             </Button>
         </Box>
     )

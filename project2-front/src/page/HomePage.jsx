@@ -1,8 +1,9 @@
-﻿import { Box, Grid2 } from '@mui/material';
+﻿import { Box } from '@mui/material';
 import RightSidebar from "../component/RightSidebar/RightSidebar.jsx";
 import {AuthBarHandle} from "../component/Navbar/AuthBarHandle.jsx";
 import {useEffect, useRef, useState} from "react";
 import PropTypes from 'prop-types';
+import './HomePage.css';
 
 function HomePage({children}) {
     const [showFAB, setShowFAB] = useState(false);
@@ -30,68 +31,17 @@ function HomePage({children}) {
     }
 
     return (
-        <Box
-            sx={{
-                height: '100vh',
-                overflow: 'hidden',
-                backgroundColor: 'white',
-            }}
-        >
-            <Grid2
-                container
-                sx={{
-                    height: '100%',
-                    display: 'grid',
-                    gridTemplateColumns: '3fr 3fr 3fr',
-
-                    boxSizing: 'border-box',
-                }}
-            >
-                <Grid2
-                    sx={{
-                        height: '100%',
-                        overflow: 'hidden',
-                        paddingRight: '50px',
-                      padding: '20px',
-                    }}
-                >
-                    <AuthBarHandle handleScrollUp={handleScrollUp} showFAB={showFAB} />
-                </Grid2>
-                <Grid2
-                    ref={containerRef}
-                    sx={{
-                        maxWidth: '650px',
-                        minWidth: '650px',
-                        height: '100%',
-                        overflowY: 'auto',
-                        overflowX: 'hidden',
-                        paddingRight: '8px'
-                    }}
-                >
-                    <Box
-                        sx={{
-                            flexDirection: 'column',
-                            display: 'flex',
-                            justifyContent: 'top',
-                            alignItems: 'center',
-                        }}
-                    >
-                        {/* Main content */}
-                        {children}
-                    </Box>
-                </Grid2>
-                <Grid2
-                    sx={{
-                        padding: '20px',
-                        paddingLeft: '20px',
-                        height: '100%',
-                        overflow: 'hidden',
-                        alignItems: 'left',
-                    }}
-                >
-                    <RightSidebar />
-                </Grid2>
-            </Grid2>
+        <Box className="HomePageContainer">
+            <Box className="AuthContainer">
+                <AuthBarHandle handleScrollUp={handleScrollUp} showFAB={showFAB}/>
+            </Box>
+            <Box className="ChildrenContainer" ref={containerRef}>
+                {/* Main content */}
+                {children}
+            </Box>
+            <Box className="RightSidebarContainer">
+                <RightSidebar />
+            </Box>
         </Box>
     );
 }

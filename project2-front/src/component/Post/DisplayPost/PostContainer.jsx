@@ -6,6 +6,7 @@ import InteractionBar from "./InteractionBar.jsx";
 import PropTypes from "prop-types";
 import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
+import "./PostContainer.css"
 import {useNavigate} from "react-router-dom";
 
 const PostContainer = ({ key, post, isPostProfile = false }) => {
@@ -26,23 +27,7 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
   }
 
   return (
-    <Card
-      elevation={0}
-      sx={{
-        mt: "-1px",
-        borderRadius: "0px",
-        display: "flex",
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "rgb(212, 219, 226)",
-        maxWidth: "600px",
-        width: "90%",
-        padding: "13px",
-        cursor: isPostProfile ? "default" : "pointer",
-      }}
-      key={key}
-      onClick={(e) => handleNavigation(e)}
-    >
+    <Card className="PostContainerCard" elevation={0} key={key} onClick={(e) => handleNavigation(e)}>
       <Box
         sx={{
           display: "flex",
@@ -94,6 +79,7 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
             flexDirection: "column",
             justifyContent: "left",
             alignItems: "left",
+              marginBottom: '2%',
           }}
         >
           <PostText comment={post.comment} />
