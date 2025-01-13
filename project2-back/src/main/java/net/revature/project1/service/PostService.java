@@ -77,8 +77,8 @@ public class PostService {
      * @param id The id of the post.
      * @return The post.
      */
-    public PostSmallResponseDto getPost(Long id) {
-        Optional<PostSmallResponseDto> postDto = postRepo.getUserPost(id);
+    public PostResponseDto getPost(Long id) {
+        Optional<PostResponseDto> postDto = postRepo.findPostDtoById(id);
         return postDto.orElse(null);
     }
 

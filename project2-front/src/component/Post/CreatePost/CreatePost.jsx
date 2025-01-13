@@ -7,17 +7,19 @@ import MediaContainer from "../MediaContainer.jsx";
 import PostInteractiveBar from "./PostInteractiveBar.jsx";
 import {usePost} from "../Context/UsePost.jsx";
 import PropTypes from "prop-types";
+import ReplyContainer from "./ReplyContainer.jsx";
+import "./CreatePost.css"
 
-const CreatePost = ({handleOpen, child}) => {
+const CreatePost = ({handleOpen, child, isReply = false, post}) => {
     const {resetPost, previewUrl, isVideo, submitPost, getPost} = usePost();
 
     const cancelPost = () => {
-        resetPost();
-        handleOpen();
+      resetPost();
+      handleOpen();
     }
 
     const handleSubmit = async () => {
-        handleOpen();
+      handleOpen();
         if(child === undefined || child === null) {
             await submitPost(null);
         } else {
@@ -40,7 +42,7 @@ const CreatePost = ({handleOpen, child}) => {
                     flexDirection: 'column',
                     minWidth: '550px',
                     maxWidth: '550px',
-                    minHeight: '300px',
+                    minHeight: '400px',
                     maxHeight: '90vh',
                     height: 'auto',
                     borderRadius: '15px',
@@ -80,6 +82,8 @@ const CreatePost = ({handleOpen, child}) => {
                     </Button>
                 </Box>
 
+              {isReply && <ReplyContainer post={post}/>}
+
                 <Box sx={{
                     width: '100%',
                     display: 'flex',
@@ -102,28 +106,45 @@ const CreatePost = ({handleOpen, child}) => {
 
                 <Box
                     sx={{
-                        maxWidth: '350px',
-                        maxHeight: '350px',
-                        margin: '0 auto',
+                        width: '100%',
+                        height: 'fit-content',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         overflow: 'hidden',
-                        position: 'relative',
                         borderRadius: '50px',
                     }}
                 >
-                    {previewUrl ? <MediaContainer media={previewUrl} isVideo={isVideo}/> : null}
+                    {previewUrl ? <MediaContainer className="MediaContainerCreatePost" media={previewUrl} isVideo={isVideo}/> : null}
                 </Box>
+              <Box
+                sx={{
+                  marginTop: 'auto',
+                }}
+              >
                 <PostInteractiveBar/>
+              </Box>
             </Box>
         </Backdrop>
     )
 }
 
 CreatePost.propTypes = {
-    handleOpen: PropTypes.func,
-    child: PropTypes.number,
+  handleOpen: PropTypes.func,
+  child: PropTypes.number,
+  isReply: PropTypes.bool,
+  post: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    username: PropTypes.string.isRequired,
+    profile_pic: PropTypes.string,
+    profilePic: PropTypes.string,
+    displayName: PropTypes.string,
+    postAt: PropTypes.string,
+    comment: PropTypes.string.isRequired,
+    commentCount: PropTypes.number,
+    likeCount: PropTypes.number,
+    media: PropTypes.string,
+  })
 };
 
 export default CreatePost;

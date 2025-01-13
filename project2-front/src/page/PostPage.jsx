@@ -1,23 +1,28 @@
-import {Box, IconButton, Typography} from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {Box} from "@mui/material";
+import PostBackBar from "../component/UserPostPage/PostBackBar.jsx";
+import ParentPost from "../component/UserPostPage/ParentPost.jsx";
+import {useState} from "react";
+import ChildPost from "../component/UserPostPage/ChildPost.jsx";
+import {useParams} from "react-router-dom";
 
 const PostPage = () => {
-    return (
-        <Box>
-            <Box
-                sx={{
+  const [post, setPost] = useState({});
+  const { postId } = useParams();
 
-                }}
-            >
-                <IconButton>
-                    <ArrowBackIcon />
-                    <Typography variant="body2" color="textSecondary">
-                        Post
-                    </Typography>
-                </IconButton>
-            </Box>
-        </Box>
-    )
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+      }}
+    >
+      <PostBackBar />
+      <ParentPost setPostParent={setPost} />
+      {post && <ChildPost parentId={postId} />}
+    </Box>
+  )
 }
 
 export default PostPage;

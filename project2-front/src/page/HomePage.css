@@ -1,0 +1,51 @@
+.HomePageContainer {
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    margin: auto;
+}
+
+.AuthContainer {
+    height: 100%;
+    width: 15%;
+}
+
+.ChildrenContainer {
+    height: 100%;
+    width: 50%;
+    min-width: 600px;
+    max-width: 600px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.RightSidebarContainer {
+    height: 100%;
+    width: 15%;
+    margin-top: 25px;
+    margin-left: 10px;
+}
+
+@media (max-width: 1280px) {
+    .ChildrenContainer {
+        height: 100%;
+        width: 50%;
+        min-width: 600px;
+        max-width: 600px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+}
+@media (min-width: 1920px) {
+    .ChildrenContainer {
+        height: 100%;
+        width: 50%;
+        min-width: 600px;
+        max-width: 600px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+}

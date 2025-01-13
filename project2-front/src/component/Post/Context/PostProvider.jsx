@@ -253,32 +253,50 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-    const value = {
-        listPostData,
-        setListPostData,
-        file: postData.file,
-        previewUrl: postData.previewUrl,
-        comment: postData.comment,
-        isVideo: postData.isVideo,
-        handleImageSelect: handleMediaSelect,
-        handleYouTubeSelect: handleYouTubeSelect,
-        setComment,
-        submitPost,
-        resetPost,
-        getPost,
-        deletePost,
-        editPost,
-        likePost,
-        isUserLike,
-        getChildren,
-        getUserPost
-    };
+  const getPostUnique = async (postId) => {
+    if(!postId){
+      return;
+    }
 
-    return (
-        <PostContext.Provider value={value}>
-            {children}
-        </PostContext.Provider>
-    );
+    try {
+      const response  = await projectApi.get(`/post/${postId}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      return response.data;
+    } catch (e) {
+      console.error('Error getting likes for post: ', e.status);
+    }
+  }
+
+  const value = {
+    listPostData,
+    setListPostData,
+    file: postData.file,
+    previewUrl: postData.previewUrl,
+    comment: postData.comment,
+    isVideo: postData.isVideo,
+    handleImageSelect: handleMediaSelect,
+    handleYouTubeSelect: handleYouTubeSelect,
+    setComment,
+    submitPost,
+    resetPost,
+    getPost,
+    deletePost,
+    editPost,
+    likePost,
+    isUserLike,
+    getChildren,
+    getUserPost,
+    getPostUnique
+  };
+
+  return (
+      <PostContext.Provider value={value}>
+          {children}
+      </PostContext.Provider>
+  );
 };
 
 PostProvider.propTypes = {
