@@ -6,11 +6,6 @@ import SearchResultContainer from "./SearchResultContainer.jsx";
 import SearchResult from "./SearchResult.jsx";
 import {projectApi} from "../../util/axios.js";
 
-//TODO: Make the API and states context. There is issue with either:
-// * Timing of context initialization
-// * Order of provider nesting
-// * Potential circular dependencies
-// * Race conditions in state updates
 function Search() {
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResults, setSearchResults] = useState([]);
@@ -45,11 +40,11 @@ function Search() {
 
     useEffect(() => {
         const checkUsernameDebounced = setTimeout(async () => {
-            if (searchTerm && searchTerm.length >= 3) {
+            if (searchTerm && searchTerm.length >= 1) {
                 const results = await searchUsername(searchTerm.toLowerCase());
                 setSearchResults(results || []);
             }
-        }, 500);
+        }, 100);
 
         return () => clearTimeout(checkUsernameDebounced);
     }, [searchTerm]);
@@ -58,8 +53,7 @@ function Search() {
         <Box sx={{
             minHeight: '100vh',
             width: '100%',
-            margin: 0,
-            padding: 0
+            marginLeft: '15px',
         }}>
             <Box
                 sx={{
