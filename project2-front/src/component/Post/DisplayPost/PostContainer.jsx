@@ -51,7 +51,7 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
         }}
         key={key}
       >
-        <UserAvatar username={post.username} image={post.profilePic} />
+        <UserAvatar username={post.username} image={post.profile} />
       </Box>
 
       <Box
@@ -137,8 +137,7 @@ PostContainer.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     username: PropTypes.string.isRequired,
-    profile_pic: PropTypes.string,
-    profilePic: PropTypes.string,
+    profile: PropTypes.string,
     displayName: PropTypes.string,
     postAt: PropTypes.string,
     comment: PropTypes.string.isRequired,

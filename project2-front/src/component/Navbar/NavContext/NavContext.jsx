@@ -13,19 +13,28 @@ export const NavProvider = ({children}) => {
   const location = useLocation();
 
   useEffect(() => {
-    setHistory((prev) => [...prev, location.pathname]);
+    setHistory((prevStack) => {
+      if (prevStack[prevStack.length - 1] === location.pathname) {
+        return prevStack;
+      }
+      return [...prevStack, location.pathname];
+    });
   }, [location]);
 
-  const handleBack = () => {
-    if (history.length > 1) {
-      const newHistory = [...history];
-      newHistory.pop();
-      const previousPath = newHistory[newHistory.length - 1];
-      setHistory(newHistory);
-      navigate(previousPath);
-    } else {
-      console.warn("No previous history available");
+  const handleBack = (steps = 1) => {
+    if (steps >= history.length) {
+      console.warn("Cannot go back further than the beginning of history.");
+      return;
     }
+
+    const newHistoryStack = [...history];
+    for (let i = 0; i < steps; i++) {
+      newHistoryStack.pop();
+    }
+
+    const previousPath = newHistoryStack[newHistoryStack.length - 1];
+    setHistory(newHistoryStack);
+    navigate(previousPath);
   };
 
     const getUser = async () => {
