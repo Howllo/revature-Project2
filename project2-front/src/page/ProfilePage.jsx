@@ -8,7 +8,8 @@ import {useEffect, useState} from "react";
 import {UserProfileProvider} from "../component/UserProfile/Context/UserProfileProvider.jsx";
 import {useLocation, useParams} from "react-router-dom";
 import SettingsContainer from "../component/ProfileSettings/SettingsContainer.jsx";
-import {projectApi} from "../util/axios.js";
+import { projectApi } from "../util/axios.js";
+import "./ProfilePage.css"
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -39,23 +40,14 @@ const ProfilePage = () => {
 
   return (
     <UserProfileProvider>
-      <Box
-        sx={{
-          maxWidth: "85%",
-          width: "100%",
-          flexDirection: "column",
-            mt: '-10px'
-        }}
-      >
+      <Box className="ProfilePageFullContainer" sx={{ flexDirection: "column", }}>
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
-          <Box sx={{mt: '-1px',
+          <Box className="ProfilePageUserContainer" sx={{mt: '-1px',
                     borderRadius: '0px',
-                    marginTop: '-60px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
+                    marginTop: '-38px',
+                    marginBottom: '3%',
                     width: '99.7%',
                     paddingTop: '20px'}} >
               {userData && <ProfileButton update={() => setKey(key + 1)} user={userData} />}
@@ -66,13 +58,7 @@ const ProfilePage = () => {
         </Box>
 
         {/* User Post */}
-        <Box sx={{mt: '-1px',
-                    borderRadius: '0px',
-                    marginTop: '-1px',
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: 'rgb(212, 219, 226)',
-                    width: '99.7%',}}>
+        <Box className="ProfilePageProfilePostContainer">
             {userData && <ProfilePost user={userData} />}
         </Box>
       </Box>

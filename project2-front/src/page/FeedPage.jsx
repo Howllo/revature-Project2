@@ -2,6 +2,7 @@
 import { usePost } from "../component/Post/Context/UsePost.jsx";
 import { useEffect, useState } from "react";
 import PostContainer from "../component/Post/DisplayPost/PostContainer.jsx";
+import "./FeedPage.css";
 
 const FeedPage = () => {
     const { listPostData, getPost, getChildren} = usePost();
@@ -49,7 +50,10 @@ const FeedPage = () => {
             <Box
                 key={comment.id}
                 sx={{
-                    width: '100%',
+                    width: '98%',
+                    marginTop: '2%',
+                    pl: 1,
+                    borderLeft: '2px solid #f0f0f0',
                 }}
             >
                 <PostContainer
@@ -64,15 +68,7 @@ const FeedPage = () => {
     if (!listPostData) return null;
 
     return (
-        <Box
-            sx={{
-                maxWidth: "650px",
-                width: "100%",
-                height: "auto",
-                display: 'flex',
-                flexDirection: 'column',
-            }}
-        >
+        <Box className="FeedContainer">
             {listPostData.map((post) => (
                 <Box key={post.id}>
                     <PostContainer

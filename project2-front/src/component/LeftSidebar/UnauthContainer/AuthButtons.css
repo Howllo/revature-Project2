@@ -1,0 +1,29 @@
+.AuthButtonsContainer {
+    margin-top: 10%;
+}
+
+.SignupButton {
+    min-width: 75px !important;
+    max-width: 75px !important;
+    min-height: 35px !important;
+    max-height: 35px !important;
+    margin-left: 5px !important;
+    font-family: Inter, sans-serif !important;
+    background-color: rgb(56,155,253) !important;
+    color: #ffffff !important;
+    text-transform: none !important;
+    font-weight: 500 !important;
+}
+
+.SigninButton {
+    min-width: 75px !important;
+    max-width: 75px !important;
+    min-height: 35px !important;
+    max-height: 35px !important;
+    margin-left: 5px !important;
+    font-family: Inter, sans-serif !important;
+    background-color: rgb(212,217,225) !important;
+    color: rgb(66, 87, 108) !important;
+    text-transform: none !important;
+    font-weight: 500 !important;
+}

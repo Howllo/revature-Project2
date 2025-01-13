@@ -1,0 +1,30 @@
+.UnauthContainer {
+    height: 100%;
+    width: 100%;
+    margin-top: 25px !important;
+}
+
+.ParticipateTitle {
+    margin-top: 10px !important;
+    font-size: 27px !important;
+    font-weight: 800 !important;
+    color: #000000;
+}
+
+.SelectLanguageContainer {
+    margin-top: 10px !important;
+}
+
+@media (max-width: 1280px) {
+    .SelectLanguageContainer {
+        margin-top: 10px !important;
+        margin-bottom: -250px !important;
+    }
+
+    .ParticipateTitle {
+        margin-top: 10px !important;
+        font-size: 25px !important;
+        font-weight: 800 !important;
+        color: #000000;
+    }
+}

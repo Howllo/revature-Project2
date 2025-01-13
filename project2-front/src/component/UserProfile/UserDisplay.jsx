@@ -1,6 +1,6 @@
-﻿import { Box } from "@mui/material";
-import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
+﻿import { Box, Avatar } from "@mui/material";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
+import "./UserDisplay.css";
 import PropTypes from "prop-types";
 // import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 import { useEffect, useState } from "react";
@@ -16,35 +16,13 @@ const UserDisplay = ({ user }) => {
     });
   }), [user];
   return (
-    <Box>
-      <Box>
-        <img
-          src={userData.bannerPic || "https://picsum.photos/1500/500"}
-          alt="Post Image"
-          loading={"lazy"}
-          style={{
-            width: "100%",
-            height: "100%",
-            maxWidth: "546px",
-            maxHeight: "180px",
-            minWidth: "546px",
-            minHeight: "180px",
-          }}
-        />
-        <Box
-          sx={{
-            mt: "-60px",
-            ml: "-30px",
-          }}
-        >
-          <UserAvatar
-            username={user.username}
-            image={userData.profilePic}
-            width={92}
-            height={92}
-          />
+    <Box className="UserDisplayContainer">
+        <img className="BannerImg"
+             src={userData.bannerPic || "https://picsum.photos/1500/500"}
+             alt="Post Image" loading={"lazy"}/>
+        <Box>
+          <Avatar className="UserDisplayUserAvatar" image={userData.profilePic}/>
         </Box>
-      </Box>
     </Box>
   );
 };

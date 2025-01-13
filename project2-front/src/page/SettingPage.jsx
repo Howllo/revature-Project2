@@ -4,6 +4,7 @@ import LogOut from "../component/LogOut/LogOut.jsx";
 
 import { useState } from "react";
 import { projectApi } from "../util/axios.js";
+import "./SettingPage.css"
 
 const SettingsPage = () => {
   const [displayName, setDisplayName] = useState();
@@ -41,19 +42,11 @@ const SettingsPage = () => {
   };
 
   return (
-    <Box>
-      <OutlinedInput
-        required
-        type="text"
-        className="text"
+    <Box className="SettingPageContainer">
+      <OutlinedInput className="SettingPageInputBar text" required type="text"
         value={displayName}
         onChange={(e) => handleDisplayNameChange(e)}
         placeholder="Enter new display name"
-        sx={{
-          maxWidth: "450px",
-          marginTop: "10px",
-          width: "100%",
-        }}
         startAdornment={
           <InputAdornment position="start">
             <EmailIcon />
@@ -61,16 +54,9 @@ const SettingsPage = () => {
         }
       />
 
-      <Button
-        variant="contained"
-        onClick={handleDisplayChange}
-        sx={{
-          marginTop: "10px",
-        }}
-      >
+      <Button className="SettingPageChangeNameButton" variant="contained" onClick={handleDisplayChange}>
         Change Name
       </Button>
-      <br />
       <LogOut />
     </Box>
   );

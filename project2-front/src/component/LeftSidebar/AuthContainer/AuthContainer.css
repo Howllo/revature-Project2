@@ -1,0 +1,24 @@
+.AuthContainerLeftBar {
+    width: 100%;
+    padding-left: 30%;
+}
+
+.NavbarDrawer {
+    display: none !important;
+}
+
+@media (max-width: 1280px) {
+    .AuthContainerLeftBar {
+        width: 100%;
+        padding-left: 20%;
+    }
+
+    .NavbarDrawer {
+        display: flex !important;
+        overflow: hidden !important;
+    }
+
+    .NavbarComponentElement {
+        display: none !important;
+    }
+}

@@ -75,7 +75,7 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
                     style={{
                         marginTop: "10px",
                         height: "auto",
-                        width: "100%",
+                        width: "95%",
                         borderRadius: "15px",
                         cursor: isInBackdrop  ? 'default' : "pointer",
                     }}
@@ -85,7 +85,7 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
             {mediaType === "youtube" && (
                 <iframe
                     style={{
-                        width: "100%",
+                        width: "95%",
                         height: "300px",
                     }}
                     src={youtube}

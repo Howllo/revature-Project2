@@ -1,0 +1,17 @@
+.SettingPageContainer {
+    height: 80%;
+    width: 100%;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}
+
+.SettingPageInputBar {
+    width: 80% !important;
+}
+
+.SettingPageChangeNameButton {
+    margin-top: 2% !important;
+    width: 27% !important;
+}

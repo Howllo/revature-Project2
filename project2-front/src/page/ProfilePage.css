@@ -1,0 +1,21 @@
+.ProfilePageProfilePostContainer {
+    border-width: thin !important;
+    border-style: solid !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-color: lightgray !important;
+    width: 571px !important;
+}
+
+.ProfilePageUserContainer {
+    margin-top: 10px !important;
+}
+
+.ProfilePageFullContainer {
+    border-width: thin !important;
+    border-style: solid !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    border-color: lightgray !important;
+}
