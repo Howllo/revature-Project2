@@ -18,23 +18,20 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
     const {likePost, isUserLike } = usePost();
     const [handleDropdownMenu, setHandleDropdownMenu] = useState(false);
 
-    const handleLike = async () => {
-        const liked = await likePost(post.id);
+  const handleLike = async () => {
+    const liked = await likePost(post.id);
+    const likeCount = liked ? 1 : -1;
+    const newLikeTotal = Math.max(0, currentLikes + likeCount);
 
-        if(!liked) {
-            setIsLiked(false);
-            return;
-        }
+    setIsLiked(liked);
+    setCurrentLikes(newLikeTotal);
 
-        let newLikeTotal = likesCount + 1;
-        setCurrentLikes(newLikeTotal);
-        setIsLiked(liked);
-        setPost({
-            ...post,
-            likeCount: newLikeTotal,
-            commentCount: commentsCount,
-        });
-    };
+    setPost({
+      ...post,
+      likeCount: newLikeTotal,
+      commentCount: commentsCount,
+    });
+  };
 
     useEffect(() => {
         handleCheckIfAuthorized()
@@ -53,7 +50,7 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
     }, [post.id, isUserLike]);
 
     const handleComments = async () => {
-        setShowCommentMenu(true)
+      setShowCommentMenu(true);
     }
 
     return (
@@ -153,7 +150,8 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                         {currentLikes}
                     </Typography>
                 </Button>
-                {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu} child={post}/> : null }
+                {showCommentMenu ? <CreatePost handleOpen={setShowCommentMenu}
+                                               child={post} isReply={true} post={post}/> : null }
             </Box>
 
             {handleDropdownMenu ? <PostDialog post={post}/> : null }
@@ -162,10 +160,22 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
 }
 
 InteractionBar.propTypes = {
-    post: PropTypes.object.isRequired,
-    setPost: PropTypes.func.isRequired,
-    commentsCount: PropTypes.number.isRequired,
-    likesCount: PropTypes.number.isRequired,
+  post: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    username: PropTypes.string.isRequired,
+    profile_pic: PropTypes.string,
+    profilePic: PropTypes.string,
+    displayName: PropTypes.string,
+    userId: PropTypes.number,
+    postAt: PropTypes.string,
+    comment: PropTypes.string.isRequired,
+    commentCount: PropTypes.number,
+    likeCount: PropTypes.number,
+    media: PropTypes.string,
+  }).isRequired,
+  setPost: PropTypes.func.isRequired,
+  commentsCount: PropTypes.number.isRequired,
+  likesCount: PropTypes.number.isRequired,
 };
 
 export default InteractionBar;

@@ -40,7 +40,6 @@ export const useSignInValidation = () => {
           email: email,
           username: Cookies.get("username"),
           password: password,
-
           birthdate: null,
         },
         {

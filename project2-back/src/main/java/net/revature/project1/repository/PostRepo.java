@@ -23,7 +23,7 @@ public interface PostRepo extends JpaRepository<Post, Long> {
             "p.postAt) " +
             "FROM Post p WHERE p.id = :id")
     Optional<PostSmallResponseDto> getUserPost(@Param("id") Long id);
-
+  
     @Query("""
     SELECT new net.revature.project1.dto.PostResponseDto(
         p.id,

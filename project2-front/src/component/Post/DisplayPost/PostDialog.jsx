@@ -13,21 +13,28 @@ const PostDialog = ({post}) => {
     const [openEditBox, setOpenEditBox] = useState(false);
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+      event.stopPropagation();
+      setAnchorEl(event.currentTarget);
     };
 
-    const handleDeletePost = async () => {
-        await deletePost(post);
-        handleClose();
+    const handleDeletePost = async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      await deletePost(post);
+      handleClose(e);
     }
 
-    const handleEditPost = () => {
-        setOpenEditBox(true);
-        handleClose();
+    const handleEditPost = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setOpenEditBox(true);
+      handleClose(e);
     }
 
-    const handleClose = () => {
-        setAnchorEl(null);
+    const handleClose = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setAnchorEl(null);
     };
 
     return (
@@ -46,7 +53,7 @@ const PostDialog = ({post}) => {
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
+                    onClick={(e) => handleClick(e)}
                 >
                     <MoreHorizIcon/>
                 </IconButton>
@@ -54,13 +61,13 @@ const PostDialog = ({post}) => {
                     id="basic-menu"
                     anchorEl={anchorEl}
                     open={open}
-                    onClose={handleClose}
+                    onClose={(e) => handleClose(e)}
                     MenuListProps={{
                         'aria-labelledby': 'basic-button',
                     }}
                 >
-                    <MenuItem onClick={handleEditPost}>Edit</MenuItem>
-                    <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
+                    <MenuItem onClick={(e) => handleEditPost(e)}>Edit</MenuItem>
+                    <MenuItem onClick={(e) => handleDeletePost(e)}>Delete</MenuItem>
                 </Menu>
             </Box>
 

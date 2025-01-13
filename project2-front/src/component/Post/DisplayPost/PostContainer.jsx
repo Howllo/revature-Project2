@@ -9,18 +9,25 @@ import { useState } from "react";
 import "./PostContainer.css"
 import {useNavigate} from "react-router-dom";
 
-const PostContainer = ({ key, post, commentChildren }) => {
+const PostContainer = ({ key, post, isPostProfile = false }) => {
   const [savedPost, setSavedPost] = useState(post);
   const navigate = useNavigate();
 
   const handleNavigation = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    navigate(`/profile/${post.username}/post/${post.id}`);
+    if(isPostProfile) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(e.target === e.currentTarget) {
+      navigate(`/profile/${post.username}/post/${post.id}`);
+    }
   }
 
   return (
-    <Card className="PostContainerCard" elevation={0} key={key}>
+    <Card className="PostContainerCard" elevation={0} key={key} onClick={(e) => handleNavigation(e)}>
       <Box
         sx={{
           display: "flex",
@@ -29,7 +36,7 @@ const PostContainer = ({ key, post, commentChildren }) => {
         }}
         key={key}
       >
-        <UserAvatar username={post.username} image={post.profilePic} />
+        <UserAvatar username={post.username} image={post.profile} />
       </Box>
 
       <Box
@@ -106,17 +113,6 @@ const PostContainer = ({ key, post, commentChildren }) => {
             likesCount={post.likeCount}
           />
         </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "95%",
-            height: "100%",
-          }}
-        >
-          {commentChildren}
-        </Box>
       </Box>
     </Card>
   );
@@ -127,8 +123,7 @@ PostContainer.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     username: PropTypes.string.isRequired,
-    profile_pic: PropTypes.string,
-    profilePic: PropTypes.string,
+    profile: PropTypes.string,
     displayName: PropTypes.string,
     postAt: PropTypes.string,
     comment: PropTypes.string.isRequired,
@@ -136,7 +131,7 @@ PostContainer.propTypes = {
     likeCount: PropTypes.number,
     media: PropTypes.string,
   }).isRequired,
-  commentChildren: PropTypes.node,
+  isPostProfile: PropTypes.bool,
 };
 
 export default PostContainer;
