@@ -4,7 +4,7 @@ import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 import { usePost } from "../Post/Context/UsePost.jsx";
 import PropTypes from "prop-types";
 
-const ChildPostPage = ({ parentId }) => {
+const ChildPost = ({ parentId }) => {
   const [listChildPost, setListChildPost] = useState([]);
   const { getChildren } = usePost();
 
@@ -14,7 +14,7 @@ const ChildPostPage = ({ parentId }) => {
       const timer = setTimeout(async () => {
         const comments = await getChildren(parentId);
         setListChildPost(comments);
-      }, 300);
+      }, 250);
       return () => clearTimeout(timer);
     };
     getAllComments();
@@ -46,8 +46,8 @@ const ChildPostPage = ({ parentId }) => {
   );
 };
 
-ChildPostPage.propTypes = {
+ChildPost.propTypes = {
   parentId: PropTypes.number.isRequired,
 };
 
-export default ChildPostPage;
+export default ChildPost;

@@ -1,8 +1,8 @@
-﻿import { createContext, useState } from "react";
+﻿import {createContext, useState} from "react";
 import PropTypes from "prop-types";
-import { projectApi } from "../../../util/axios.js";
+import {projectApi} from "../../../util/axios.js";
 import Cookies from "js-cookie";
-import { SettingsProvider } from "../../ProfileSettings/Context/SettingsProvider.jsx";
+import {SettingsProvider} from "../../ProfileSettings/Context/SettingsProvider.jsx";
 
 const UserProfileContext = createContext(null);
 
@@ -87,15 +87,15 @@ export const UserProfileProvider = ({ children }) => {
   const getUserData = async (username) => {
     try {
       const response = await projectApi.get(`/user/username/${username}`);
-      const respData = response.data;
-
-      return respData;
+      return response.data;
     } catch (e) {
       console.error(`Error Status: ${e.status}`);
 
       throw e;
     }
   };
+
+
 
   const value = {
     listPostData,
