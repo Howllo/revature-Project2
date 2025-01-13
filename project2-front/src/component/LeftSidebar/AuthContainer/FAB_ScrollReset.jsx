@@ -7,7 +7,7 @@ const FAB_ScrollReset = ({handleScrollUp, showFAB}) => {
 
     return (
         <Box className="FABScrollResetContainer">
-            <Fab className="FABScrollContainer" elevation={0} onClick={handleScrollUp} disableRipple={true}>
+            <Fab className="FABScrollContainer" disableElevation onClick={handleScrollUp} disableRipple={true}>
                 <ExpandLessIcon className="ExpandLessIcon"/>
             </Fab>
         </Box>

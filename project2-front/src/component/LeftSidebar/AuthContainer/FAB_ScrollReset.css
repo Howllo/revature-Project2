@@ -9,6 +9,10 @@
     float: right;
     margin-right: 20px !important;
     background-color: #ffffff !important;
+    box-shadow: none !important;
+    border-width: thin !important;
+    border-color: lightgray !important;
+    border-style: solid !important;
 }
 
 .ExpandLessIcon {

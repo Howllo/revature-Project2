@@ -49,19 +49,19 @@ const Navbar = () => {
             <UserAvatar username={Cookies.get("username")} image={Cookies.get("profile_pic")}/>
             {openPostPopup &&  <CreatePost handleOpen={handleOpeningPost}/>}
             <Link to={'/'}>
-                <Button onClick={handleHomeClick} variant="text">
+                <Button className="NavbarTextSizing" onClick={handleHomeClick} variant="text">
                     <HomeIcon/>
                     <Typography className="NavBarIconButton" sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Home</Typography>
                 </Button>
             </Link>
             <Link to={`/profile/${username}`} state={{ userObj: user}}>
-                <Button onClick={handleProfileClick} variant="text">
+                <Button className="NavbarTextSizing" onClick={handleProfileClick} variant="text">
                     <AccountCircleIcon/>
                     <Typography className="NavBarIconButton" sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Profile</Typography>
                 </Button>
             </Link>
             <Link to={'/setting'}>
-                <Button onClick={handleSettingsClick} variant="text">
+                <Button className="NavbarTextSizing" onClick={handleSettingsClick} variant="text">
                     <SettingsIcon/>
                     <Typography className="NavBarIconButton" sx={{color: 'rgb(11, 15, 20)', textTransform: 'capitalize', fontWeight: 500}} fontFamily="Inter, sans-serif">Setting</Typography>
                 </Button>

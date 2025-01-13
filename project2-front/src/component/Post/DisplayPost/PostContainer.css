@@ -1,5 +1,5 @@
 .PostContainerCard {
-    border-radius: 0px;
+    border-radius: 0% !important;
     display: flex;
     border-style: solid;
     border-width: thin;
