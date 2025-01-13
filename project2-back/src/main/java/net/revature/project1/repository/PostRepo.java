@@ -25,19 +25,19 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     Optional<PostSmallResponseDto> getUserPost(@Param("id") Long id);
 
     @Query("""
-            SELECT new your.package.PostResponseDto(
+            SELECT new net.revature.project1.dto.PostResponseDto(
                 p.id,
                 CASE WHEN p.postParent IS NULL THEN null ELSE p.postParent.id END,
                 p.user.id,
                 p.user.username,
                 p.user.displayName,
-                p.user.profilePic, -- mapped to 'profile' in DTO
+                p.user.profilePic,
                 p.comment,
                 p.media,
                 p.postEdited,
                 p.postAt,
-                SIZE(p.likes), -- likeCount
-                (SELECT COUNT(c) FROM Post c WHERE c.postParent.id = p.id) -- commentCount
+                SIZE(p.likes),
+                (SELECT COUNT(c) FROM Post c WHERE c.postParent.id = p.id)
             )
             FROM Post p
             WHERE p.id = :postId
