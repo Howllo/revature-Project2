@@ -22,6 +22,27 @@ export const FollowerListProvider = ({ children }) => {
     }
   };
 
+  const handleGetFollowers = async () => {
+    console.log("Handle get followers was called");
+    try {
+      console.log(Cookies.get("user_id"));
+      const user_id = Cookies.get("user_id");
+      console.log("Api was called");
+      const response = await axios.get(`/user/followers/${user_id}`);
+
+      if (response.status !== 200) {
+        throw new Error("API response was not okay");
+      }
+      console.log("Response data");
+      console.log(response.data);
+      setFollowerList(response.data);
+    } catch (e) {
+      console.log("Api call failed");
+      console.error(`Error Status: ${e.status}`);
+      throw e;
+    }
+  };
+
   useEffect(() => {
     try {
       const fetchFollowerList = async () => {
@@ -31,7 +52,7 @@ export const FollowerListProvider = ({ children }) => {
         if (response.status !== 200) {
           throw new Error("API response was not okay");
         }
-
+        console.log(response.data);
         setFollowerList(response.data);
       };
 
@@ -44,7 +65,12 @@ export const FollowerListProvider = ({ children }) => {
 
   return (
     <FollowerListContext.Provider
-      value={{ followerList, setFollowerList, handleDeleteFollower }}
+      value={{
+        followerList,
+        setFollowerList,
+        handleDeleteFollower,
+        handleGetFollowers,
+      }}
     >
       {children}
     </FollowerListContext.Provider>

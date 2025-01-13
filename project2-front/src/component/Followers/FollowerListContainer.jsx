@@ -6,7 +6,7 @@ import FollowerListContext from "./Context/FollowerListProvider";
 
 const FollowerListContainer = () => {
   const navigate = useNavigate();
-  const { followerList } = useContext(FollowerListContext);
+  // const { followerList } = useContext(FollowerListContext);
 
   const handleBack = () => {
     navigate(-1);

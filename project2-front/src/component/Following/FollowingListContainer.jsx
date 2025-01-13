@@ -1,6 +1,6 @@
 import { Box, Button, List, Typography } from "@mui/material";
 import FollowingList from "./FollowingList";
-// import { useSettings } from "../Context/useSettings";
+
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import FollowingListContext from "./Context/FollowingListProvider";
@@ -13,11 +13,36 @@ const FollowingListContainer = () => {
     navigate(-1);
   };
   return (
-    <Box>
-      <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
-        People Following
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 600,
+        mx: "auto",
+        mt: 4,
+        p: 3,
+        borderRadius: 2,
+        boxShadow: 3,
+        bgcolor: "background.paper", // Uses theme's background color
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{
+          mb: 3,
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "primary.main",
+        }}
+      >
+        People Following You
       </Typography>
-      <Button onClick={handleBack}>Back</Button>
+      <Button
+        variant="outlined"
+        sx={{ mb: 3, textTransform: "none" }}
+        onClick={handleBack}
+      >
+        Back
+      </Button>
       <List>
         <FollowingList />
         <FollowingList />
