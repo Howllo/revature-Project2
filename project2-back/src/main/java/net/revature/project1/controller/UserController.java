@@ -130,7 +130,6 @@ public class UserController {
 
     @GetMapping("/followers/{id}")
     public ResponseEntity<Set<UserDto>> getFollowers(@PathVariable Long id, @RequestHeader("Authorization") String receivedToken){
-        System.out.println("test");
         String token = receivedToken.substring(7);
         Set<UserDto> setOfFollowers = userService.getFollowers(id, token);
         if (setOfFollowers == null){
