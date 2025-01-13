@@ -10,7 +10,7 @@ const LogOut = () => {
     const handleLogoutClick = () => {
             Cookies.remove('jwt')
             Cookies.remove('username')
-            navigate('/')
+            navigate('/');
             window.location.reload(true)
         }
 

@@ -1,11 +1,16 @@
 ﻿import {Box, IconButton, Typography} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import useNav from "../Navbar/NavContext/UseNav.jsx";
+import {useNavigate} from "react-router-dom";
 
 const PostBackBar = () => {
-  const { handleBack } = useNav();
+  const { handleBack, history } = useNav();
+  const navigate = useNavigate();
 
   const handleClick = () => {
+    if(history.length <= 1){
+      navigate("/");
+    }
     handleBack();
   }
 
