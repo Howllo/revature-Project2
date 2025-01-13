@@ -126,7 +126,7 @@ public class FileService {
      * @throws IOException If it fails to create a file it throws the exception.
      */
     public String createFile(String post) throws IOException {
-        if(post.isEmpty()){
+        if(post == null || post.isEmpty()){
             return "";
         }
 
