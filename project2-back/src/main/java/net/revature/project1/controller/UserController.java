@@ -85,10 +85,11 @@ public class UserController {
             return new ResponseEntity<>(appUser, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/username")
+    @PutMapping("/{id}/update/{username}")
     public ResponseEntity<String> updateUsername(@PathVariable Long id,
-                                                 @RequestBody AppUser appUser) {
-        UserEnum result = userService.updateUsername(id, appUser);
+                                                 @PathVariable String username,
+                                                 @RequestHeader("Authorization") String token) {
+        UserEnum result = userService.updateUsername(id, username, token.substring(7));
         return resultResponse(result);
     }
 
@@ -129,6 +130,7 @@ public class UserController {
 
     @GetMapping("/followers/{id}")
     public ResponseEntity<Set<UserDto>> getFollowers(@PathVariable Long id, @RequestHeader("Authorization") String receivedToken){
+        System.out.println("test");
         String token = receivedToken.substring(7);
         Set<UserDto> setOfFollowers = userService.getFollowers(id, token);
         if (setOfFollowers == null){
