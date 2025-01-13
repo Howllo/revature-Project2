@@ -1,6 +1,7 @@
 import { SettingsProvider } from "./Context/SettingsProvider";
 import BioTextField from "./ProfileSettingsFields/BioTextField";
 import Banner from "./ProfileSettingsFields/Banner";
+import ProfilePictureInput from "./ProfileSettingsFields/ProfilePictureInput";
 import DisplayNameField from "./ProfileSettingsFields/DisplayNameField";
 
 import {
@@ -34,21 +35,22 @@ const SettingsContainer = ({ user }) => {
         }}
         onClose={handleCloseDialogBox}
       >
-        <DialogTitle
-          sx={{ textAlign: "center", fontWeight: "bold", fontSize: "23px" }}
-        >
-          Edit my profile
+        <DialogTitle sx={{ textAlign: "center" }}>
+          Edit Your Profile
         </DialogTitle>
         <DialogContent>
-          <Banner user={user} />
-          {/* <ProfilePictureInput user={user} /> */}
-          <DisplayNameField user={user} />
-          <BioTextField user={user} />
+          {" "}
+          <Banner
+            user={user}
+          /> {/* <ProfilePictureInput user={user} /> */}{" "}
+          <DisplayNameField user={user} /> <BioTextField user={user} />
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
+          {" "}
           <SubmitButton user={user} />
         </DialogActions>
         <DialogActions sx={{ justifyContent: "center" }}>
+          {" "}
           <CancelButton />
         </DialogActions>
       </Dialog>
