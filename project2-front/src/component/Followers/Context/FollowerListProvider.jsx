@@ -22,29 +22,28 @@ export const FollowerListProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
+  const handleGetFollowers = async () => {
     try {
-      const fetchFollowerList = async () => {
-        const user_id = Cookies.get("user_id");
-        const response = await axios.get(`/user/followers/${user_id}`);
-
-        if (response.status !== 200) {
-          throw new Error("API response was not okay");
-        }
-
-        setFollowerList(response.data);
-      };
-
-      fetchFollowerList();
+      const user_id = Cookies.get("user_id");
+      const response = await axios.get(`/user/followers/${user_id}`);
+      if (response.status !== 200) {
+        throw new Error("API response was not okay");
+      }
+      setFollowerList(response.data);
     } catch (e) {
       console.error(`Error Status: ${e.status}`);
       throw e;
     }
-  }, []);
+  };
 
   return (
     <FollowerListContext.Provider
-      value={{ followerList, setFollowerList, handleDeleteFollower }}
+      value={{
+        followerList,
+        setFollowerList,
+        handleDeleteFollower,
+        handleGetFollowers,
+      }}
     >
       {children}
     </FollowerListContext.Provider>
