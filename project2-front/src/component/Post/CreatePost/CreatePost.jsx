@@ -37,14 +37,16 @@ const CreatePost = ({handleOpen, child}) => {
         >
             <Box
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '600px',
-                    height: 'auto',
-                    borderRadius: '15px',
-                    backgroundColor: 'white',
-                    padding: '10px',
-                    overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '600px',
+                  height: 'auto',
+                  maxHeight: '85vh',
+                  borderRadius: '15px',
+                  backgroundColor: 'white',
+                  padding: '10px',
+                  overflowX: 'hidden',
+                  overflowY: 'auto',
                 }}
             >
                 <Box
