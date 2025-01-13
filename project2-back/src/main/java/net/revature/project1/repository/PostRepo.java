@@ -25,23 +25,23 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     Optional<PostSmallResponseDto> getUserPost(@Param("id") Long id);
 
     @Query("""
-            SELECT new net.revature.project1.dto.PostResponseDto(
-                p.id,
-                CASE WHEN p.postParent IS NULL THEN null ELSE p.postParent.id END,
-                p.user.id,
-                p.user.username,
-                p.user.displayName,
-                p.user.profilePic,
-                p.comment,
-                p.media,
-                p.postEdited,
-                p.postAt,
-                SIZE(p.likes),
-                (SELECT COUNT(c) FROM Post c WHERE c.postParent.id = p.id)
-            )
-            FROM Post p
-            WHERE p.id = :postId
-           """)
+    SELECT new net.revature.project1.dto.PostResponseDto(
+        p.id,
+        CASE WHEN p.postParent IS NULL THEN null ELSE p.postParent.id END,
+        p.user.id,
+        p.user.username,
+        p.user.displayName,
+        p.user.profilePic,
+        p.comment,
+        p.media,
+        p.postEdited,
+        p.postAt,
+        (SELECT COUNT(u) FROM p.likes u),
+        (SELECT COUNT(c) FROM Post c WHERE c.postParent.id = p.id)
+    )
+    FROM Post p
+    WHERE p.id = :postId
+    """)
     Optional<PostResponseDto> findPostDtoById(@Param("postId") Long postId);
 
     @Query("SELECT p FROM Post p " +
