@@ -4,12 +4,16 @@ import { useEffect, useState } from "react";
 import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import FollowerListContext from "../Followers/Context/FollowerListProvider.jsx";
+import { useContext } from "react";
 
 const ProfileInformationPanel = ({ user }) => {
   const { listPostData, getUserPost } = usePost();
   const { getId, getUserData } = useUserProfile();
   const [userData, setUserData] = useState(user);
   const [time, setTime] = useState(null);
+  const { handleGetFollowers } = useContext(FollowerListContext);
 
   useEffect(() => {
     const options = { year: "numeric", month: "long" };
@@ -92,19 +96,21 @@ const ProfileInformationPanel = ({ user }) => {
           >
             {userData.followerCount}
           </Typography>
-
-          <Typography
-            variant="h6"
-            color="secondary"
-            sx={{
-              marginLeft: "5px",
-              fontWeight: "400",
-              fontSize: "15px",
-              color: "rgb(66, 87, 108)",
-            }}
-          >
-            followers
-          </Typography>
+          <Link to="/profile/:username/followers">
+            <Typography
+              variant="h6"
+              color="secondary"
+              sx={{
+                marginLeft: "5px",
+                fontWeight: "400",
+                fontSize: "15px",
+                color: "rgb(66, 87, 108)",
+              }}
+              onClick={handleGetFollowers}
+            >
+              followers
+            </Typography>
+          </Link>
         </Box>
 
         <Box
@@ -126,20 +132,21 @@ const ProfileInformationPanel = ({ user }) => {
           >
             {userData.followingCount}
           </Typography>
-
-          <Typography
-            variant="h6"
-            color="secondary"
-            sx={{
-              marginLeft: "5px",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: "400",
-              fontSize: "15px",
-              color: "rgb(66, 87, 108)",
-            }}
-          >
-            following
-          </Typography>
+          <Link to="/profile/:username/following">
+            <Typography
+              variant="h6"
+              color="secondary"
+              sx={{
+                marginLeft: "5px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "400",
+                fontSize: "15px",
+                color: "rgb(66, 87, 108)",
+              }}
+            >
+              following
+            </Typography>
+          </Link>
         </Box>
 
         <Box
