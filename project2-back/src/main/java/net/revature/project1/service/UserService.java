@@ -142,6 +142,36 @@ public class UserService {
         return UserEnum.SUCCESS;
     }
 
+    public UserEnum updateUsername(Long id, String username, String token){
+        
+        boolean isValid = isValidToken(token, id);
+        if(!isValid){
+            return UserEnum.UNAUTHORIZED;
+        }
+        
+        if(username.isEmpty()
+                || !RegisterRequirementsUtils.isValidUsername(username)
+                || username.length() < 3
+                || username.length() > 20
+        ){
+            System.out.println(username.length());
+            System.out.println(RegisterRequirementsUtils.isValidUsername(username));
+            return UserEnum.BAD_USERNAME;
+        }
+        ;
+        Optional<AppUser> userOptional = userRepo.findById(id);
+        if(userOptional.isEmpty()){
+            return UserEnum.UNKNOWN;
+        }
+       
+        AppUser newUser = userOptional.get();
+        
+        newUser.setUsername(username);
+        userRepo.save(newUser);
+
+        return UserEnum.SUCCESS;
+    }
+
     /**
      * Used to change the user display name.
 //     * @param id Take in a user id to find the user.
