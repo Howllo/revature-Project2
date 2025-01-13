@@ -4,6 +4,7 @@ import net.revature.project1.dto.EmailData;
 import net.revature.project1.dto.UserDto;
 import net.revature.project1.dto.UserRequestPicDto;
 import net.revature.project1.dto.UserSearchDto;
+import net.revature.project1.dto.*;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.enumerator.UserEnum;
 import net.revature.project1.result.UserResult;
@@ -97,6 +98,7 @@ public class UserController {
         UserEnum result = userService.updateBiography(id, appUser);
         return resultResponse(result);
     }
+
 
     @PostMapping("/{id}/follow/{user}")
     public ResponseEntity<String> followNewUser(@PathVariable("id") Long followerId,
