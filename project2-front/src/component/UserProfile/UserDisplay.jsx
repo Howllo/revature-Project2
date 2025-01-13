@@ -4,6 +4,7 @@ import "./UserDisplay.css";
 import PropTypes from "prop-types";
 // import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 import { useEffect, useState } from "react";
+import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 
 const UserDisplay = ({ user }) => {
   const [userData, setUserData] = useState(user);
