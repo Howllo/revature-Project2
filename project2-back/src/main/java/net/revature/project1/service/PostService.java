@@ -78,7 +78,7 @@ public class PostService {
      * @return The post.
      */
     public PostResponseDto getPost(Long id) {
-        Optional<PostResponseDto> postDto = postRepo.findPostResponseById(id);
+        Optional<PostResponseDto> postDto = postRepo.findPostDtoById(id);
         return postDto.orElse(null);
     }
 
