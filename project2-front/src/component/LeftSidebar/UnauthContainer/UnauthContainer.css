@@ -6,7 +6,7 @@
 
 .ParticipateTitle {
     margin-top: 10px !important;
-    font-size: 2.4vw !important;
+    font-size: 27px !important;
     font-weight: 800 !important;
     color: #000000;
 }
@@ -19,5 +19,12 @@
     .SelectLanguageContainer {
         margin-top: 10px !important;
         margin-bottom: -250px !important;
+    }
+
+    .ParticipateTitle {
+        margin-top: 10px !important;
+        font-size: 25px !important;
+        font-weight: 800 !important;
+        color: #000000;
     }
 }

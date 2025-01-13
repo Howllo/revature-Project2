@@ -1,14 +1,21 @@
 .ProfilePageProfilePostContainer {
-    border-style: solid;
-    border-width: thin;
-    border-left: thin;
-    border-top: thin;
-    border-bottom: 0 !important;
-    border-right: thin;
-    border-color: rgb(212, 219, 226);
-    width: 98% !important;
+    border-width: thin !important;
+    border-style: solid !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-color: lightgray !important;
+    width: 571px !important;
 }
 
 .ProfilePageUserContainer {
     margin-top: 10px !important;
+}
+
+.ProfilePageFullContainer {
+    border-width: thin !important;
+    border-style: solid !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    border-color: lightgray !important;
 }

@@ -40,7 +40,7 @@ const ProfilePage = () => {
 
   return (
     <UserProfileProvider>
-      <Box sx={{ flexDirection: "column", }}>
+      <Box className="ProfilePageFullContainer" sx={{ flexDirection: "column", }}>
         {/* User Profile Information */}
         <Box>
           {userData && <UserDisplay user={userData} />}
