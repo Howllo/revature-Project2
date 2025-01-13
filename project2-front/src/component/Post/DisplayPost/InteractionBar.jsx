@@ -163,10 +163,22 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
 }
 
 InteractionBar.propTypes = {
-    post: PropTypes.object.isRequired,
-    setPost: PropTypes.func.isRequired,
-    commentsCount: PropTypes.number.isRequired,
-    likesCount: PropTypes.number.isRequired,
+  post: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    username: PropTypes.string.isRequired,
+    profile_pic: PropTypes.string,
+    profilePic: PropTypes.string,
+    displayName: PropTypes.string,
+    userId: PropTypes.number,
+    postAt: PropTypes.string,
+    comment: PropTypes.string.isRequired,
+    commentCount: PropTypes.number,
+    likeCount: PropTypes.number,
+    media: PropTypes.string,
+  }).isRequired,
+  setPost: PropTypes.func.isRequired,
+  commentsCount: PropTypes.number.isRequired,
+  likesCount: PropTypes.number.isRequired,
 };
 
 export default InteractionBar;

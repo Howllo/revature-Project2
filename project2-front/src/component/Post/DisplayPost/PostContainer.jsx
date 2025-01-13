@@ -8,13 +8,14 @@ import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
-const PostContainer = ({ key, post, commentChildren }) => {
+const PostContainer = ({ key, post }) => {
   const [savedPost, setSavedPost] = useState(post);
   const navigate = useNavigate();
 
   const handleNavigation = (e) => {
       e.preventDefault();
       e.stopPropagation();
+
     if(e.target === e.currentTarget) {
       navigate(`/profile/${post.username}/post/${post.id}`);
     }
@@ -122,17 +123,6 @@ const PostContainer = ({ key, post, commentChildren }) => {
             likesCount={post.likeCount}
           />
         </Box>
-
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "95%",
-            height: "100%",
-          }}
-        >
-          {commentChildren}
-        </Box>
       </Box>
     </Card>
   );
@@ -152,7 +142,6 @@ PostContainer.propTypes = {
     likeCount: PropTypes.number,
     media: PropTypes.string,
   }).isRequired,
-  commentChildren: PropTypes.node,
 };
 
 export default PostContainer;

@@ -118,7 +118,7 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-    const getPost = async () => {
+    const getPostAll = async () => {
         try {
             const response = await projectApi.get("/post/all", {
                 headers: {
@@ -170,7 +170,7 @@ export const PostProvider = ({ children }) => {
             });
 
              if(response.status === 200) {
-                 await getPost();
+                 await getPostAll();
              }
         } catch (e) {
             console.error('Error editing post: ', e.status);
@@ -220,19 +220,6 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-    const getChildren = async (postId) => {
-        try {
-            const response  = await projectApi.get(`/post/${postId}/comments`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            return response.data;
-        } catch (e) {
-            console.error('Error getting likes for post: ', e.status);
-        }
-    }
-
     const getUserPost = async (id) => {
         try {
             const response = await projectApi.get("/post/all", {
@@ -253,26 +240,57 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-    const value = {
-        listPostData,
-        setListPostData,
-        file: postData.file,
-        previewUrl: postData.previewUrl,
-        comment: postData.comment,
-        isVideo: postData.isVideo,
-        handleImageSelect: handleMediaSelect,
-        handleYouTubeSelect: handleYouTubeSelect,
-        setComment,
-        submitPost,
-        resetPost,
-        getPost,
-        deletePost,
-        editPost,
-        likePost,
-        isUserLike,
-        getChildren,
-        getUserPost
-    };
+  const getPost = async (postId) => {
+    if(!postId){
+      return;
+    }
+
+    try {
+      const response  = await projectApi.get(`/post/${postId}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      return response.data;
+    } catch (e) {
+      console.error('Error getting likes for post: ', e.status);
+    }
+  }
+
+  const getChildren = async (postId) => {
+    try {
+      const response  = await projectApi.get(`/post/${postId}/comments`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      return response.data;
+    } catch (e) {
+      console.error('Error getting likes for post: ', e.status);
+    }
+  }
+
+  const value = {
+    listPostData,
+    setListPostData,
+    file: postData.file,
+    previewUrl: postData.previewUrl,
+    comment: postData.comment,
+    isVideo: postData.isVideo,
+    handleImageSelect: handleMediaSelect,
+    handleYouTubeSelect: handleYouTubeSelect,
+    setComment,
+    submitPost,
+    resetPost,
+    getPostAll,
+    deletePost,
+    editPost,
+    likePost,
+    isUserLike,
+    getUserPost,
+    getPost,
+    getChildren
+  };
 
     return (
         <PostContext.Provider value={value}>

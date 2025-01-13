@@ -1,15 +1,21 @@
 import {Box} from "@mui/material";
 import PostBackBar from "../component/UserPostPage/PostBackBar.jsx";
+import ParentPost from "../component/UserPostPage/ParentPost.jsx";
+import {useState} from "react";
 
 const PostPage = () => {
-  return (
-    <Box>
-      <Box
-        sx={{
+  const [post, setPost] = useState({});
 
-        }}
-      >
-        <PostBackBar />
+  return (
+    <Box
+      sx={{
+
+      }}
+    >
+      <PostBackBar />
+
+      <Box>
+        <ParentPost setPostParent={setPost} />
       </Box>
     </Box>
   )
