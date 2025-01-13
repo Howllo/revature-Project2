@@ -118,7 +118,7 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-    const getPostAll = async () => {
+    const getPost = async () => {
         try {
             const response = await projectApi.get("/post/all", {
                 headers: {
@@ -170,7 +170,7 @@ export const PostProvider = ({ children }) => {
             });
 
              if(response.status === 200) {
-                 await getPostAll();
+                 await getPost();
              }
         } catch (e) {
             console.error('Error editing post: ', e.status);
@@ -220,6 +220,19 @@ export const PostProvider = ({ children }) => {
         }
     }
 
+    const getChildren = async (postId) => {
+        try {
+            const response  = await projectApi.get(`/post/${postId}/comments`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            return response.data;
+        } catch (e) {
+            console.error('Error getting likes for post: ', e.status);
+        }
+    }
+
     const getUserPost = async (id) => {
         try {
             const response = await projectApi.get("/post/all", {
@@ -240,26 +253,13 @@ export const PostProvider = ({ children }) => {
         }
     }
 
-  const getPost = async (postId) => {
+  const getPostUnique = async (postId) => {
     if(!postId){
       return;
     }
 
     try {
       const response  = await projectApi.get(`/post/${postId}`, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      return response.data;
-    } catch (e) {
-      console.error('Error getting likes for post: ', e.status);
-    }
-  }
-
-  const getChildren = async (postId) => {
-    try {
-      const response  = await projectApi.get(`/post/${postId}/comments`, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -282,21 +282,21 @@ export const PostProvider = ({ children }) => {
     setComment,
     submitPost,
     resetPost,
-    getPostAll,
+    getPost,
     deletePost,
     editPost,
     likePost,
     isUserLike,
+    getChildren,
     getUserPost,
-    getPost,
-    getChildren
+    getPostUnique
   };
 
-    return (
-        <PostContext.Provider value={value}>
-            {children}
-        </PostContext.Provider>
-    );
+  return (
+      <PostContext.Provider value={value}>
+          {children}
+      </PostContext.Provider>
+  );
 };
 
 PostProvider.propTypes = {

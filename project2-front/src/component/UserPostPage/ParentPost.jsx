@@ -8,11 +8,11 @@ import {usePost} from "../Post/Context/UsePost.jsx";
 const ParentPost = ({ setPostParent }) => {
   const [post, setPost] = useState({});
   const { postId } = useParams();
-  const {getPost} = usePost();
+  const {getPostUnique} = usePost();
 
   useEffect(() => {
     const getPostAsync = async () => {
-      setPost(await getPost(Number(postId)));
+      setPost(await getPostUnique(Number(postId)));
       setPostParent(post);
     }
     getPostAsync();
