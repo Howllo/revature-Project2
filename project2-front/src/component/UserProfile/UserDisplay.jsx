@@ -4,6 +4,7 @@ import "./UserDisplay.css";
 import PropTypes from "prop-types";
 // import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 import { useEffect, useState } from "react";
+import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 
 const UserDisplay = ({ user }) => {
   const [userData, setUserData] = useState(user);
@@ -21,7 +22,12 @@ const UserDisplay = ({ user }) => {
              src={userData.bannerPic || "https://picsum.photos/1500/500"}
              alt="Post Image" loading={"lazy"}/>
         <Box>
-          <Avatar className="UserDisplayUserAvatar" image={userData.profilePic}/>
+          <UserAvatar 
+            className="UserDisplayUserAvatar" 
+            username={user.username} 
+            image={userData.profilePic} 
+            width={92}
+            height={92}/>
         </Box>
     </Box>
   );
