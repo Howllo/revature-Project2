@@ -41,7 +41,6 @@ const SettingsContainer = ({ user }) => {
         </DialogTitle>
         <DialogContent>
           <Banner user={user} />
-          {/* <ProfilePictureInput user={user} /> */}
           <DisplayNameField user={user} />
           <BioTextField user={user} />
         </DialogContent>
@@ -55,4 +54,5 @@ const SettingsContainer = ({ user }) => {
     </SettingsProvider>
   );
 };
+
 export default SettingsContainer;

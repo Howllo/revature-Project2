@@ -1,5 +1,6 @@
 ﻿import {Box, Typography} from "@mui/material";
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 const PostText = ({display_name, username, post_date}) => {
     const daysBetween = () => {
@@ -37,20 +38,27 @@ const PostText = ({display_name, username, post_date}) => {
             }}
         >
             <Box>
-                <Typography
+                <Link to={`/profile/${username}`}>
+                  <Typography
                     variant="h6"
                     fontFamily="Inter, sans-serif"
                     sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        fontSize: '15px',
-                        wordWrap: 'break-word',
-                        overflow: 'hidden',
-                        color: 'rgb(11, 15, 20)'
+                      display: 'flex',
+                      flexDirection: 'row',
+                      textDecoration: "none",
+                      "&:hover": {
+                        textDecoration: "underline"
+                      },
+                      fontSize: '15px',
+                      wordWrap: 'break-word',
+                      overflow: 'hidden',
+                      color: 'rgb(11, 15, 20)'
+
                     }}
-                >
+                  >
                     {display_name}
-                </Typography>
+                  </Typography>
+                </Link>
             </Box>
 
             <Box>
