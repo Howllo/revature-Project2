@@ -12,15 +12,23 @@ const ParentPost = ({ setPostParent }) => {
 
   useEffect(() => {
     const getPostAsync = async () => {
-      setPost(await getPostUnique(Number(postId)));
+      const getPost = await getPostUnique(postId);
+      setPost(getPost);
       setPostParent(post);
     }
     getPostAsync();
-  }, postId);
+  }, [postId]);
 
   return (
-    <Box>
-      <PostContainer post={post} />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "99.50%",
+        alignItems: "center",
+      }}
+    >
+      {post.id ? <PostContainer post={post} isPostProfile={true}/> : null}
     </Box>
   )
 }

@@ -12,16 +12,12 @@ import ReplyContainer from "./ReplyContainer.jsx";
 const CreatePost = ({handleOpen, child, isReply = false, post}) => {
     const {resetPost, previewUrl, isVideo, submitPost, getPost} = usePost();
 
-    const cancelPost = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    const cancelPost = () => {
       resetPost();
       handleOpen();
     }
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    const handleSubmit = async () => {
       handleOpen();
         if(child === undefined || child === null) {
             await submitPost(null);
@@ -68,7 +64,7 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                             borderRadius: '20px',
                             textTransform: 'capitalize'
                         }}
-                        onClick={(e) => cancelPost(e)}
+                        onClick={cancelPost}
                     >
                         Cancel
                     </Button>
@@ -79,7 +75,7 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                             borderRadius: '20px',
                             textTransform: 'capitalize',
                         }}
-                        onClick={(e) => handleSubmit(e)}
+                        onClick={handleSubmit}
                     >
                         Post
                     </Button>

@@ -18,23 +18,20 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
     const {likePost, isUserLike } = usePost();
     const [handleDropdownMenu, setHandleDropdownMenu] = useState(false);
 
-    const handleLike = async () => {
-      const liked = await likePost(post.id);
+  const handleLike = async () => {
+    const liked = await likePost(post.id);
+    const likeCount = liked ? 1 : -1;
+    const newLikeTotal = Math.max(0, currentLikes + likeCount);
 
-      if(!liked) {
-          setIsLiked(false);
-          return;
-      }
+    setIsLiked(liked);
+    setCurrentLikes(newLikeTotal);
 
-      let newLikeTotal = likesCount + 1;
-      setCurrentLikes(newLikeTotal);
-      setIsLiked(liked);
-      setPost({
-          ...post,
-          likeCount: newLikeTotal,
-          commentCount: commentsCount,
-      });
-    };
+    setPost({
+      ...post,
+      likeCount: newLikeTotal,
+      commentCount: commentsCount,
+    });
+  };
 
     useEffect(() => {
         handleCheckIfAuthorized()

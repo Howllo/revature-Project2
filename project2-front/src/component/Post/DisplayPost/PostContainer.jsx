@@ -8,13 +8,17 @@ import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
-const PostContainer = ({ key, post }) => {
+const PostContainer = ({ key, post, isPostProfile = false }) => {
   const [savedPost, setSavedPost] = useState(post);
   const navigate = useNavigate();
 
   const handleNavigation = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    if(isPostProfile) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
 
     if(e.target === e.currentTarget) {
       navigate(`/profile/${post.username}/post/${post.id}`);
@@ -31,10 +35,10 @@ const PostContainer = ({ key, post }) => {
         borderStyle: "solid",
         borderWidth: 1,
         borderColor: "rgb(212, 219, 226)",
-        maxWidth: "650px",
+        maxWidth: "600px",
         width: "90%",
         padding: "13px",
-        cursor: "pointer",
+        cursor: isPostProfile ? "default" : "pointer",
       }}
       key={key}
       onClick={(e) => handleNavigation(e)}
@@ -142,6 +146,7 @@ PostContainer.propTypes = {
     likeCount: PropTypes.number,
     media: PropTypes.string,
   }).isRequired,
+  isPostProfile: PropTypes.bool,
 };
 
 export default PostContainer;

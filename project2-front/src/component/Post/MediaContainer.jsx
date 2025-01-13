@@ -17,10 +17,8 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
 
   const toggleMedia = (e) => {
     if (isInBackdrop) return;
-
     e.stopPropagation();
     e.preventDefault();
-    console.log(`The current boolean is ${open}.`)
     setOpen((prev) => !prev);
   };
 
@@ -90,7 +88,7 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
                     }}
                     src={youtube}
                     title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                 ></iframe>
             )}
