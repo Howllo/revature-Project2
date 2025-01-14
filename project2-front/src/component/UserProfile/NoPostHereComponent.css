@@ -26,14 +26,14 @@
 
 .SpaIcon {
     color: rgb(168,182,195);
-    width: 55px;
-    height: 55px;
+    width: 55px  !important;
+    height: 55px !important;
 }
 
 .Typography {
-    margin-top: 10px;
-    font-weight: 400;
-    font-size: 17px;
-    color: rgb(65,86,107);
-    padding-left: 5px;
+    margin-top: 10px        !important;
+    font-weight: 400        !important;
+    font-size: 17px         !important;
+    color: rgb(65,86,107)   !important;
+    padding-left: 5px       !important;
 }

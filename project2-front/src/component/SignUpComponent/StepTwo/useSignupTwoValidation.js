@@ -14,7 +14,7 @@ export const useSignupTwoValidation = () => {
   const checkUsername = async () => {
     try {
       const response = await projectApi.get(
-        `/user/check/username/${data.username}`
+        `/user/check/username/${data.username.toLowerCase()}`
       );
       return response.status === 200;
     } catch (e) {

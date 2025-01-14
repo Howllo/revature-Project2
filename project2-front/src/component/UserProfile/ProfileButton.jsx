@@ -12,7 +12,7 @@ const ProfileButton = ({ user, update }) => {
   const [isFollowed, setIsFollowed] = useState();
 
   useEffect(() => {
-    const x = checkFollow(Cookies.get("user_id"), user.username);
+    const x = checkFollow(Cookies.get("username"), user.username);
     x.then((value) => {
       setIsFollowed(value);
     });
@@ -20,7 +20,7 @@ const ProfileButton = ({ user, update }) => {
 
   const handleFollow = async () => {
     isFollowed
-      ? removeFollow(Cookies.get("user_id"), user.username)
+      ? removeFollow(Cookies.get("username"), user.username)
       : setFollow(Cookies.get("user_id"), user.username);
     setIsFollowed(!isFollowed);
     update();

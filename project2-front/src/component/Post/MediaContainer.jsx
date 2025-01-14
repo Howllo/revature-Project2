@@ -6,7 +6,7 @@ import MediaBackdrop from "./MediaBackdrop.jsx";
 import {usePost} from "./Context/UsePost.jsx";
 import "./MediaBackdrop.css"
 
-const MediaContainer = ({ media, isVideo, isInBackdrop = false, isInPreview = false}) => {
+const MediaContainer = ({ media, isVideo, isInBackdrop = false, isInPreview}) => {
     const { resetPost } = usePost();
     const [youtube, setYoutube] = useState("");
     const [mediaType, setMediaType] = useState("");

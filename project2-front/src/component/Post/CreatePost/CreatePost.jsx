@@ -98,7 +98,7 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
 
                         }}
                     >
-                        <UserAvatar username={Cookies.get('username')}/>
+                        <UserAvatar username={Cookies.get('username')} image={Cookies.get("profile_pic")}/>
                     </Box>
                     <PostTextField/>
                 </Box>
@@ -115,7 +115,10 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                         borderRadius: '50px',
                     }}
                 >
-                    {previewUrl ? <MediaContainer className="MediaContainerCreatePost" media={previewUrl} isVideo={isVideo}/> : null}
+                    {previewUrl ? <MediaContainer className="MediaContainerCreatePost" media={previewUrl}
+                                                  isVideo={isVideo}
+                                                  isInPreview={true}
+                    /> : null}
                 </Box>
               <Box
                 sx={{
