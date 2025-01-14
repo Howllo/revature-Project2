@@ -291,8 +291,8 @@ public class UserService {
      * @param username Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
-    public UserEnum unfollowUser(Long followerId, String username, String token){
-        Optional<AppUser> optionalFollower = userRepo.findById(followerId);
+    public UserEnum unfollowUser(String currentUser, String username, String token){
+        Optional<AppUser> optionalFollower = userRepo.findAppUserByUsername(currentUser);
         Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(username);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
             return UserEnum.UNKNOWN;
@@ -304,7 +304,7 @@ public class UserService {
             return UserEnum.UNKNOWN;
         }
 
-        boolean isValid = isValidToken(token, followerId);
+        boolean isValid = isValidToken(token, follower.getId());
         if(!isValid){
             return UserEnum.UNAUTHORIZED;
         }

@@ -109,11 +109,11 @@ public class UserController {
         return resultResponse(result);
     }
 
-    @DeleteMapping("/{id}/follow/{user}")
-    public ResponseEntity<String> unfollowUser(@PathVariable("id") Long followerId,
+    @DeleteMapping("/{currentUser}/follow/{user}")
+    public ResponseEntity<String> unfollowUser(@PathVariable("currentUser") String currentUser,
                                                @PathVariable("user") String username,
                                                @RequestHeader("Authorization") String token) {
-        UserEnum result = userService.unfollowUser(followerId, username, token.substring(7));
+        UserEnum result = userService.unfollowUser(currentUser, username, token.substring(7));
         return resultResponse(result);
     }
 
