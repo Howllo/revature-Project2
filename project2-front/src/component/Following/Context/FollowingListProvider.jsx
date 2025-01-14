@@ -42,7 +42,7 @@ export const FollowingListProvider = ({ children }) => {
 
   useEffect(() => {
     handleGetFollowing();
-  }, []);
+  }, [followingList]);
 
   return (
     <FollowingListContext.Provider

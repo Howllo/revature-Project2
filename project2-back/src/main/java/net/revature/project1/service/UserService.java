@@ -304,7 +304,6 @@ public class UserService {
             return UserEnum.UNKNOWN;
         }
 
-
         follower.getFollowing().remove(following);
         following.getFollower().remove(follower);
 
