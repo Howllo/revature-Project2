@@ -6,7 +6,7 @@ import FollowerListContext from "./Context/FollowerListProvider";
 
 const FollowerListContainer = () => {
   const navigate = useNavigate();
-  // const { followerList } = useContext(FollowerListContext);
+  const { followerList } = useContext(FollowerListContext);
 
   const handleBack = () => {
     navigate(-1);
@@ -18,8 +18,10 @@ const FollowerListContainer = () => {
       </Typography>
       <Button onClick={handleBack}>Back</Button>
       <List>
-        <FollowerList />
-        <FollowerList />
+        {followerList &&
+          followerList.map((follower) => (
+            <FollowerList follower={follower} key={follower.username} />
+          ))}
       </List>
     </Box>
   );

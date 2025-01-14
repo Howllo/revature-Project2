@@ -1,13 +1,12 @@
 import { Box, Button, List, Typography } from "@mui/material";
 import FollowingList from "./FollowingList";
-
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import FollowingListContext from "./Context/FollowingListProvider";
 
 const FollowingListContainer = () => {
   const navigate = useNavigate();
-  //   const { followingList } = useContext(FollowingListContext);
+  const { followingList } = useContext(FollowingListContext);
 
   const handleBack = () => {
     navigate(-1);
@@ -34,7 +33,7 @@ const FollowingListContainer = () => {
           color: "primary.main",
         }}
       >
-        People Following You
+        People You are Following
       </Typography>
       <Button
         variant="outlined"
@@ -44,8 +43,12 @@ const FollowingListContainer = () => {
         Back
       </Button>
       <List>
-        <FollowingList />
-        <FollowingList />
+        {followingList &&
+          followingList.map((following) => {
+            return (
+              <FollowingList following={following} key={following.username} />
+            );
+          })}
       </List>
     </Box>
   );

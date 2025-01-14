@@ -1,8 +1,8 @@
-﻿import {createContext, useState} from "react";
+﻿import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-import {projectApi} from "../../../util/axios.js";
+import { projectApi } from "../../../util/axios.js";
 import Cookies from "js-cookie";
-import {SettingsProvider} from "../../ProfileSettings/Context/SettingsProvider.jsx";
+import { SettingsProvider } from "../../ProfileSettings/Context/SettingsProvider.jsx";
 
 const UserProfileContext = createContext(null);
 
@@ -36,6 +36,7 @@ export const UserProfileProvider = ({ children }) => {
       throw e;
     }
   };
+
   const removeFollow = async (follower_id, username) => {
     const token = Cookies.get("jwt");
     try {
@@ -94,8 +95,6 @@ export const UserProfileProvider = ({ children }) => {
       throw e;
     }
   };
-
-
 
   const value = {
     listPostData,
