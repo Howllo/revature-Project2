@@ -27,7 +27,7 @@ const ProfilePost = ({user}) => {
                 }}
               >
                 {listPostData.map((post) => (
-                  <Box key={post.id}>
+                  <Box key={post.id} sx={{ml: '-1px', mt: '-1px'}}>
                     <PostContainer
                       post={post}
                       isComment={false}

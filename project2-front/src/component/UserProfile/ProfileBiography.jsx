@@ -26,7 +26,6 @@ const ProfileBiography = ({ user }) => {
         color="secondary"
         sx={{
           marginLeft: "5px",
-          marginBottom: "5px",
           fontFamily: "Inter, sans-serif",
           fontWeight: "400",
           fontSize: "15px",

@@ -16,7 +16,7 @@ const FeedPage = () => {
     return (
         <Box className="FeedContainer">
             {listPostData.map((post) => (
-                <Box key={post.id}>
+                <Box key={post.id} sx={{mt: '-1px'}}>
                     <PostContainer
                         post={post}
                         isComment={false}

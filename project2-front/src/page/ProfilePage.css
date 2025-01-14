@@ -5,7 +5,7 @@
     border-top: none !important;
     border-left: none !important;
     border-color: lightgray !important;
-    width: 571px !important;
+    width: 570px !important;
 }
 
 .ProfilePageUserContainer {
@@ -13,7 +13,7 @@
 }
 
 .ProfilePageFullContainer {
-    border-width: thin !important;
+    border-width: 1px !important;
     border-style: solid !important;
     border-bottom: none !important;
     border-top: none !important;

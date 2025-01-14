@@ -2,7 +2,7 @@
     border-radius: 0 !important;
     display: flex;
     border-style: solid;
-    border-width: thin;
+    border-width: 1px;
     border-color: rgb(212, 219, 226);
     width: 100%;
     padding-bottom: 2%;

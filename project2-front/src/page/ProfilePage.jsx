@@ -13,6 +13,7 @@ import "./ProfilePage.css";
 import { FollowerListProvider } from "../component/Followers/Context/FollowerListProvider.jsx";
 import {usePost} from "../component/Post/Context/UsePost.jsx";
 import NoPostHereComponent from "../component/UserProfile/NoPostHereComponent.jsx";
+import {HorizontalRule} from "@mui/icons-material";
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -71,6 +72,16 @@ const ProfilePage = () => {
               )}
               {userData && <SettingsContainer user={userData} />}
               {userData && <ProfileBiography user={userData} />}
+
+              {listPostData && listPostData.length === 0 &&
+                <HorizontalRule sx={{
+                  mt: '-5px',
+                  color: 'rgb(212,217,225)',
+                  width: '103.7%',
+                  height: '1px',
+                  backgroundColor: 'rgb(212,217,225)',
+                }}/>
+              }
             </Box>
           </Box>
 
@@ -79,6 +90,7 @@ const ProfilePage = () => {
             {userData && <ProfilePost user={userData} />}
           </Box>
 
+          {/* No Post Yet */}
           <Box>
             {listPostData && listPostData.length === 0 && <NoPostHereComponent/>}
           </Box>
