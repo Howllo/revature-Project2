@@ -14,6 +14,7 @@ import { FollowerListProvider } from "../component/Followers/Context/FollowerLis
 import {usePost} from "../component/Post/Context/UsePost.jsx";
 import NoPostHereComponent from "../component/UserProfile/NoPostHereComponent.jsx";
 import {HorizontalRule} from "@mui/icons-material";
+import {useAuth} from "../util/auth/UseAuth.jsx";
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const ProfilePage = () => {
   const { username } = useParams();
   const [key, setKey] = useState(0);
   const { listPostData } = usePost();
+  const { isAuthenticated } = useAuth();
 
   const getUser = async (user) => {
     try {
@@ -31,6 +33,14 @@ const ProfilePage = () => {
       throw e;
     }
   };
+
+  const handleButtonDisplay = () => {
+    if (isAuthenticated) {
+        return <ProfileButton update={() => setKey(key + 1)} user={userData} />
+    } else {
+        return <br/>
+    }
+}
 
   useEffect(() => {
     if (location.state?.userObj) {
@@ -65,7 +75,7 @@ const ProfilePage = () => {
               }}
             >
               {userData && (
-                <ProfileButton update={() => setKey(key + 1)} user={userData} />
+                handleButtonDisplay()
               )}
               {userData && (
                 <ProfileInformationPanel key={key} user={userData} />
