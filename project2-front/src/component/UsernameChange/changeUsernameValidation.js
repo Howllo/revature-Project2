@@ -13,7 +13,7 @@ export const changeUsernameValidation = (username) => {
   const checkUsername = async () => {
     try {
       const response = await projectApi.get(
-        `/user/check/username/${username}`
+        `/user/check/username/${username.toLowerCase()}`
       );
       return response.status === 200;
     } catch (e) {
