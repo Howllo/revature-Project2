@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import PostContainer from "../Post/DisplayPost/PostContainer.jsx";
 import {useUserProfile} from "./Context/UseUserProfile.jsx";
 import PropTypes from "prop-types";
-import NoPostHereComponent from "./NoPostHereComponent.jsx";
 
 const ProfilePost = ({user}) => {
     const {getId} = useUserProfile();
@@ -19,14 +18,12 @@ const ProfilePost = ({user}) => {
 
         return (
           <Box>
-            {listPostData.length > 0 ? <Box
+            {listPostData.length > 0 && <Box
                 sx={{
                   maxWidth: "104.7%",
                   width: "104.7%",
                   display: 'flex',
                   flexDirection: 'column',
-
-                  marginLeft: '-1px'
                 }}
               >
                 {listPostData.map((post) => (
@@ -37,12 +34,6 @@ const ProfilePost = ({user}) => {
                     />
                   </Box>
                 ))}
-
-
-              </Box> :
-
-              <Box>
-                {listPostData.length === 0 && <NoPostHereComponent/>}
               </Box>
             }
           </Box>

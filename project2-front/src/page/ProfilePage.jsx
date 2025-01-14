@@ -11,12 +11,15 @@ import SettingsContainer from "../component/ProfileSettings/SettingsContainer.js
 import { projectApi } from "../util/axios.js";
 import "./ProfilePage.css";
 import { FollowerListProvider } from "../component/Followers/Context/FollowerListProvider.jsx";
+import {usePost} from "../component/Post/Context/UsePost.jsx";
+import NoPostHereComponent from "../component/UserProfile/NoPostHereComponent.jsx";
 
 const ProfilePage = () => {
   const location = useLocation();
   const [userData, setUserData] = useState(null);
   const { username } = useParams();
   const [key, setKey] = useState(0);
+  const { listPostData } = usePost();
 
   const getUser = async (user) => {
     try {
@@ -74,6 +77,10 @@ const ProfilePage = () => {
           {/* User Post */}
           <Box className="ProfilePageProfilePostContainer">
             {userData && <ProfilePost user={userData} />}
+          </Box>
+
+          <Box>
+            {listPostData && listPostData.length === 0 && <NoPostHereComponent/>}
           </Box>
         </Box>
       </UserProfileProvider>
