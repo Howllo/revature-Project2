@@ -8,3 +8,7 @@
 .UserAvatarPic {
     background-color: #ffffff !important;
 }
+
+.UserAvatarPicNoImg {
+    background-color: #389afb !important;
+}

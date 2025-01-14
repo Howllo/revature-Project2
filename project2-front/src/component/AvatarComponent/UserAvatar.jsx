@@ -13,7 +13,7 @@ const UserAvatar = ({ username, image, width = 42, height = 42, border = false }
   return (
     <Button className="UserAvatarButton" variant="contained" disableRipple={true}
             onClick={handleSubmit} disableElevation={true}>
-      <Avatar className="UserAvatarPic" alt={name} src={image}
+      <Avatar className={image ? "UserAvatarPic" : 'UserAvatarPicNoImg'} alt={name} src={image}
         sx={{
           width: width,
           height: height,
