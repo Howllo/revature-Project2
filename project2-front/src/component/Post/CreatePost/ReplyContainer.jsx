@@ -3,6 +3,7 @@ import {Box, Typography} from "@mui/material";
 import UserAvatar from "../../AvatarComponent/UserAvatar.jsx";
 import {HorizontalRule} from "@mui/icons-material";
 import MediaContainer from "../MediaContainer.jsx";
+import Cookies from "js-cookie";
 
 const ReplyContainer = ({post}) => {
   return (
@@ -24,7 +25,7 @@ const ReplyContainer = ({post}) => {
             marginLeft: '10px',
           }}
         >
-          <UserAvatar username={post.username} width={50} height={50} image={post.profilePic}/>
+          <UserAvatar username={post.username} width={50} height={50} image={post.profile}/>
         </Box>
 
         <Box
@@ -46,7 +47,7 @@ const ReplyContainer = ({post}) => {
               paddingLeft: "5px",
             }}
           >
-            {post.displayName}
+            {post.displayName || post.username}
           </Typography>
 
           <Typography
@@ -70,12 +71,12 @@ const ReplyContainer = ({post}) => {
           sx={{
             display: "flex",
             marginLeft: "auto",
-            width: "70px",
-            height: "70px",
-            paddingRight: '20px',
+            width: "30%",
+            height: "30%",
+            paddingRight: post.media.includes('youtube') ? '70px' : '20px',
           }}
         >
-          <MediaContainer media={post.media}/>
+          <MediaContainer media={post.media} isInPreview={true}/>
         </Box> : null}
       </Box>
       <HorizontalRule
@@ -96,8 +97,7 @@ ReplyContainer.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     username: PropTypes.string.isRequired,
-    profile_pic: PropTypes.string,
-    profilePic: PropTypes.string,
+    profile: PropTypes.string,
     displayName: PropTypes.string,
     postAt: PropTypes.string,
     comment: PropTypes.string.isRequired,
