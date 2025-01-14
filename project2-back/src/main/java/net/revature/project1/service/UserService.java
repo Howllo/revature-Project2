@@ -304,10 +304,6 @@ public class UserService {
             return UserEnum.UNKNOWN;
         }
 
-        boolean isValid = isValidToken(token, follower.getId());
-        if(!isValid){
-            return UserEnum.UNAUTHORIZED;
-        }
 
         follower.getFollowing().remove(following);
         following.getFollower().remove(follower);
