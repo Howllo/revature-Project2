@@ -6,7 +6,7 @@ import MediaBackdrop from "./MediaBackdrop.jsx";
 import {usePost} from "./Context/UsePost.jsx";
 import "./MediaBackdrop.css"
 
-const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
+const MediaContainer = ({ media, isVideo, isInBackdrop = false, isInPreview = false}) => {
     const { resetPost } = usePost();
     const [youtube, setYoutube] = useState("");
     const [mediaType, setMediaType] = useState("");
@@ -43,22 +43,12 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
     }, [media, isVideo, resetPost]);
 
     return (
-        <Box
-          className={'media-container'}
-            sx={{
-              borderRadius: isInBackdrop ? '0' : "15px",
-            }}
-        >
+        <Box className={'media-container'}>
             {mediaType === "video" && (
                 <video
                     src={media}
                     controls
-                    style={{
-                        marginTop: "10px",
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "15px",
-                    }}
+                    className={isInPreview ? 'media-video-preview' : 'media-video'}
                 ></video>
             )}
 
@@ -74,10 +64,7 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
 
             {mediaType === "youtube" && (
                 <iframe
-                    style={{
-                        width: "95%",
-                        height: "300px",
-                    }}
+                    className={isInPreview ? '.media-youtube-preview' : 'media-youtube'}
                     src={youtube}
                     title="YouTube video player"
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -94,6 +81,7 @@ MediaContainer.propTypes = {
   media: PropTypes.string.isRequired,
   isVideo: PropTypes.bool,
   isInBackdrop: PropTypes.bool,
+  isInPreview: PropTypes.bool,
 };
 
 export default MediaContainer;
