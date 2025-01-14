@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Cookies from "js-cookie";
 import { useContext } from "react";
+import FollowerListContext from "./Context/FollowerListProvider";
 
 const FollowerList = ({ follower }) => {
   const currentUser = Cookies.get("username");
@@ -16,7 +17,7 @@ const FollowerList = ({ follower }) => {
 
   return (
     <>
-      <ListItem sx={{ gap: 5 }} key={follower.username}>
+      <ListItem sx={{ gap: 3 }} key={follower.username}>
         <ListItemAvatar>
           <Avatar src={follower.profilePic} />
         </ListItemAvatar>

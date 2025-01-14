@@ -18,7 +18,7 @@ const FollowingList = ({ following }) => {
 
   return (
     <>
-      <ListItem sx={{ gap: 5 }}>
+      <ListItem sx={{ gap: 3 }}>
         <ListItemAvatar>
           <Avatar src={following.profilePic} />
         </ListItemAvatar>

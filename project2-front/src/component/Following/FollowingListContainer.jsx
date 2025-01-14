@@ -18,7 +18,7 @@ const FollowingListContainer = () => {
         maxWidth: 600,
         mx: "auto",
         mt: 4,
-        p: 3,
+        p: 2,
         borderRadius: 2,
         boxShadow: 3,
         bgcolor: "background.paper", // Uses theme's background color
