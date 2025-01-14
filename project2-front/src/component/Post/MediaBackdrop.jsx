@@ -16,7 +16,7 @@ const MediaBackdrop = ({media, open, handleClose}) => {
             onClick={handleBackdropClick}
             sx={{
               zIndex: 9999,
-              backgroundColor: 'black',
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
               cursor: 'default'
             }}
         >
@@ -26,8 +26,8 @@ const MediaBackdrop = ({media, open, handleClose}) => {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: '80%',
-                height: '80%',
+                maxHeight: '90vh',
+                maxWidth: '90vw',
                 cursor: 'default'
               }}
             >

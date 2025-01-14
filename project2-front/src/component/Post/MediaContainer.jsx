@@ -4,6 +4,7 @@ import {allowedImageTypes, allowedVideoTypes} from "../../util/MediaSupport.js";
 import {useEffect, useState} from "react";
 import MediaBackdrop from "./MediaBackdrop.jsx";
 import {usePost} from "./Context/UsePost.jsx";
+import "./MediaBackdrop.css"
 
 const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
     const { resetPost } = usePost();
@@ -43,12 +44,9 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
 
     return (
         <Box
+          className={'media-container'}
             sx={{
-              position: "relative",
-              width: "100%",
-              height: "100%",
-              borderRadius: "15px",
-              overflow: "hidden",
+              borderRadius: isInBackdrop ? '0' : "15px",
             }}
         >
             {mediaType === "video" && (
@@ -70,13 +68,7 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false}) => {
                     alt="Post Image"
                     loading={"lazy"}
                     onClick={(e) => toggleMedia(e)}
-                    style={{
-                        marginTop: "10px",
-                        height: "auto",
-                        width: "95%",
-                        borderRadius: "15px",
-                        cursor: isInBackdrop  ? 'default' : "pointer",
-                    }}
+                    className={`media-image ${isInBackdrop ? "in-backdrop" : "default"}`}
                 />
             )}
 
