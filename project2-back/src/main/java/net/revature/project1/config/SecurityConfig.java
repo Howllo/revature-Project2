@@ -102,7 +102,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/post/{id}/comments").permitAll()
                 .requestMatchers("/api/v1/user/username/**").permitAll()
                 .requestMatchers("/api/v1/user/getSearchDto/**").permitAll()
-                .requestMatchers("/api/v1/user/followers/**").permitAll()
+                .requestMatchers("/api/v1/user/{id}/follow/{user}").permitAll()
                 .requestMatchers("/api/v1/user/following/**").permitAll()
                 .requestMatchers("/api/v1/auth/verify-captcha").permitAll()
                 .requestMatchers("/api/v1/auth/verify-token").permitAll()
