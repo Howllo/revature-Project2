@@ -36,11 +36,11 @@ export const UserProfileProvider = ({ children }) => {
       throw e;
     }
   };
-  const removeFollow = async (follower_id, username) => {
+  const removeFollow = async (currentUser, username) => {
     const token = Cookies.get("jwt");
     try {
       const response = await projectApi.delete(
-        `/user/${follower_id}/follow/${username}`,
+        `/user/${currentUser}/follow/${username}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
