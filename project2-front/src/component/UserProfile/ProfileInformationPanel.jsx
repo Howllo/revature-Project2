@@ -80,6 +80,17 @@ const ProfileInformationPanel = ({ user }) => {
           sx={{
             display: "flex",
             flexDirection: "row",
+            position: "relative",
+            textDecoration: "none",
+            "&:hover::after": {
+              content: '""',
+              position: "absolute",
+              bottom: 4,
+              left: 10,
+              width: "88%",
+              height: "1px",
+              backgroundColor: "rgb(89,107,126)"
+            },
           }}
         >
           <Typography
@@ -94,7 +105,7 @@ const ProfileInformationPanel = ({ user }) => {
           >
             {userData.followerCount}
           </Typography>
-          <Link to="/profile/:username/followers">
+          <Link to={`/profile/${user.username}/followers`}>
             <Typography
               variant="h6"
               color="secondary"
@@ -111,29 +122,38 @@ const ProfileInformationPanel = ({ user }) => {
           </Link>
         </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          <Typography
-            variant="h6"
-            color="primary"
+        <Link to={`/profile/${user.username}/following`}>
+          <Box
             sx={{
-              marginLeft: "10px",
-              fontFamily: "Inter, sans-serif",
-              fontWeight: "800",
-              fontSize: "15px",
-              color: "rgb(11, 15, 20)",
+              display: "flex",
+              flexDirection: "row",
+              position: "relative",
+              textDecoration: "none",
+              "&:hover::after": {
+                content: '""',
+                position: "absolute",
+                bottom: 4,
+                left: 11,
+                width: "86%",
+                height: "1px",
+                backgroundColor: "rgb(89,107,126)"
+              },
             }}
           >
-            {userData.followingCount}
-          </Typography>
-          <Link to="/profile/:username/following">
             <Typography
               variant="h6"
-              color="secondary"
+              sx={{
+                marginLeft: "10px",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: "800",
+                fontSize: "15px",
+                color: "rgb(11, 15, 20)",
+              }}
+            >
+              {userData.followingCount}
+            </Typography>
+            <Typography
+              variant="h6"
               sx={{
                 marginLeft: "5px",
                 fontFamily: "Inter, sans-serif",
@@ -144,8 +164,8 @@ const ProfileInformationPanel = ({ user }) => {
             >
               following
             </Typography>
-          </Link>
-        </Box>
+          </Box>
+        </Link>
 
         <Box
           sx={{
