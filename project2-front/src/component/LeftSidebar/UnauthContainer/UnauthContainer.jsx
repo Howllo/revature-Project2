@@ -20,9 +20,24 @@ export function UnauthContainer() {
                 </Avatar>
             </Link>
 
-            <Typography variant="h3" fontFamily="Inter, sans-serif" className="ParticipateTitle">
-                Participate in discussion
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: 'column',
+              }}
+            >
+              <Typography variant="h3" fontFamily="Inter, sans-serif" className="ParticipateTitle">
+                Participate in
+              </Typography>
+              <Typography variant="h3" fontFamily="Inter, sans-serif" className="ParticipateTitle"
+                sx={{
+                  mt: '-10px'
+                }}
+              >
+                discussion
+              </Typography>
+            </Box>
+
 
             <AuthButtons/>
             <Box className="SelectLanguageContainer">

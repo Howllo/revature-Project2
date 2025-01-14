@@ -3,11 +3,11 @@ import {Box, Fab} from "@mui/material";
 import PropTypes from "prop-types";
 import "./FAB_ScrollReset.css";
 
-const FAB_ScrollReset = ({handleScrollUp, showFAB}) => {
+const FAB_ScrollReset = ({handleScrollUp}) => {
 
     return (
         <Box className="FABScrollResetContainer">
-            <Fab className="FABScrollContainer" disableElevation onClick={handleScrollUp} disableRipple={true}>
+            <Fab className="FABScrollContainer" elevation={0} onClick={handleScrollUp} disableRipple={true}>
                 <ExpandLessIcon className="ExpandLessIcon"/>
             </Fab>
         </Box>
@@ -16,7 +16,6 @@ const FAB_ScrollReset = ({handleScrollUp, showFAB}) => {
 
 FAB_ScrollReset.propTypes = {
     handleScrollUp: PropTypes.func.isRequired,
-    showFAB: PropTypes.bool.isRequired,
 };
 
 export default FAB_ScrollReset;

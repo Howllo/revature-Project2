@@ -1,5 +1,6 @@
 .UserDisplayContainer {
-    height: 200px;
+    position: relative;
+    height: 175px;
     width: 100%;
 }
 
@@ -10,8 +11,29 @@
     height: 100% !important;
 }
 
-.UserDisplayUserAvatar {
-    height: 82px !important;
-    width: 82px !important;
-    margin-left: 10px !important;
+.BackButton{
+    display: flex;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #777879;
+    align-items: center;
+    justify-content: center;
+}
+
+.BackButtonIcon {
+    color: #FFFF;
+}
+
+.UserProfileAvatar {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 40px;
+    border-color: white;
+    border-width: 2px;
+    border-style: solid;
 }
