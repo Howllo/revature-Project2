@@ -44,6 +44,7 @@ pipeline {
                 sh '''
                     cd project2-back
                     IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+                    echo $IMAGE_TAG > image_tag.txt
                     /usr/bin/docker build --no-cache -t project2:$IMAGE_TAG . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
                 '''
