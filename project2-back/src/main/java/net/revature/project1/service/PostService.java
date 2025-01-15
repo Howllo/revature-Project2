@@ -115,7 +115,6 @@ public class PostService {
     public PostResult createPost(PostCreateRequestDto postDto, String token) {
         Post post = new Post();
         post.setComment(postDto.comment());
-        String url = "";
 
         if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
             try{
@@ -124,7 +123,8 @@ public class PostService {
                 logger.error(e.getMessage());
                 return new PostResult(PostEnum.INVALID_POST, "Media failed to upload.", null);
             }
-
+        } else {
+            logger.info("Creating new post media does not exist.");
         }
 
         if(postDto.postParent() != null){
