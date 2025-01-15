@@ -162,7 +162,14 @@ public class FileService {
         }
 
         FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
-        String mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
+        String mediaUrl = "";
+
+        try{
+            uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
+        } catch (IllegalStateException e) {
+            logger.error("Error while uploading file: ", e);
+        }
+
         Files.deleteIfExists(tempFile);
         return mediaUrl;
     }
@@ -189,7 +196,7 @@ public class FileService {
                     .build();
             s3Client.deleteObject(deleteObjectRequest );
         }
-        catch (RuntimeException e) {
+        catch (IllegalStateException e) {
             logger.error("Error while deleting file: ", e);
         }
 
