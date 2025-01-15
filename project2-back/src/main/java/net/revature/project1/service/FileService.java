@@ -59,6 +59,10 @@ public class FileService {
             throw new IllegalArgumentException("File path and name cannot be null");
         }
 
+        if(s3Client == null) {
+            throw new IllegalArgumentException("S3 client cannot be null");
+        }
+
         String pathBucketKey = "";
 
         long maxImageSize = 10 * 1024 * 1024;
@@ -135,8 +139,13 @@ public class FileService {
         }
 
         String originalFilename = file.getOriginalFilename();
-        String extension = originalFilename.substring(originalFilename.lastIndexOf(".") - 1);
-        String uniqueFileName = UUID.randomUUID() + "." + extension;
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        if (extension.isEmpty()) {
+            throw new IllegalArgumentException("File must have an extension");
+        }
+
+        String uniqueFileName = UUID.randomUUID() + extension;
         String imageType = file.getContentType();
         Path tempFile = Files.createTempFile(uniqueFileName, "." + extension);
 

@@ -126,6 +126,11 @@ public class PostService {
             }
         }
 
+        if((post.getMedia() == null || post.getMedia().isEmpty()) &&
+                (postDto.youTubeMedia() != null && !postDto.youTubeMedia().isEmpty())){
+            post.setMedia(postDto.youTubeMedia());
+        }
+
         if(postDto.postParent() != null){
             Optional<Post> postParentOptional = postRepo.findById(postDto.postParent());
             if(postParentOptional.isPresent()){
@@ -146,18 +151,14 @@ public class PostService {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
         }
 
-        if(post.getComment() != null && post.getComment().isEmpty() && post.getMedia() == null || post.getMedia().isEmpty()) {
-            logger.error("Both comment and image are null during the creation of a post.");
+        if((post.getComment() != null && post.getComment().isEmpty()) || (post.getMedia() == null || post.getMedia().isEmpty()) ) {
+            logger.error("Both comment and media are null during the creation of a post.");
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }
 
         boolean isValid = isValidToken(token, post);
         if(!isValid){
             return new PostResult(PostEnum.INVALID_POST, "User and post are not the same", null);
-        }
-
-        if((post.getMedia() == null || post.getMedia().isEmpty()) && !postDto.youTubeMedia().isEmpty()){
-            post.setMedia(postDto.youTubeMedia());
         }
 
         post.setPostAt(Timestamp.from(Instant.now()));
