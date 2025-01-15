@@ -40,7 +40,7 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps
+            steps {
                 sh '''
                     IMAGE_TAG=$(date +%Y%m%d%H%M%S)
                     cd project2-back
