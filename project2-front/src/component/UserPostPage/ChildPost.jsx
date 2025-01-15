@@ -47,7 +47,7 @@ const ChildPost = ({ parentId }) => {
 };
 
 ChildPost.propTypes = {
-  parentId: PropTypes.number.isRequired,
+  parentId: PropTypes.string.isRequired,
 };
 
 export default ChildPost;
