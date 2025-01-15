@@ -54,6 +54,8 @@ public class PostController {
             return ResponseEntity.badRequest().body("Invalid post");
         }
 
+        logger.info("Creating a new post {}", post);
+
         PostResult postResult = postService.createPost(post, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
