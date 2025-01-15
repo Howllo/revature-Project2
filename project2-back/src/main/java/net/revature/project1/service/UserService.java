@@ -286,14 +286,14 @@ public class UserService {
 
     /**
      * Used to remove a relationship between following and follower.
-     * @param followerId Take in a follower id. AKA who started the unfollowing.
+     * @param currentUser Take in a follower id. AKA who started the unfollowing.
      * @param username Take in a username. AKA who the person that is being unfollowed.
      * @param token Takes the token of the user who wants to unfollow
      * @param username Take in a following id. AKA who the person that is being unfollowed.
      * @return {@code UserEnum} is return depending on the status of the service.
      */
-    public UserEnum unfollowUser(Long followerId, String username, String token){
-        Optional<AppUser> optionalFollower = userRepo.findById(followerId);
+    public UserEnum unfollowUser(String currentUser, String username, String token){
+        Optional<AppUser> optionalFollower = userRepo.findAppUserByUsername(currentUser);
         Optional<AppUser> optionalFollowing = userRepo.findAppUserByUsername(username);
         if(optionalFollower.isEmpty() || optionalFollowing.isEmpty()){
             return UserEnum.UNKNOWN;
@@ -303,11 +303,6 @@ public class UserService {
         AppUser following = optionalFollowing.get();
         if(!follower.getFollowing().contains(following) || !following.getFollower().contains(follower)){
             return UserEnum.UNKNOWN;
-        }
-
-        boolean isValid = isValidToken(token, followerId);
-        if(!isValid){
-            return UserEnum.UNAUTHORIZED;
         }
 
         follower.getFollowing().remove(following);

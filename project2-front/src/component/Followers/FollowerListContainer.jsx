@@ -6,20 +6,30 @@ import FollowerListContext from "./Context/FollowerListProvider";
 
 const FollowerListContainer = () => {
   const navigate = useNavigate();
-  // const { followerList } = useContext(FollowerListContext);
+  const { followerList } = useContext(FollowerListContext);
 
   const handleBack = () => {
     navigate(-1);
   };
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
+      <Typography
+        variant="h5"
+        sx={{
+          mb: 3,
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "primary.main",
+        }}
+      >
         Followers
       </Typography>
       <Button onClick={handleBack}>Back</Button>
       <List>
-        <FollowerList />
-        <FollowerList />
+        {followerList &&
+          followerList.map((follower) => (
+            <FollowerList follower={follower} key={follower.username} />
+          ))}
       </List>
     </Box>
   );
