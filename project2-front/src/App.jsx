@@ -17,7 +17,7 @@ import { PostProvider } from "./component/Post/Context/PostProvider.jsx";
 import { SearchProvider } from "./component/Search/Context/GetSelectedData.jsx";
 import PostPage from "./page/PostPage.jsx";
 import FollowingPage from "./page/FollowingPage.jsx";
-import FollowersPage from "./page/FollowingPage.jsx";
+import FollowersPage from "./page/FollowersPage.jsx";
 
 function App() {
   return (

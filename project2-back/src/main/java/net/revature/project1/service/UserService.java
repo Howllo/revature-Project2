@@ -285,7 +285,7 @@ public class UserService {
 
     /**
      * Used to remove a relationship between following and follower.
-     * @param followerId Take in a follower id. AKA who started the unfollowing.
+     * @param currentUser Take in a follower id. AKA who started the unfollowing.
      * @param username Take in a username. AKA who the person that is being unfollowed.
      * @param token Takes the token of the user who wants to unfollow
      * @param username Take in a following id. AKA who the person that is being unfollowed.
@@ -302,11 +302,6 @@ public class UserService {
         AppUser following = optionalFollowing.get();
         if(!follower.getFollowing().contains(following) || !following.getFollower().contains(follower)){
             return UserEnum.UNKNOWN;
-        }
-
-        boolean isValid = isValidToken(token, follower.getId());
-        if(!isValid){
-            return UserEnum.UNAUTHORIZED;
         }
 
         follower.getFollowing().remove(following);
