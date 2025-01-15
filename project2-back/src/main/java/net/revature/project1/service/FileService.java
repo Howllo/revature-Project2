@@ -167,7 +167,7 @@ public class FileService {
 
         try{
             mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
-        } catch (IllegalStateException e) {
+        } catch (RuntimeException e) {
             logger.error("Illegal Statement: Error while uploading file to S3.");
         }
 
@@ -197,8 +197,8 @@ public class FileService {
                     .build();
             s3Client.deleteObject(deleteObjectRequest );
         }
-        catch (IllegalStateException e) {
-            logger.error("Error while deleting file: ", e);
+        catch (RuntimeException e) {
+            logger.error("Illegal Statement: Error while deleting file to S3.");
         }
 
     }
