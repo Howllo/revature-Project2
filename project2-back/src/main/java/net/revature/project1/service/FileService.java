@@ -60,6 +60,7 @@ public class FileService {
         }
 
         if(s3Client == null) {
+            logger.warn("The S3 client is null. Exiting out of upload file.");
             throw new IllegalArgumentException("S3 client cannot be null");
         }
 
@@ -167,7 +168,7 @@ public class FileService {
         try{
             mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
         } catch (IllegalStateException e) {
-            logger.error("Error while uploading file: ", e);
+            logger.error("Illegal Statement: Error while uploading file to S3.");
         }
 
         Files.deleteIfExists(tempFile);

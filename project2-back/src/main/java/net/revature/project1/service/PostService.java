@@ -116,8 +116,7 @@ public class PostService {
         Post post = new Post();
         post.setComment(postDto.comment());
 
-        if(postDto.media() != null && !postDto.media().isEmpty() &&
-                postDto.youTubeMedia() == null || postDto.youTubeMedia().isEmpty()){
+        if((postDto.media() != null && !postDto.media().isEmpty()) && postDto.youTubeMedia() == null){
             try{
                 post.setMedia(fileService.createFile(postDto.media()));
             } catch (IOException e) {
@@ -125,9 +124,7 @@ public class PostService {
                 return new PostResult(PostEnum.INVALID_POST, "Media failed to upload.", null);
             }
         }
-
-        if((post.getMedia() == null || post.getMedia().isEmpty()) &&
-                (postDto.youTubeMedia() != null && !postDto.youTubeMedia().isEmpty())){
+        else if(!postDto.youTubeMedia().isEmpty()){
             post.setMedia(postDto.youTubeMedia());
         }
 
