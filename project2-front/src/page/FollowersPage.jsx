@@ -4,7 +4,7 @@ import { FollowerListProvider } from "../component/Followers/Context/FollowerLis
 const FollowersPage = () => {
   return (
     <FollowerListProvider>
-      <FollowerListContainer />;
+      <FollowerListContainer />
     </FollowerListProvider>
   );
 };
