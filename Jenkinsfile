@@ -65,19 +65,19 @@ pipeline {
             steps {
                 sh '''
                     # Capture the command ID
-                    COMMAND_ID=$(aws ssm send-command \
+                    COMMAND_ID=$(/usr/bin/aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --output text \
                         --parameters '{"commands":[
-                            "docker stop project2 || true",
-                            "docker rm -f project2 || true",
+                            "/usr/bin/docker stop project2 || true",
+                            "/usr/bin/docker rm -f project2 || true",
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
-                            "docker image prune -f || true",
-                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "docker load < project2.tar",
-                            "docker run -d -p 8080:8080 --name project2 project2"
+                            "sudo /usr/bin/docker image prune -f || true",
+                            "/usr/bin/aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
+                            "/usr/bin/docker load < project2.tar",
+                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2"
                         ]}' \
                         --query "Command.CommandId")
 
