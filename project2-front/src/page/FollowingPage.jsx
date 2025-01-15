@@ -1,12 +1,12 @@
 import FollowingListContainer from "../component/Following/FollowingListContainer";
-
 import { FollowingListProvider } from "../component/Following/Context/FollowingListProvider";
-const FollowersPage = () => {
+
+const FollowingPage = () => {
   return (
     <FollowingListProvider>
-      <FollowingListContainer />;
+      <FollowingListContainer />
     </FollowingListProvider>
   );
 };
 
-export default FollowersPage;
+export default FollowingPage;

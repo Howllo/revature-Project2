@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { projectApi } from "../util/axios.js";
 import "./SettingPage.css"
+import ChangeUsernamePresent from "../component/UsernameChange/ChangeUsernamePresent.jsx";
 
 const SettingsPage = () => {
   const [username, setUsername] = useState();
@@ -62,6 +63,10 @@ const SettingsPage = () => {
         }
       />
       <p>Note: Changing your username will log you out.</p>
+      {username && username.length > 0 ?
+                          <ChangeUsernamePresent username={username}/>
+                          : null
+                      }
       <Button className="SettingPageChangeNameButton" variant="contained" onClick={handleDisplayChange}>
         Change Name
       </Button>
