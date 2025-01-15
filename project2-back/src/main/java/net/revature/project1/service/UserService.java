@@ -247,7 +247,7 @@ public class UserService {
         }
 
         try {
-            if(!userUpdateRequestDto.bannerPic().isEmpty()){
+            if(userUpdateRequestDto.bannerPic() != null && !userUpdateRequestDto.bannerPic().isEmpty()){
                 oldBanner = user.getBannerPic();
                 String bannerUrl = fileService.createFile(userUpdateRequestDto.bannerPic());
                 user.setBannerPic(bannerUrl);
@@ -260,7 +260,7 @@ public class UserService {
         }
 
         try {
-            if(!userUpdateRequestDto.profilePic().isEmpty()){
+            if(userUpdateRequestDto.profilePic() != null && !userUpdateRequestDto.profilePic().isEmpty()){
                 oldProfilePicture = user.getProfilePic();
                 String profileUrl = fileService.createFile(userUpdateRequestDto.profilePic());
                 user.setProfilePic(profileUrl);

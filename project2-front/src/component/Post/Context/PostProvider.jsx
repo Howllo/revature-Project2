@@ -19,8 +19,9 @@ export const PostProvider = ({ children }) => {
             if (postData.previewUrl) {
                 URL.revokeObjectURL(postData.previewUrl);
             }
+          resetPost();
         };
-    }, [postData.previewUrl]);
+    }, []);
 
     const handleYouTubeSelect = (url) => {
         if(postData.previewUrl) {
@@ -81,7 +82,7 @@ export const PostProvider = ({ children }) => {
           mediaData.append('userId', Cookies.get('user_id'));
           mediaData.append('postParent', parentPost ? parentPost.id : null);
           mediaData.append('comment', postData.comment);
-          mediaData.append('media', postData.file[0]);
+          mediaData.append('media', postData.file);
 
           const response = await projectApi.post('/post/create',
               mediaData,
@@ -95,7 +96,7 @@ export const PostProvider = ({ children }) => {
           resetPost();
           return response.data;
       } catch (error) {
-          console.error('Error submitting post:', error.status);
+          console.error(`Error submitting post:`, error.response?.data || error.message);
           throw error;
       }
     }
@@ -166,7 +167,7 @@ export const PostProvider = ({ children }) => {
         }
 
         try{
-            const response = await projectApi.post(`/post/${id}/like/${Cookies.get('user_id')}`, {
+            const response = await projectApi.post(`/post/${id}/like/${Cookies.get('user_id')}`, null,{
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
