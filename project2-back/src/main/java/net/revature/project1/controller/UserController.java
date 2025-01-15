@@ -57,13 +57,6 @@ public class UserController {
         return ResponseEntity.ok("This username is available.");
     }
 
-    @PutMapping("/{id}/email")
-    public ResponseEntity<String> updateUserEmail(@PathVariable Long id,
-                                                  @RequestBody AppUser appUser) {
-        UserEnum result = userService.updateEmail(id, appUser);
-        return resultResponse(result);
-    }
-
     @PostMapping("/check/email")
     public ResponseEntity<String> checkEmail(@RequestBody EmailData emailData) {
         boolean isNotAvailable = userService.existsByEmail(emailData.email());
@@ -74,15 +67,15 @@ public class UserController {
     }
 
     @PutMapping("/settings/update")
-    public ResponseEntity<AppUser> updateUserDetails(@RequestBody AppUser appUser, @RequestHeader("Authorization") String receivedToken){
-
+    public ResponseEntity<UserUpdateResponseDto> updateUserDetails(@ModelAttribute UserUpdateRequestDto userUpdateRequestDto,
+                                                                   @RequestHeader("Authorization") String receivedToken){
         String token = receivedToken.substring(7);
-        AppUser receivedAppUser = userService.updateAppUser(appUser, token);
-        if (receivedAppUser == null){
+        UserUpdateResponseDto responseDto = userService.updateAppUser(userUpdateRequestDto, token);
+        if (responseDto == null){
            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
         }
-            return new ResponseEntity<>(appUser, HttpStatus.OK);
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/update/{username}")

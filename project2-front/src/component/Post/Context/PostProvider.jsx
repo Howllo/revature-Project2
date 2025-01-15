@@ -71,51 +71,33 @@ export const PostProvider = ({ children }) => {
     };
 
     const submitPost = async (parentPost) => {
+      const token = Cookies.get('jwt');
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
         try {
-            let mediaString = null;
+          const mediaData = new FormData();
+          mediaData.append('userId', Cookies.get('user_id'));
+          mediaData.append('postParent', parentPost ? parentPost.id : null);
+          mediaData.append('comment', postData.comment);
+          mediaData.append('media', postData.file[0]);
 
-            if (postData.file) {
-                const reader = new FileReader();
-                const base64String = await new Promise((resolve) => {
-                    reader.onload = () => {
-                        const base64 = reader.result.split(',')[1];
-                        resolve(base64);
-                    };
-                    reader.readAsDataURL(postData.file);
-                });
-                mediaString = `data:${postData.file.type};base64,${base64String}`;
-            } else if (postData.previewUrl) {
-                mediaString = postData.previewUrl;
-            }
+          const response = await projectApi.post('/post/create',
+              mediaData,
+              {
+                  headers: {
+                      'Authorization': `Bearer ${token}`,
+                  }
+              }
+          );
 
-            const postPayload = {
-                postParent: parentPost ? parentPost.id : null,
-                userId: Number(Cookies.get('user_id')),
-                comment: postData.comment,
-                media: mediaString
-            };
-
-            const token = Cookies.get('jwt');
-            if (!token) {
-                throw new Error('No authentication token found');
-            }
-
-            const response = await projectApi.post('/post/create',
-                postPayload,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-
-            resetPost();
-            return response.data;
-        } catch (error) {
-            console.error('Error submitting post:', error);
-            throw error;
-        }
+          resetPost();
+          return response.data;
+      } catch (error) {
+          console.error('Error submitting post:', error.status);
+          throw error;
+      }
     }
 
     const getPost = async () => {

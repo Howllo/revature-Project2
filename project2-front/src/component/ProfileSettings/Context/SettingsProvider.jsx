@@ -15,15 +15,9 @@ export const SettingsProvider = ({ children }) => {
     profilePreviewURL: "",
     bannerPreviewURL: "",
   });
-
   const navigate = useNavigate();
-
-  const [unapprovedProfilePic, setUnapprovedProfilePic] = useState("");
-  const [unapprovedBannerPic, setUnapprovedBannerPic] = useState("");
-
-  // Strings to be converted to base64 for API
-  let profileMediaString = null;
-  let bannerMediaString = null;
+  const [profileFile, setProfileFile] = useState(null);
+  const [bannerFile, setBannerFile] = useState()
 
   const resetTempImageURLS = () => {
     if (settingsData.profilePreviewURL) {
@@ -38,12 +32,13 @@ export const SettingsProvider = ({ children }) => {
         bannerPreviewURL: URL.revokeObjectURL(settingsData.bannerPreviewURL),
       }));
     }
-    profileMediaString = "";
-    bannerMediaString = "";
+    setProfileFile(null);
+    setBannerFile(null);
   };
 
   const handleProfilePicChange = (event) => {
     const file = event.target.files[0];
+
     if (file && !file.type.startsWith("video/")) {
       if (settingsData.profilePreviewURL) {
         URL.revokeObjectURL(settingsData.profilePreviewURL);
@@ -52,9 +47,10 @@ export const SettingsProvider = ({ children }) => {
         ...prev,
         profilePreviewURL: URL.createObjectURL(file),
       }));
-      setUnapprovedProfilePic(file);
+      setProfileFile(file);
     }
   };
+
   const handleBannerPicChange = (event) => {
     const file = event.target.files[0];
 
@@ -66,9 +62,10 @@ export const SettingsProvider = ({ children }) => {
         ...prev,
         bannerPreviewURL: URL.createObjectURL(file),
       }));
-      setUnapprovedBannerPic(file);
+      setBannerFile(file);
     }
   };
+
   const setDisplayName = (event) => {
     const displayName = event.target.value;
     setSettingsData((prev) => ({
@@ -109,53 +106,24 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const handleSubmitSettings = async () => {
-    console.log("Handle submit was called");
+    const token = Cookies.get("jwt");
+    if (!token) {
+      throw new Error("No authentication token found");
+    }
+
     try {
-      if (unapprovedProfilePic) {
-        const reader = new FileReader();
-        profileMediaString = await new Promise((resolve) => {
-          reader.onload = () => {
-            resolve(reader.result);
-          };
-          reader.readAsDataURL(unapprovedProfilePic);
-        });
-      } else {
-        console.error("No profile picture provided");
-      }
+      const settingsPayload = new FormData();
+      settingsPayload.append('id', Cookies.get('user_id'));
+      settingsPayload.append('profilePic', profileFile ? profileFile[0] : null);
+      settingsPayload.append('bannerFile', bannerFile ? bannerFile[0] : null);
+      settingsPayload.append("displayName", settingsData.displayName);
+      settingsPayload.append("biography", settingsData.biography);
 
-      if (unapprovedBannerPic) {
-        const reader = new FileReader();
-        bannerMediaString = await new Promise((resolve) => {
-          reader.onload = () => {
-            resolve(reader.result);
-          };
-          reader.readAsDataURL(unapprovedBannerPic);
-        });
-      } else {
-        console.error("No banner picture provided");
-      }
-      const settingsPayload = {
-        id: Cookies.get("user_id"),
-
-        displayName: settingsData.displayName,
-        profilePic: profileMediaString,
-        bannerPic: bannerMediaString,
-        biography: settingsData.biography,
-      };
-
-      const token = Cookies.get("jwt");
-
-      if (!token) {
-        throw new Error("No authentication token found");
-      }
-      console.log("API was called");
       const response = await projectApi.put(
-        "user/settings/update",
-        settingsPayload,
+        "user/settings/update", settingsPayload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
           },
         }
       );
@@ -172,14 +140,13 @@ export const SettingsProvider = ({ children }) => {
         displayName: response.data.displayName,
         biography: response.data.biography,
       }));
+
       Cookies.set("profile_pic", response.data.profilePic);
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
 
       resetTempImageURLS();
-      console.log("Settings updated successfully");
-
       navigate(`/profile/${Cookies.get("username")}`.toLowerCase());
     } catch (error) {
       console.error("Error submitting settings:", error);
@@ -195,8 +162,6 @@ export const SettingsProvider = ({ children }) => {
     setBioText,
     resetSettingsData,
     handleSubmitSettings,
-    setUnapprovedProfilePic,
-    setUnapprovedBannerPic,
     handleProfilePicChange,
     handleBannerPicChange,
   };

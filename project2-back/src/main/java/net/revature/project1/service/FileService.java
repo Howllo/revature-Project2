@@ -3,8 +3,10 @@ package net.revature.project1.service;
 import net.revature.project1.enumerator.FileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
@@ -16,13 +18,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class FileService {
     private static final Logger logger = LoggerFactory.getLogger(FileService.class);
+    private final S3Client s3Client;
 
     @Value("${s3.bucket}")
     private String s3Bucket;
@@ -38,6 +40,10 @@ public class FileService {
     private final List<String> allowedVideoTypes = List.of(
             "video/mp4", "video/m4a", "video/m4b", "video/webm", "video/mov", "video/gif"
     );
+
+    public FileService(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
 
     /**
      * Upload a file to the server.
@@ -100,10 +106,7 @@ public class FileService {
                 return null;
         }
 
-        try (S3Client s3Client = S3Client.builder()
-                .region(Region.US_EAST_2)
-                .credentialsProvider(DefaultCredentialsProvider.create())
-                .build())
+        try (s3Client)
         {
             PutObjectRequest putOb = PutObjectRequest.builder()
                     .bucket(s3Bucket)
@@ -121,49 +124,56 @@ public class FileService {
     }
 
     /**
-     * Create a new file and a temporary file based on a base64 encoding.
-     * @param post Take in the post to set the new media URL.
+     * Create a new file and a temporary file from multipart file.
+     * @param file Take in the file to set the new media URL.
      * @throws IOException If it fails to create a file it throws the exception.
      */
-    public String createFile(String post) throws IOException {
-        if(post == null || post.isEmpty()){
+    public String createFile(MultipartFile file) throws IOException {
+        if(file == null || file.isEmpty()){
             return "";
         }
 
-        String[] parts = post.split(",");
+        String originalFilename = file.getOriginalFilename();
+        String extension = originalFilename.substring(originalFilename.lastIndexOf(".") - 1);
+        String uniqueFileName = UUID.randomUUID() + "." + extension;
+        String imageType = file.getContentType();
 
-        String imageType = parts[0].split(";")[0].split(":")[1];
-        byte[] imageBytes = Base64.getDecoder().decode(parts[1]);
+        Path tempFile = Files.createTempFile(uniqueFileName, "." + extension);
 
-        String extension = getExtensionFromMimeType(imageType);
-        String tempFileName = UUID.randomUUID() + "." + extension;
+        try{
+            file.transferTo(tempFile.toFile());
+        } catch (IOException e) {
+            logger.error("Error while moving multipart file: ", e);
+        }
 
-        Path tempPath = Paths.get(System.getProperty("java.io.tmpdir"), tempFileName);
-        Files.write(tempPath, imageBytes);
+        assert imageType != null;
+        if(imageType.isEmpty()){
+            logger.error("Image type cannot be empty");
+            return "";
+        }
+
         FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
+        String mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
 
-        String mediaUrl = uploadFile(fileType, tempPath.toString(), tempFileName);
-
-
-        Files.deleteIfExists(tempPath);
-
+        Files.deleteIfExists(tempFile);
         return mediaUrl;
     }
 
     /**
      * Used to delete objects from the S3 Bucket.
-     * @param filePath Take in a file path to find to create an object key.
-     * @return {@Code True} if the was successful in deleting and {@Code False} if it failed to delete.
+     *
+     * @param urlPath Take in a file path to find to create an object key.
      */
-    public boolean deleteFile(String filePath) {
-        String[] parts = filePath.split("/");
-        final int length = parts.length;
-        String objectKey = filePath.split("/")[length - 1];
+    public void deleteFile(String urlPath) {
+        if(urlPath == null || urlPath.isEmpty()){
+            return;
+        }
 
-        try (S3Client s3Client = S3Client.builder()
-                .region(Region.US_EAST_2)
-                .credentialsProvider(DefaultCredentialsProvider.create())
-                .build())
+        String[] parts = urlPath.split("/");
+        final int length = parts.length;
+        String objectKey = urlPath.split("/")[length - 1];
+
+        try (s3Client)
         {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                     .bucket(s3Bucket)
@@ -173,19 +183,7 @@ public class FileService {
         }
         catch (RuntimeException e) {
             logger.error("Error while deleting file: ", e);
-            return false;
         }
-        return true;
 
-    }
-
-    private String getExtensionFromMimeType(String mimeType) {
-        return switch (mimeType) {
-            case "image/jpeg" -> "jpg";
-            case "image/png" -> "png";
-            case "image/gif" -> "gif";
-            case "video/mp4" -> "mp4";
-            default -> "jpg";  // Default to jpg if unknown
-        };
     }
 }

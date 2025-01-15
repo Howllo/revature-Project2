@@ -112,10 +112,20 @@ public class PostService {
     * @param postDto The post to be created.
     * @return The created post.
     */
-    public PostResult createPost(PostCreateDto postDto, String token) {
+    public PostResult createPost(PostCreateRequestDto postDto, String token) {
         Post post = new Post();
         post.setComment(postDto.comment());
-        post.setMedia(postDto.media());
+        String url = "";
+
+        if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
+            try{
+                url = fileService.createFile(postDto.media());
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+                return new PostResult(PostEnum.INVALID_POST, "Media failed to upload.", null);
+            }
+            post.setMedia(url);
+        }
 
         if(postDto.postParent() != null){
             Optional<Post> postParentOptional = postRepo.findById(postDto.postParent());
@@ -150,13 +160,6 @@ public class PostService {
             return new PostResult(PostEnum.INVALID_POST, "User and post are not the same", null);
         }
 
-        if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
-            try{
-               post.setMedia(fileService.createFile(post.getMedia()));
-            } catch (IOException e) {
-                return new PostResult(PostEnum.INVALID_POST, "File could not be created.", null);
-            }
-        }
         post.setPostAt(Timestamp.from(Instant.now()));
         postRepo.save(post);
 

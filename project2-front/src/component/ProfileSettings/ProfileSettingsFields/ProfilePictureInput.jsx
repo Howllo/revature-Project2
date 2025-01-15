@@ -5,12 +5,13 @@ import SettingsContext from "../Context/SettingsProvider";
 import PropTypes from "prop-types";
 
 const ProfilePictureInput = ({ width = 42, height = 42 }) => {
-  let { settingsData, setUnapprovedProfilePic, handleProfilePicChange } =
+  let { settingsData, handleProfilePicChange } =
     useContext(SettingsContext);
   const inputRef = useRef(null);
   const handleClick = () => {
     inputRef.current.click();
   };
+
 
   return (
     <Box
@@ -64,10 +65,8 @@ const ProfilePictureInput = ({ width = 42, height = 42 }) => {
 
       <input
         type="file"
-        // inputProps={{ accept: "images/*" }}
         style={{ display: "none" }}
         onChange={(e) => {
-          setUnapprovedProfilePic(e);
           handleProfilePicChange(e);
         }}
         ref={inputRef}
