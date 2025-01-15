@@ -18,9 +18,8 @@ const FollowingListContainer = () => {
         maxWidth: 600,
         mx: "auto",
         mt: 4,
-        p: 2,
+        p: 1,
         borderRadius: 2,
-        boxShadow: 3,
         bgcolor: "background.paper", // Uses theme's background color
       }}
     >
@@ -33,7 +32,7 @@ const FollowingListContainer = () => {
           color: "primary.main",
         }}
       >
-        People You are Following
+        People You Are Following
       </Typography>
       <Button
         variant="outlined"

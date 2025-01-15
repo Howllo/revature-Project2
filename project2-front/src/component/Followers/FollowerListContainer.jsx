@@ -13,7 +13,15 @@ const FollowerListContainer = () => {
   };
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
+      <Typography
+        variant="h5"
+        sx={{
+          mb: 3,
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "primary.main",
+        }}
+      >
         Followers
       </Typography>
       <Button onClick={handleBack}>Back</Button>

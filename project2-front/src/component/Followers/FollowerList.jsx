@@ -17,20 +17,30 @@ const FollowerList = ({ follower }) => {
 
   return (
     <>
-      <ListItem sx={{ gap: 3 }} key={follower.username}>
+      <ListItem sx={{}} key={follower.username}>
         <ListItemAvatar>
           <Avatar src={follower.profilePic} />
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Typography sx={{ mb: 1 }}>{follower.displayName}</Typography>
+            <Typography sx={{ mb: 1, color: "black", fontSize: "large" }}>
+              {follower.displayName}
+            </Typography>
           }
           secondary={
             <>
-              <Typography sx={{ mb: 1 }}>@{follower.username}</Typography>
-              <Typography sx={{ mb: 0.5 }}>{follower.biography}</Typography>
-              <Typography>{follower.followerCount} Followers</Typography>
-              <Typography>{follower.followingCount} Following</Typography>
+              <Typography sx={{ mb: 1, color: "black", fontSize: "small" }}>
+                @{follower.username}
+              </Typography>
+              <Typography sx={{ mb: 0.5, color: "black", fontSize: "small" }}>
+                {follower.biography}
+              </Typography>
+              <Typography sx={{ color: "black", fontSize: "small" }}>
+                {follower.followerCount} Followers
+              </Typography>
+              <Typography sx={{ color: "black", fontSize: "small" }}>
+                {follower.followingCount} Following
+              </Typography>
             </>
           }
         />
