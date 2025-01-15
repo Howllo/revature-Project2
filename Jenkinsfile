@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Inject Application Properties') {
             steps {
-                dir('project2-back'){
+                dir('project2-back') {
                     sh """
                         echo "" >> src/main/resources/application.properties
                         echo "spring.profiles.active=default" >> src/main/resources/application.properties
@@ -30,45 +30,42 @@ pipeline {
             }
         }
 
-        stage('Build Jar'){
+        stage('Build Jar') {
             steps {
-                sh '''
-                    cd project2-back
-                    /opt/maven/bin/mvn clean install
-                '''
+                dir('project2-back') {
+                    sh '/opt/maven/bin/mvn clean install'
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh '''
+                sh """
                     IMAGE_TAG=$(date +%Y%m%d%H%M%S)
-                    echo $IMAGE_TAG > image_tag.txt
+                    echo $IMAGE_TAG > image_tag.txt  # Save the tag in the workspace root
                     cd project2-back
                     /usr/bin/docker build --no-cache -t project2:$IMAGE_TAG . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
-                '''
+                """
             }
         }
 
-        stage('Upload File to S3'){
+        stage('Upload File to S3') {
             steps {
-                sh '''
-                    IMAGE_TAG=$(cat image_tag.txt)
+                sh """
+                    IMAGE_TAG=$(cat image_tag.txt)  # Read the tag from the workspace root
                     cd project2-back
-                    # Save and upload Docker image
                     docker save project2:$IMAGE_TAG > project2.tar
                     aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
-                  '''
+                """
             }
         }
 
         stage('Deploy to EC2 Docker') {
             steps {
-                sh '''
-                    IMAGE_TAG=$(cat image_tag.txt)
-                    # Capture the command ID
-                    COMMAND_ID=$(aws ssm send-command \
+                sh """
+                    IMAGE_TAG=$(cat image_tag.txt)  # Read the tag from the workspace root
+                    COMMAND_ID=$(/usr/bin/aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --output text \
@@ -78,7 +75,7 @@ pipeline {
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
                             "/usr/bin/docker images | grep 'project2' && /usr/bin/docker rmi -f project2 || echo 'No stale images.'",
-                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
+                            "/usr/bin/aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
                             "/usr/bin/docker load < project2.tar",
                             "/usr/bin/docker run -d -p 8080:8080 --name project2 project2:$IMAGE_TAG"
                         ]}' \
@@ -86,15 +83,13 @@ pipeline {
 
                     # Wait for SSM command to complete
                     aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
-                '''
+                """
             }
         }
 
-        stage('Cleaning up the S3'){
+        stage('Cleaning up the S3') {
             steps {
-                sh '''
-                    aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
-                '''
+                sh "aws s3 rm s3://${S3_DEPLOY_BUCKET}/temp/project2.tar"
             }
         }
     }
@@ -102,11 +97,11 @@ pipeline {
     post {
         always {
             cleanWs()
-            sh '''
+            sh """
                 docker system prune --all --volumes --force
                 docker volume prune -f
                 docker builder prune -af
-            '''
+            """
         }
     }
 }
