@@ -67,31 +67,24 @@ pipeline {
             steps {
                 sh '''
                     IMAGE_TAG=$(cat image_tag.txt)
-                    COMMAND_ID=$(/usr/bin/aws ssm send-command \
+                    COMMAND_ID=$(aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
                         --document-name "AWS-RunShellScript" \
                         --output text \
                         --parameters '{"commands":[
-                            "/usr/bin/docker stop project2 || true",
-                            "/usr/bin/docker rm -f project2 || true",
+                            "docker stop project2 || true",
+                            "docker rm -f project2 || true",
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
-                            "/usr/bin/docker images | grep project2 && /usr/bin/docker rmi -f project2 || echo No stale images.",
-                            "/usr/bin/aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "/usr/bin/docker load < project2.tar",
-                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2:${IMAGE_TAG}"
+                            "docker images | grep project2 && docker rmi -f project2 || echo No stale images.",
+                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
+                            "docker load < project2.tar",
+                            "docker run -d -p 8080:8080 --name project2 project2:${IMAGE_TAG}"
                         ]}' \
                         --query "Command.CommandId")
 
                     # Wait for SSM command to complete
                     aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
-
-                    # Logs
-                    aws ssm get-command-invocation \
-                        --command-id "$COMMAND_ID" \
-                        --instance-id "${INSTANCE_ID}" \
-                        --query "StandardErrorContent" \
-                        --output text
                 '''
             }
         }
