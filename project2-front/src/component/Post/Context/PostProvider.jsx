@@ -84,7 +84,12 @@ export const PostProvider = ({ children }) => {
             mediaData.append('postParent', parentPost.id);
           }
           mediaData.append('comment', postData.comment);
-          mediaData.append('media', postData.file);
+
+          if(postData.file && !postData.previewUrl.contains('youtube')) {
+            mediaData.append('media', postData.file);
+          } else {
+            mediaData.append('youTubeMedia', postData.previewUrl);
+          }
 
           const response = await projectApi.post('/post/create',
               mediaData,

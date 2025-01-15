@@ -47,16 +47,14 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@ModelAttribute PostCreateRequestDto post,
+    public ResponseEntity<?> createPost(@ModelAttribute PostCreateRequestDto postDto,
                                         @RequestHeader("Authorization") String token){
-        if(post == null){
+        if(postDto == null){
             logger.error("Creating a new post failed. The post is null.");
             return ResponseEntity.badRequest().body("Invalid post");
         }
 
-        logger.info("Creating a new post {}", post);
-
-        PostResult postResult = postService.createPost(post, token.substring(7));
+        PostResult postResult = postService.createPost(postDto, token.substring(7));
         PostEnum result = postResult.postEnum();
         return ResponseHandler.returnType(result, postResult.post());
     }

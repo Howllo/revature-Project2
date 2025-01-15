@@ -116,15 +116,13 @@ public class PostService {
         Post post = new Post();
         post.setComment(postDto.comment());
 
-        if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
+        if(postDto.media() != null && !postDto.media().isEmpty() && postDto.youTubeMedia().isEmpty()){
             try{
                 post.setMedia(fileService.createFile(postDto.media()));
             } catch (IOException e) {
                 logger.error(e.getMessage());
                 return new PostResult(PostEnum.INVALID_POST, "Media failed to upload.", null);
             }
-        } else {
-            logger.info("Creating new post media does not exist.");
         }
 
         if(postDto.postParent() != null){
@@ -155,6 +153,10 @@ public class PostService {
         boolean isValid = isValidToken(token, post);
         if(!isValid){
             return new PostResult(PostEnum.INVALID_POST, "User and post are not the same", null);
+        }
+
+        if((post.getMedia() == null || post.getMedia().isEmpty()) && !postDto.youTubeMedia().isEmpty()){
+            post.setMedia(postDto.youTubeMedia());
         }
 
         post.setPostAt(Timestamp.from(Instant.now()));
