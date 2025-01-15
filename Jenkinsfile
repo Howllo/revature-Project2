@@ -10,7 +10,6 @@ pipeline {
         INSTANCE_ID = credentials('INSTANCE_ID')
         S3_DEPLOY_BUCKET = credentials('S3_DEPLOY_BUCKET')
         S3_BUCKET = credentials('S3_BUCKET')
-        IMAGE_TAG=$(date +%Y%m%d%H%M%S)
     }
 
     stages {
@@ -44,7 +43,8 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-                    /usr/bin/docker build --no-cache -t project2:IMAGE_TAG . || { echo "Docker build failed"; exit 1; }
+                    IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+                    /usr/bin/docker build --no-cache -t project2:$IMAGE_TAG . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
                 '''
             }
@@ -54,9 +54,9 @@ pipeline {
             steps {
                 sh '''
                     cd project2-back
-
+                    IMAGE_TAG=$(cat image_tag.txt)
                     # Save and upload Docker image
-                    docker save project2:IMAGE_TAG > project2.tar
+                    docker save project2:$IMAGE_TAG > project2.tar
                     aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
                   '''
             }
@@ -65,6 +65,7 @@ pipeline {
         stage('Deploy to EC2 Docker') {
             steps {
                 sh '''
+                    IMAGE_TAG=$(cat image_tag.txt)
                     # Capture the command ID
                     COMMAND_ID=$(/usr/bin/aws ssm send-command \
                         --instance-ids "${INSTANCE_ID}" \
@@ -78,7 +79,7 @@ pipeline {
                             "/usr/bin/docker images | grep 'project2' && /usr/bin/docker rmi -f project2 || echo 'No stale images.'",
                             "/usr/bin/aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
                             "/usr/bin/docker load < project2.tar",
-                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2"
+                            "/usr/bin/docker run -d -p 8080:8080 --name project2 project2:$IMAGE_TAG"
                         ]}' \
                         --query "Command.CommandId")
 
