@@ -116,7 +116,8 @@ public class PostService {
         Post post = new Post();
         post.setComment(postDto.comment());
 
-        if(postDto.media() != null && !postDto.media().isEmpty() && postDto.youTubeMedia().isEmpty()){
+        if(postDto.media() != null && !postDto.media().isEmpty() &&
+                postDto.youTubeMedia() == null || postDto.youTubeMedia().isEmpty()){
             try{
                 post.setMedia(fileService.createFile(postDto.media()));
             } catch (IOException e) {
@@ -221,6 +222,7 @@ public class PostService {
             return PostEnum.UNAUTHORIZED;
         }
 
+        fileService.deleteFile(postToDelete.getMedia());
         postRepo.delete(postToDelete);
         return PostEnum.SUCCESS;
     }
