@@ -74,7 +74,7 @@ pipeline {
                             "/usr/bin/docker rm -f project2 || true",
                             "sudo rm -f /usr/bin/project2.tar || true",
                             "sudo rm -f ./project2.tar || true",
-                            "sudo /usr/bin/docker image prune -f || true",
+                            "/usr/bin/docker image prune -f",
                             "/usr/bin/aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
                             "/usr/bin/docker load < project2.tar",
                             "/usr/bin/docker run -d -p 8080:8080 --name project2 project2"
