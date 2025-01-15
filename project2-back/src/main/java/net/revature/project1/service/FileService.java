@@ -41,6 +41,7 @@ public class FileService {
             "video/mp4", "video/m4a", "video/m4b", "video/webm", "video/mov", "video/gif"
     );
 
+    @Autowired
     public FileService(S3Client s3Client) {
         this.s3Client = s3Client;
     }
@@ -137,7 +138,6 @@ public class FileService {
         String extension = originalFilename.substring(originalFilename.lastIndexOf(".") - 1);
         String uniqueFileName = UUID.randomUUID() + "." + extension;
         String imageType = file.getContentType();
-
         Path tempFile = Files.createTempFile(uniqueFileName, "." + extension);
 
         try{
@@ -154,9 +154,6 @@ public class FileService {
 
         FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
         String mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
-
-        logger.info(mediaUrl);
-
         Files.deleteIfExists(tempFile);
         return mediaUrl;
     }
