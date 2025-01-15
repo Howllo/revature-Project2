@@ -55,6 +55,7 @@ export const SettingsProvider = ({ children }) => {
       setUnapprovedProfilePic(file);
     }
   };
+
   const handleBannerPicChange = (event) => {
     const file = event.target.files[0];
 
@@ -69,6 +70,7 @@ export const SettingsProvider = ({ children }) => {
       setUnapprovedBannerPic(file);
     }
   };
+
   const setDisplayName = (event) => {
     const displayName = event.target.value;
     setSettingsData((prev) => ({
@@ -109,7 +111,6 @@ export const SettingsProvider = ({ children }) => {
   };
 
   const handleSubmitSettings = async () => {
-    console.log("Handle submit was called");
     try {
       if (unapprovedProfilePic) {
         const reader = new FileReader();
@@ -134,9 +135,9 @@ export const SettingsProvider = ({ children }) => {
       } else {
         console.error("No banner picture provided");
       }
+
       const settingsPayload = {
         id: Cookies.get("user_id"),
-
         displayName: settingsData.displayName,
         profilePic: profileMediaString,
         bannerPic: bannerMediaString,
@@ -144,11 +145,10 @@ export const SettingsProvider = ({ children }) => {
       };
 
       const token = Cookies.get("jwt");
-
       if (!token) {
         throw new Error("No authentication token found");
       }
-      console.log("API was called");
+
       const response = await projectApi.put(
         "user/settings/update",
         settingsPayload,
@@ -172,14 +172,13 @@ export const SettingsProvider = ({ children }) => {
         displayName: response.data.displayName,
         biography: response.data.biography,
       }));
+
       Cookies.set("profile_pic", response.data.profilePic);
       Cookies.set("banner_pic", response.data.bannerPic);
       Cookies.set("display_name", response.data.displayName);
       Cookies.set("bio_text", response.data.biography);
 
       resetTempImageURLS();
-      console.log("Settings updated successfully");
-
       navigate(`/profile/${Cookies.get("username")}`.toLowerCase());
     } catch (error) {
       console.error("Error submitting settings:", error);

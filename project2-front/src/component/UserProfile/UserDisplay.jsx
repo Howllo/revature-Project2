@@ -48,6 +48,8 @@ const UserDisplay = ({ user }) => {
           height={105}
           border={true}
         />
+
+
       </Box>
     </Box>
   );

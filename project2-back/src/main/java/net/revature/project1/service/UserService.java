@@ -1,8 +1,6 @@
 package net.revature.project1.service;
 
-import net.revature.project1.dto.UserDto;
-import net.revature.project1.dto.UserRequestPicDto;
-import net.revature.project1.dto.UserSearchDto;
+import net.revature.project1.dto.*;
 import net.revature.project1.entity.AppUser;
 import net.revature.project1.enumerator.PicUploadType;
 import net.revature.project1.enumerator.UserEnum;
@@ -13,10 +11,10 @@ import net.revature.project1.utils.RegisterRequirementsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
 import java.util.stream.Collectors;
 
 import java.io.IOException;
@@ -24,8 +22,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -85,34 +81,6 @@ public class UserService {
      */
     public List<UserSearchDto> getSearchUser(String username){
         return userRepo.findTop7ByUsernameContaining(username);
-    }
-
-    /**
-     * Used to update the user email.
-     *
-     * @param id Take an ID to find the user and update it.
-     * @param user Take in user object with the new email.
-     * @return Returns an enum whether it was successful or not.
-     */
-    public UserEnum updateEmail(Long id, AppUser user){
-        if(!RegisterRequirementsUtils.isValidEmail(user.getEmail())){
-            return UserEnum.INVALID_EMAIL_FORMAT;
-        }
-
-        if(userRepo.existsByEmail(user.getEmail())){
-           return UserEnum.INVALID_EMAIL_FORMAT;
-        }
-
-        Optional<AppUser> getUser = userRepo.findById(id);
-        if(getUser.isEmpty()){
-            return UserEnum.UNKNOWN;
-        }
-
-        AppUser checkUser = getUser.get();
-        checkUser.setEmail(user.getEmail());
-        userRepo.save(checkUser);
-
-        return UserEnum.SUCCESS;
     }
 
     /**
@@ -251,36 +219,69 @@ public class UserService {
      * @params AppUser take in the user who wants to update their profile
      * @return AppUser
      */
-    public AppUser updateAppUser(AppUser appUser, String token){
-        Long userId = appUser.getId();
+    public UserUpdateResponseDto updateAppUser(UserUpdateRequestDto userUpdateRequestDto, String token){
+        Long userId = userUpdateRequestDto.id();
+        String oldBanner = "";
+        String oldProfilePicture = "";
+        UserUpdateResponseDto userUpdateResponseDto = new UserUpdateResponseDto();
 
         Optional<AppUser> optUser = findUserById(userId);
-        if (!optUser.isPresent()){
-            return null;
-        }
-        Boolean isValidUser = isValidToken(token, userId);
-        if (!isValidUser){
+        if (optUser.isEmpty()){
             return null;
         }
         AppUser user = optUser.get();
-        user.setDisplayName(appUser.getDisplayName());
-        user.setBiography(appUser.getBiography());
+
+        boolean isValidUser = isValidToken(token, userId);
+        if (!isValidUser){
+            return null;
+        }
+
+        if (StringUtils.hasText(userUpdateRequestDto.displayName())) {
+            user.setDisplayName(userUpdateRequestDto.displayName());
+            userUpdateResponseDto.displayName = userUpdateRequestDto.displayName();
+        }
+
+        if(StringUtils.hasText(userUpdateRequestDto.biography())){
+            user.setBiography(userUpdateRequestDto.biography());
+            userUpdateResponseDto.biography = userUpdateRequestDto.biography();
+        }
+
         try {
-            String bannerUrl = fileService.createFile(appUser.getBannerPic());
-            user.setBannerPic(bannerUrl);
-            appUser.setBannerPic(bannerUrl);
+            if(!userUpdateRequestDto.bannerPic().isEmpty()){
+                oldBanner = user.getBannerPic();
+                String bannerUrl = fileService.createFile(userUpdateRequestDto.bannerPic());
+                user.setBannerPic(bannerUrl);
+                userUpdateResponseDto.bannerPic = bannerUrl;
+            } else {
+                userUpdateResponseDto.bannerPic = user.getBannerPic();
+            }
         } catch (IOException e){
             logger.error("Error while creating Banner file: ", e);
         }
+
         try {
-            String profileUrl = fileService.createFile(appUser.getProfilePic());
-            user.setProfilePic(profileUrl);
-            appUser.setProfilePic(profileUrl);
+            if(!userUpdateRequestDto.profilePic().isEmpty()){
+                oldProfilePicture = user.getProfilePic();
+                String profileUrl = fileService.createFile(userUpdateRequestDto.profilePic());
+                user.setProfilePic(profileUrl);
+                userUpdateResponseDto.profilePic = profileUrl;
+            } else {
+                userUpdateResponseDto.profilePic = user.getProfilePic();
+            }
         } catch (IOException e){
             logger.error("Error while creating profile file: ", e);
         }
+
+        if(!oldBanner.isEmpty() && user.getBannerPic().equals(oldBanner)){
+            fileService.deleteFile(oldBanner);
+        }
+
+        if(!oldBanner.isEmpty() && !user.getProfilePic().equals(oldProfilePicture)){
+            fileService.deleteFile(oldProfilePicture);
+        }
+
         saveAppUser(user);
-        return appUser;
+        return userUpdateResponseDto;
     }
 
     /**
