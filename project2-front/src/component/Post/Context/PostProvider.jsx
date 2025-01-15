@@ -80,7 +80,9 @@ export const PostProvider = ({ children }) => {
         try {
           const mediaData = new FormData();
           mediaData.append('userId', Cookies.get('user_id'));
-          mediaData.append('postParent', parentPost ? parentPost.id : null);
+          if(parentPost){
+            mediaData.append('postParent', parentPost.id);
+          }
           mediaData.append('comment', postData.comment);
           mediaData.append('media', postData.file);
 
