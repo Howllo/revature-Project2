@@ -9,24 +9,6 @@ const FollowerListContext = createContext(null);
 export const FollowerListProvider = ({ children }) => {
   const [followerList, setFollowerList] = useState([]);
 
-  // const handleDeleteFollower = async (currentUser, username) => {
-  //   try {
-  //     const response = await projectApi.delete(
-  //       `/user/${username}/follow/${currentUser}`
-  //     );
-
-  //     if (response.status !== 200) {
-  //       throw new Error("API call was not successful");
-  //     }
-  //     console.log("from follower list provider");
-  //     console.log(response.data);
-  //     setFollowerList((prev) => {
-  //       return prev.filter((follower) => follower.username !== username);
-  //     });
-  //   } catch (e) {
-  //     throw new Error("Couldn't delete user" + e);
-  //   }
-  // };
   const handleDeleteFollower = async (currentUser, username) => {
     try {
       const { status } = await projectApi.delete(
@@ -62,7 +44,7 @@ export const FollowerListProvider = ({ children }) => {
 
   useEffect(() => {
     handleGetFollowers();
-  }, []);
+  }, [followerList]);
 
   return (
     <FollowerListContext.Provider
