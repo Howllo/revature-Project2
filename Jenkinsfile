@@ -40,10 +40,10 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
+            steps
                 sh '''
-                    cd project2-back
                     IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+                    cd project2-back
                     echo $IMAGE_TAG > image_tag.txt
                     /usr/bin/docker build --no-cache -t project2:$IMAGE_TAG . || { echo "Docker build failed"; exit 1; }
                     /usr/bin/docker images | grep project2 || { echo "Image not found after build"; exit 1; }
@@ -54,8 +54,8 @@ pipeline {
         stage('Upload File to S3'){
             steps {
                 sh '''
-                    cd project2-back
                     IMAGE_TAG=$(cat image_tag.txt)
+                    cd project2-back
                     # Save and upload Docker image
                     docker save project2:$IMAGE_TAG > project2.tar
                     aws s3 cp project2.tar s3://${S3_DEPLOY_BUCKET}/temp/project2.tar
