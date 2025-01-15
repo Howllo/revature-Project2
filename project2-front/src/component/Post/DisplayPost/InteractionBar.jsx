@@ -23,8 +23,6 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
       return;
     }
 
-    console.log(`The user id is ${post.userId} and current user is: ${Cookies.get('user_id')}`);
-
     const liked = await likePost(post.id);
     const likeCount = liked ? 1 : -1;
     const newLikeTotal = Math.max(0, currentLikes + likeCount);

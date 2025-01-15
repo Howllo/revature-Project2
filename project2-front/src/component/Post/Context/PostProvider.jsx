@@ -78,21 +78,16 @@ export const PostProvider = ({ children }) => {
 
         try {
           const mediaData = new FormData();
-          mediaData.append(postData.file[0]);
-
-          const postPayload = {
-              postParent: parentPost ? parentPost.id : null,
-              userId: Number(Cookies.get('user_id')),
-              comment: postData.comment,
-              media: mediaData
-          };
+          mediaData.append('userId', Cookies.get('user_id'));
+          mediaData.append('postParent', parentPost ? parentPost.id : null);
+          mediaData.append('comment', postData.comment);
+          mediaData.append('media', postData.file[0]);
 
           const response = await projectApi.post('/post/create',
-              postPayload,
+              mediaData,
               {
                   headers: {
                       'Authorization': `Bearer ${token}`,
-                      'Content-Type': 'application/json'
                   }
               }
           );

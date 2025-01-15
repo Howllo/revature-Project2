@@ -5,7 +5,7 @@ import { useContext, useRef } from "react";
 import ProfilePictureInput from "./ProfilePictureInput.jsx";
 
 const Banner = ({ user }) => {
-  const { settingsData, handleBannerPicChange, setUnapprovedBannerPic } =
+  const { settingsData, handleBannerPicChange } =
     useContext(SettingsContext);
   const inputRef = useRef(null);
   const handleClick = () => {
@@ -66,7 +66,6 @@ const Banner = ({ user }) => {
                 style={{ display: "none" }}
                 ref={inputRef}
                 onChange={(e) => {
-                    setUnapprovedBannerPic(e);
                     handleBannerPicChange(e);
                 }}
                 accept="image/*"
