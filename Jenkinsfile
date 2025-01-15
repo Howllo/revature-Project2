@@ -85,6 +85,13 @@ pipeline {
 
                     # Wait for SSM command to complete
                     aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
+
+                    # Logs
+                    aws ssm get-command-invocation \
+                        --command-id "$COMMAND_ID" \
+                        --instance-id "${INSTANCE_ID}" \
+                        --query "StandardErrorContent" \
+                        --output text
                 '''
             }
         }
