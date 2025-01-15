@@ -165,7 +165,7 @@ public class FileService {
         String mediaUrl = "";
 
         try{
-            uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
+            mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
         } catch (IllegalStateException e) {
             logger.error("Error while uploading file: ", e);
         }
