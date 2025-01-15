@@ -50,6 +50,7 @@ public class PostController {
     public ResponseEntity<?> createPost(@ModelAttribute PostCreateRequestDto post,
                                         @RequestHeader("Authorization") String token){
         if(post == null){
+            logger.error("Creating a new post failed. The post is null.");
             return ResponseEntity.badRequest().body("Invalid post");
         }
 

@@ -142,16 +142,13 @@ public class PostService {
         }
         post.setUser(optionalAppUser.get());
 
-        if(post.getComment() == null && post.getMedia() == null) {
-            return new PostResult(PostEnum.INVALID_POST, "Post must have a comment, " +
-                 "image, or video.", null);
-        }
-
         if(post.getComment() != null && post.getComment().length() > 255) {
+            logger.warn("The length of a comment is greater than 255 characters.");
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
         }
 
         if(post.getComment() != null && post.getComment().isEmpty() && post.getMedia() == null) {
+            logger.error("Both comment and image are null during the creation of a post.");
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }
 
