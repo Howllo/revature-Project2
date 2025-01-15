@@ -116,6 +116,8 @@ public class PostService {
         Post post = new Post();
         post.setComment(postDto.comment());
 
+        logger.warn("The Post DTO: {}", postDto);
+
         if((postDto.media() != null && !postDto.media().isEmpty()) && postDto.youTubeMedia() == null){
             try{
                 post.setMedia(fileService.createFile(postDto.media()));
