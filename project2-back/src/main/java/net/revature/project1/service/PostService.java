@@ -119,12 +119,12 @@ public class PostService {
 
         if(post.getMedia() != null && !post.getMedia().isEmpty() && !post.getMedia().contains("youtube")){
             try{
-                url = fileService.createFile(postDto.media());
+                post.setMedia(fileService.createFile(postDto.media()));
             } catch (IOException e) {
                 logger.error(e.getMessage());
                 return new PostResult(PostEnum.INVALID_POST, "Media failed to upload.", null);
             }
-            post.setMedia(url);
+
         }
 
         if(postDto.postParent() != null){
@@ -147,7 +147,7 @@ public class PostService {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
         }
 
-        if(post.getComment() != null && post.getComment().isEmpty() && post.getMedia() == null) {
+        if(post.getComment() != null && post.getComment().isEmpty() && post.getMedia() == null || post.getMedia().isEmpty()) {
             logger.error("Both comment and image are null during the creation of a post.");
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }

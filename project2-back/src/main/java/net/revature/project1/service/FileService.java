@@ -155,6 +155,8 @@ public class FileService {
         FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
         String mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
 
+        logger.info(mediaUrl);
+
         Files.deleteIfExists(tempFile);
         return mediaUrl;
     }
