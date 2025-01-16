@@ -36,9 +36,8 @@ const ChildPost = ({ parentId }) => {
             key={post.id}
             sx={{
               display: 'flex',
-              width: '99.5%',
+              width: "599px",
               alignItems: "center",
-              marginLeft: '1px',
               mt: '-1px'
             }}>
               <PostContainer post={post} />

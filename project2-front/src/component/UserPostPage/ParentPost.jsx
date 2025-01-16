@@ -24,7 +24,7 @@ const ParentPost = ({ setPostParent }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        width: "99.50%",
+        width: "597px",
         alignItems: "center",
         mt: '-1px',
       }}
