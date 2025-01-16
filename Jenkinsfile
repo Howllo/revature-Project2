@@ -79,7 +79,6 @@ pipeline {
                             "docker rmi -f project2 || true",
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
                             "docker load < project2.tar",
-                            "docker run -d -p 8080:8080 --name project2 project2:${IMAGE_TAG}"
                         ]}' \
                         --query "Command.CommandId")
 
