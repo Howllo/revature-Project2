@@ -112,7 +112,7 @@ public class FileService {
                 return null;
         }
 
-        try (s3Client)
+        try
         {
             PutObjectRequest putOb = PutObjectRequest.builder()
                     .bucket(s3Bucket)
