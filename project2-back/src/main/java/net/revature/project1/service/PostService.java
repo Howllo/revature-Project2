@@ -124,7 +124,7 @@ public class PostService {
                 return new PostResult(PostEnum.INVALID_POST, "Media failed to upload.", null);
             }
         }
-        else if(!postDto.youTubeMedia().isEmpty()){
+        else if(postDto.youTubeMedia() != null && !postDto.youTubeMedia().isEmpty()){
             post.setMedia(postDto.youTubeMedia());
         }
 
