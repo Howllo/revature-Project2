@@ -220,7 +220,10 @@ public class PostService {
             return PostEnum.UNAUTHORIZED;
         }
 
-        fileService.deleteFile(postToDelete.getMedia());
+        if(postToDelete.getMedia() != null && !postToDelete.getMedia().isEmpty()){
+            fileService.deleteFile(postToDelete.getMedia());
+        }
+
         postRepo.delete(postToDelete);
         return PostEnum.SUCCESS;
     }
