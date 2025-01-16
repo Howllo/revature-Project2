@@ -1,10 +1,10 @@
 ﻿import { Box, Button, InputAdornment, OutlinedInput } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import useNav from "../component/Navbar/NavContext/UseNav.jsx";
 import EmailIcon from "@mui/icons-material/Email";
 import LogOut from "../component/LogOut/LogOut.jsx";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { projectApi } from "../util/axios.js";
 import "./SettingPage.css"
 import ChangeUsernamePresent from "../component/UsernameChange/ChangeUsernamePresent.jsx";
@@ -13,6 +13,10 @@ const SettingsPage = () => {
   const [username, setUsername] = useState();
   const {currentNav} = useNav();
     let navigate  = useNavigate();
+
+  useEffect(() => {
+    document.title = 'Settings - DevSky'
+  }, []);
 
   const changeName = async (id) => {
     const token = Cookies.get("jwt");

@@ -2,7 +2,7 @@
 import SignInNavigator from "../component/SigninComponent/SignInNavigator.jsx";
 import EmailFieldSignIn from "../component/SigninComponent/Fields/EmailFieldSignIn.jsx";
 import PasswordFieldSignIn from "../component/SigninComponent/Fields/PasswordFieldSignIn.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import useSignIn from "../component/SigninComponent/Context/UseSignin.jsx";
 import AuthWarning from "../component/AuthCommon/AuthWarning.jsx";
 
@@ -10,6 +10,10 @@ export function SigninPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { credentialsInvalid } = useSignIn();
+
+    useEffect(() => {
+      document.title = 'Signin - DevSky'
+    }, []);
 
     return (
         <Grid2

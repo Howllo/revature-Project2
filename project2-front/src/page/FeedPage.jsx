@@ -9,6 +9,7 @@ const FeedPage = () => {
 
     useEffect(() => {
         getPost();
+        document.title = 'Feed - DevSky'
     }, []);
 
     if (!listPostData) return null;

@@ -53,6 +53,12 @@ const ProfilePage = () => {
     }
   }, [location, username]);
 
+  useEffect(() => {
+    if(userData){
+      document.title = `${userData.displayName || ''} (@${username}) - DevSky`
+    }
+  }, [userData, username]);
+
   return (
     <FollowerListProvider>
       <UserProfileProvider>

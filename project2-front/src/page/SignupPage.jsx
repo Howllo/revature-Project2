@@ -6,7 +6,6 @@ import StepTwoSignup from "../component/SignUpComponent/StepTwo/StepTwoSignup.js
 import StepThreeSignup from "../component/SignUpComponent/StepThree/StepThreeSignup.jsx";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Cookies from "js-cookie";
 
 export function SignupPage() {
   const { step } = useSignup();
@@ -17,6 +16,10 @@ export function SignupPage() {
       navigate("/");
     }
   }, [step, navigate]);
+
+  useEffect(() => {
+    document.title = 'Signup - DevSky'
+  }, []);
 
   const handleDisplay = () => {
     if (step === 1) {

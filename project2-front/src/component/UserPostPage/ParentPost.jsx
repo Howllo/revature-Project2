@@ -10,11 +10,14 @@ const ParentPost = ({ setPostParent }) => {
   const { postId } = useParams();
   const {getPostUnique} = usePost();
 
+
+
   useEffect(() => {
     const getPostAsync = async () => {
       const getPost = await getPostUnique(postId);
       setPost(getPost);
-      setPostParent(post);
+      setPostParent(getPost);
+      document.title = `${getPost.displayName || getPost.username}: ${getPost.comment || 'Media'} - DevSky`;
     }
     getPostAsync();
   }, [postId]);

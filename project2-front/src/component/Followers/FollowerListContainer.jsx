@@ -11,6 +11,7 @@ const FollowerListContainer = () => {
   const handleBack = () => {
     navigate(-1);
   };
+
   return (
     <Box>
       <Typography
