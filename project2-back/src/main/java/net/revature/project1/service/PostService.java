@@ -116,8 +116,6 @@ public class PostService {
         Post post = new Post();
         post.setComment(postDto.comment());
 
-        logger.warn("The Post DTO: {}", postDto);
-
         if((postDto.media() != null && !postDto.media().isEmpty()) && postDto.youTubeMedia() == null){
             try{
                 post.setMedia(fileService.createFile(postDto.media()));
@@ -150,7 +148,7 @@ public class PostService {
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too long.", null);
         }
 
-        if((post.getComment() != null && post.getComment().isEmpty()) || (post.getMedia() == null || post.getMedia().isEmpty()) ) {
+        if((post.getComment() == null && post.getComment().isEmpty()) && (post.getMedia() == null || post.getMedia().isEmpty()) ) {
             logger.error("Both comment and media are null during the creation of a post.");
             return new PostResult(PostEnum.INVALID_COMMENT, "Comment is too short.", null);
         }
