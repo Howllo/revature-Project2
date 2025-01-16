@@ -334,16 +334,12 @@ public class UserService {
 
     /**
      * Used to get the list of all the users following the current user
-     * @param userId takes the id of the current user.
-     * @param token takes the token of the current user to validate the user
+     * @param username takes the username of the current user.
      * @return Set<UserDto> returns the list of users following the current user
      */
-    public Set<UserDto> getFollowing(Long userId, String token){
-        boolean isValidUser = isValidToken(token, userId);
-        if(!isValidUser){
-            return null;
-        }
-        Optional<AppUser> optUser = userRepo.findById(userId);
+    public Set<UserDto> getFollowing(String username){
+
+        Optional<AppUser> optUser = userRepo.findAppUserByUsername(username);
         if (optUser.isEmpty()){
             return null;
         }
@@ -355,16 +351,11 @@ public class UserService {
 
     /**
      * Used to get the list of all the users follower the current user follows
-     * @param userId takes the id of the current user.
-     * @param token takes the token of the current user to validate the user
+     * @param username takes the username of the current user.
      * @return Set<UserDto> returns the list of users following the current user
      */
-    public Set<UserDto> getFollowers(Long userId, String token){
-        boolean isValidUser = isValidToken(token, userId);
-        if(!isValidUser){
-            return null;
-        }
-        Optional<AppUser> optUser = userRepo.findById(userId);
+    public Set<UserDto> getFollowers(String username){
+        Optional<AppUser> optUser = userRepo.findAppUserByUsername(username);
         if (optUser.isEmpty()){
             return null;
         }
