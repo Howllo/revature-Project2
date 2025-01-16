@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { projectApi } from "../../../util/axios";
 import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 
 const FollowerListContext = createContext(null);
 
 export const FollowerListProvider = ({ children }) => {
   const [followerList, setFollowerList] = useState([]);
+  const { username } = useParams();
 
   const handleDeleteFollower = async (currentUser, username) => {
     try {
@@ -30,8 +32,7 @@ export const FollowerListProvider = ({ children }) => {
 
   const handleGetFollowers = async () => {
     try {
-      const user_id = Cookies.get("user_id");
-      const response = await projectApi.get(`/user/followers/${user_id}`);
+      const response = await projectApi.get(`/user/followers/${username}`);
       if (response.status !== 200) {
         throw new Error("API response was not okay");
       }
@@ -44,7 +45,7 @@ export const FollowerListProvider = ({ children }) => {
 
   useEffect(() => {
     handleGetFollowers();
-  }, [followerList]);
+  }, [followerList, username]);
 
   return (
     <FollowerListContext.Provider
