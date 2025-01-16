@@ -31,8 +31,10 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
 
     return (
         <Backdrop
+          onClick={(e) => e.stopPropagation()}
             sx={{
-                zIndex: 1051,
+              zIndex: 1051,
+              cursor: "default",
             }}
             open
         >

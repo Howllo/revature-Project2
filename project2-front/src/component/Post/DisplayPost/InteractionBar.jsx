@@ -18,7 +18,8 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
     const {likePost, isUserLike } = usePost();
     const [handleDropdownMenu, setHandleDropdownMenu] = useState(false);
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
+    e.stopPropagation();
     if(Cookies.get('user_id') === post.userId.toString()){
       return;
     }
@@ -53,7 +54,8 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
         checkLikeStatus();
     }, [post.id, isUserLike]);
 
-    const handleComments = async () => {
+    const handleComments = async (e) => {
+      e.stopPropagation();
       setShowCommentMenu(true);
     }
 
@@ -75,12 +77,13 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
                 }}
             >
                 <Button
+
                     disableRipple={true}
                     sx={{
                         borderRadius: '50px',
                         alignItems: 'center',
                     }}
-                    onClick={handleComments}
+                    onClick={(e) => handleComments(e)}
                 >
                     <ChatBubbleOutlineIcon
                         sx={{
@@ -112,10 +115,9 @@ const InteractionBar = ({ post, setPost, commentsCount, likesCount }) => {
 
                 }}
             >
-
                 <Button
                     disableRipple={true}
-                    onClick={handleLike}
+                    onClick={(e) => handleLike(e)}
                     sx={{
                         borderRadius: '50px',
                         width: '30%',

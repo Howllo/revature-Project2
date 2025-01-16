@@ -6,30 +6,29 @@ import InteractionBar from "./InteractionBar.jsx";
 import PropTypes from "prop-types";
 import MediaContainer from "../MediaContainer.jsx";
 import { useState } from "react";
-import "./PostContainer.css"
-import {useNavigate} from "react-router-dom";
+import "./PostContainer.css";
+import { useNavigate } from "react-router-dom";
 
 const PostContainer = ({ key, post, isPostProfile = false }) => {
   const [savedPost, setSavedPost] = useState(post);
   const navigate = useNavigate();
 
   const handleNavigation = (e) => {
-    if(isPostProfile) {
+    if (isPostProfile) {
       return;
     }
 
-    e.preventDefault();
     e.stopPropagation();
-
-    if(e.target === e.currentTarget) {
-      navigate(`/profile/${post.username}/post/${post.id}`);
-    }
-  }
+    navigate(`/profile/${post.username}/post/${post.id}`);
+  };
 
   return (
-    <Card className="PostContainerCard" elevation={0} key={key} onClick={(e) => handleNavigation(e)}>
+    <Card className="PostContainerCard" elevation={0} key={key} onClick={handleNavigation}
+          sx={{
+            cursor: isPostProfile ? "default" : "pointer",
+          }}
+    >
       <Box
-        onClick={(e) => handleNavigation(e)}
         sx={{
           display: "flex",
           height: "100%",
@@ -41,7 +40,6 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
       </Box>
 
       <Box
-        onClick={(e) => handleNavigation(e)}
         sx={{
           height: "100%",
           width: "100%",
@@ -81,22 +79,24 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
             flexDirection: "column",
             justifyContent: "left",
             alignItems: "left",
-              marginBottom: '2%',
+            marginBottom: "2%",
           }}
         >
           <PostText comment={post.comment} />
         </Box>
 
-        <Box
-          sx={{
-            width: "100%",
-            height: "auto",
-            display: "block",
-            overflow: "hidden",
-          }}
-        >
-          {post.media ? <MediaContainer media={post.media} /> : null}
-        </Box>
+        {post.media && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              overflow: "hidden",
+            }}
+          >
+            <MediaContainer media={post.media} />
+          </Box>
+        )}
 
         <Box
           sx={{

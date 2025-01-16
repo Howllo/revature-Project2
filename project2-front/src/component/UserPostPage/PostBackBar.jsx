@@ -10,6 +10,7 @@ const PostBackBar = () => {
   const handleClick = () => {
     if(history.length <= 1){
       navigate("/");
+      return;
     }
     handleBack();
   }
