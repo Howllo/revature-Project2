@@ -75,7 +75,7 @@ pipeline {
                             "docker stop project2 || true",
                             "docker rm -f project2 || true",
                             "sudo rm -f /usr/bin/project2.tar || true",
-                            "sudo rm -f ./project2.tar || true",
+                            "sudo rm -f ./project2.tar || true"
                         ]}' \
                         --query "Command.CommandId")
 
