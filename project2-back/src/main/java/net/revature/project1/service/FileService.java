@@ -73,7 +73,6 @@ public class FileService {
         long fileSize = Files.size(fromPath);
 
         String mimeType = Files.probeContentType(fromPath);
-        List<String> allowedTypes;
 
         logger.info("FileType is {}", fileType);
         logger.info("filePath is {}", filePath);
@@ -81,8 +80,6 @@ public class FileService {
 
         switch (fileType) {
             case IMAGE:
-                allowedTypes = allowedImageTypes;
-
                 if (!allowedImageTypes.contains(mimeType)) {
                     logger.warn("Unsupported image type: {}", mimeType);
                     throw new IllegalArgumentException("Unsupported image type: " + mimeType);
@@ -97,7 +94,6 @@ public class FileService {
                 break;
 
             case VIDEO:
-                allowedTypes = allowedVideoTypes;
 
                 if (!allowedVideoTypes.contains(mimeType)) {
                     logger.warn("Unsupported video type: {}", mimeType);
@@ -151,7 +147,8 @@ public class FileService {
         }
 
         String uniqueFileName = UUID.randomUUID() + extension;
-        String imageType = file.getContentType();
+        String contentType = file.getContentType();
+        FileType fileType;
         Path tempFile = Files.createTempFile(uniqueFileName, "." + extension);
 
         try{
@@ -160,15 +157,15 @@ public class FileService {
             logger.error("Error while moving multipart file: ", e);
         }
 
-        assert imageType != null;
-        if(imageType.isEmpty()){
-            logger.error("Image type cannot be empty");
-            return "";
+        if (allowedVideoTypes.contains(contentType)) {
+            fileType = FileType.VIDEO;
+        } else if (allowedImageTypes.contains(contentType)) {
+            fileType = FileType.IMAGE;
+        } else {
+            throw new IllegalArgumentException("Unsupported file type: " + contentType);
         }
 
-        FileType fileType = imageType.startsWith("video/") ? FileType.VIDEO : FileType.IMAGE;
         String mediaUrl = "";
-
         try{
             mediaUrl = uploadFile(fileType, tempFile.toFile().getPath(), uniqueFileName);
         } catch (RuntimeException e) {
