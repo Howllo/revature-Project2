@@ -99,6 +99,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/post/all").permitAll()
                 .requestMatchers("/api/v1/post/check/**").permitAll()
                 .requestMatchers("/api/v1/post/{id}/likes").permitAll()
+                .requestMatchers(HttpMethod.GET ,"/api/v1/post/{id}").permitAll()
                 .requestMatchers("/api/v1/post/{id}/comments").permitAll()
                 .requestMatchers("/api/v1/user/username/**").permitAll()
                 .requestMatchers("/api/v1/user/getSearchDto/**").permitAll()

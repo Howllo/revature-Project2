@@ -11,10 +11,6 @@ export function SigninPage() {
     const [password, setPassword] = useState("");
     const { credentialsInvalid } = useSignIn();
 
-    useEffect(() => {
-      document.title = 'Signin - DevSky'
-    }, []);
-
     return (
         <Grid2
             id="layout-grid-top"
