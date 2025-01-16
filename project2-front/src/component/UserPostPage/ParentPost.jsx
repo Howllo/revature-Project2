@@ -26,6 +26,7 @@ const ParentPost = ({ setPostParent }) => {
         flexDirection: "column",
         width: "99.50%",
         alignItems: "center",
+        mt: '-1px',
       }}
     >
       {post.id ? <PostContainer post={post} isPostProfile={true}/> : null}

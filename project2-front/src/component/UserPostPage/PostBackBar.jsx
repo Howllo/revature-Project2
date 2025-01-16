@@ -19,8 +19,8 @@ const PostBackBar = () => {
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        width: '600px',
-        height: '50px',
+        width: '597px',
+        height: '51px',
         borderBottom: '',
         borderStyle: 'solid',
         borderWidth: 1,

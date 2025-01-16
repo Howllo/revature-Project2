@@ -29,6 +29,7 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
   return (
     <Card className="PostContainerCard" elevation={0} key={key} onClick={(e) => handleNavigation(e)}>
       <Box
+        onClick={(e) => handleNavigation(e)}
         sx={{
           display: "flex",
           height: "100%",
@@ -40,6 +41,7 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
       </Box>
 
       <Box
+        onClick={(e) => handleNavigation(e)}
         sx={{
           height: "100%",
           width: "100%",
