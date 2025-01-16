@@ -9,14 +9,20 @@ import {usePost} from "../Context/UsePost.jsx";
 import PropTypes from "prop-types";
 import ReplyContainer from "./ReplyContainer.jsx";
 import "./CreatePost.css"
+import {useEffect, useState} from "react";
 
 const CreatePost = ({handleOpen, child, isReply = false, post}) => {
-    const {resetPost, previewUrl, isVideo, submitPost, getPost} = usePost();
-
+    const {resetPost, previewUrl, isVideo, submitPost, getPost, file, comment} = usePost();
+  const [enable, setEnable] = useState(true)
+    
     const cancelPost = () => {
       resetPost();
       handleOpen();
     }
+
+    useEffect(() => {
+      setEnable(comment.length > 0 || file != null || (previewUrl != null && previewUrl.length > 0))
+    }, [comment, previewUrl, file]);
 
     const handleSubmit = async () => {
       handleOpen();
@@ -44,10 +50,10 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                     flexDirection: 'column',
                     minWidth: '550px',
                     maxWidth: '550px',
-                    minHeight: '400px',
+                    minHeight: '350px',
                     maxHeight: '90vh',
                     height: 'auto',
-                    borderRadius: '15px',
+                    borderRadius: '10px',
                     backgroundColor: 'white',
                     padding: '10px',
                     overflow: 'hidden',
@@ -73,6 +79,7 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                     </Button>
 
                     <Button
+                      disabled={!enable}
                         variant="contained"
                         sx={{
                             borderRadius: '20px',
@@ -95,14 +102,10 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                     paddingRight: '10px',
                     overflow: 'auto',
                 }}>
-                    <Box
-                        sx={{
-
-                        }}
-                    >
+                    <Box>
                         <UserAvatar username={Cookies.get('username')} image={Cookies.get("profile_pic")}/>
                     </Box>
-                    <PostTextField/>
+                    <PostTextField />
                 </Box>
 
 

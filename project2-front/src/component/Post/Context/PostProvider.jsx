@@ -85,9 +85,9 @@ export const PostProvider = ({ children }) => {
           }
           mediaData.append('comment', postData.comment);
 
-          if(postData.file && !postData.previewUrl.includes('youtube')) {
+          if(postData.file) {
             mediaData.append('media', postData.file);
-          } else {
+          } else if(postData.previewUrl && !postData.previewUrl.includes('youtube')) {
             mediaData.append('youTubeMedia', postData.previewUrl);
           }
 

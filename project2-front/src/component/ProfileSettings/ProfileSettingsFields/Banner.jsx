@@ -8,7 +8,8 @@ const Banner = ({ user }) => {
   const { settingsData, handleBannerPicChange } =
     useContext(SettingsContext);
   const inputRef = useRef(null);
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation();
     inputRef.current.click();
   };
 
@@ -50,7 +51,7 @@ const Banner = ({ user }) => {
             }}
           >
             {/* Camera Icon */}
-            <Box onClick={handleClick}
+            <Box onClick={(e) => handleClick(e)}
                  sx={{
                    display: "flex",
                    cursor: "pointer",

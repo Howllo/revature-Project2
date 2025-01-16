@@ -95,8 +95,6 @@ export const UserProfileProvider = ({ children }) => {
     }
   };
 
-
-
   const value = {
     listPostData,
     setListPostData,
