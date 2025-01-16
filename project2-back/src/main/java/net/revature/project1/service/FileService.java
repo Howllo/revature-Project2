@@ -75,6 +75,10 @@ public class FileService {
         String mimeType = Files.probeContentType(fromPath);
         List<String> allowedTypes;
 
+        logger.info("FileType is {}", fileType);
+        logger.info("filePath is {}", filePath);
+        logger.info("fileName is {}", fileName);
+
         switch (fileType) {
             case IMAGE:
                 allowedTypes = allowedImageTypes;
