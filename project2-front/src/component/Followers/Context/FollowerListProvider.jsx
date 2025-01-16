@@ -45,7 +45,7 @@ export const FollowerListProvider = ({ children }) => {
 
   useEffect(() => {
     handleGetFollowers();
-  }, [followerList, username]);
+  }, [username]);
 
   return (
     <FollowerListContext.Provider
@@ -54,6 +54,7 @@ export const FollowerListProvider = ({ children }) => {
         setFollowerList,
         handleDeleteFollower,
         handleGetFollowers,
+        username
       }}
     >
       {children}
