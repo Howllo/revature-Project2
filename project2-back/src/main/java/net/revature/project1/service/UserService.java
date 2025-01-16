@@ -241,13 +241,13 @@ public class UserService {
             userUpdateResponseDto.displayName = userUpdateRequestDto.displayName();
         }
 
-        if(StringUtils.hasText(userUpdateRequestDto.biography())){
+        if (StringUtils.hasText(userUpdateRequestDto.biography())){
             user.setBiography(userUpdateRequestDto.biography());
             userUpdateResponseDto.biography = userUpdateRequestDto.biography();
         }
 
         try {
-            if(userUpdateRequestDto.bannerPic() != null && !userUpdateRequestDto.bannerPic().isEmpty()){
+            if (userUpdateRequestDto.bannerPic() != null && !userUpdateRequestDto.bannerPic().isEmpty()){
                 oldBanner = user.getBannerPic();
                 String bannerUrl = fileService.createFile(userUpdateRequestDto.bannerPic());
                 user.setBannerPic(bannerUrl);
@@ -260,7 +260,7 @@ public class UserService {
         }
 
         try {
-            if(userUpdateRequestDto.profilePic() != null && !userUpdateRequestDto.profilePic().isEmpty()){
+            if (userUpdateRequestDto.profilePic() != null && !userUpdateRequestDto.profilePic().isEmpty()){
                 oldProfilePicture = user.getProfilePic();
                 String profileUrl = fileService.createFile(userUpdateRequestDto.profilePic());
                 user.setProfilePic(profileUrl);
@@ -272,11 +272,11 @@ public class UserService {
             logger.error("Error while creating profile file: ", e);
         }
 
-        if(!oldBanner.isEmpty() && user.getBannerPic().equals(oldBanner)){
+        if (!oldBanner.isEmpty() && user.getBannerPic().equals(oldBanner)) {
             fileService.deleteFile(oldBanner);
         }
 
-        if(!oldBanner.isEmpty() && !user.getProfilePic().equals(oldProfilePicture)){
+        if (!oldProfilePicture.isEmpty() && !user.getProfilePic().equals(oldProfilePicture)) {
             fileService.deleteFile(oldProfilePicture);
         }
 

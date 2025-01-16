@@ -114,8 +114,15 @@ export const SettingsProvider = ({ children }) => {
     try {
       const settingsPayload = new FormData();
       settingsPayload.append('id', Cookies.get('user_id'));
-      settingsPayload.append('profilePic', profileFile ? profileFile : null);
-      settingsPayload.append('bannerFile', bannerFile ? bannerFile : null);
+
+      if(profileFile){
+        settingsPayload.append('profilePic', profileFile ? profileFile : null);
+      }
+
+      if(bannerFile){
+        settingsPayload.append('bannerPic', bannerFile ? bannerFile : null);
+      }
+
       settingsPayload.append("displayName", settingsData.displayName || "");
       settingsPayload.append("biography", settingsData.biography || "");
 
