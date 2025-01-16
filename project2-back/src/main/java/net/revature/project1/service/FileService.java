@@ -181,13 +181,14 @@ public class FileService {
             return;
         }
 
-        logger.info("Deleting file: {}", urlPath);
-
-        String[] parts = urlPath.split("/");
-        final int length = parts.length;
-        String objectKey = urlPath.split("/")[length - 1];
-
-        logger.info("Deleting file: {}", objectKey);
+        String objectKey = "";
+        if(urlPath.contains("videos")){
+            objectKey = urlPath.substring(urlPath.indexOf("videos/"));
+        } else if(urlPath.contains("images")){
+            objectKey = urlPath.substring(urlPath.indexOf("images/"));
+        } else {
+            throw new IllegalArgumentException("Unsupported url path: " + urlPath);
+        }
 
         try
         {
