@@ -76,8 +76,7 @@ pipeline {
                             "docker rm -f project2 || true",
                             "docker rmi -f project2 || true",
                             "docker image prune -f || true",
-                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
-                            "sudo find / -name "project2.tar" | xargs -r rm -f"
+                            "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar"
                         ]}' \
                         --query "Command.CommandId")
 
