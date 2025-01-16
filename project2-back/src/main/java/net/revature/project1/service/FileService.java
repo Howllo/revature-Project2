@@ -71,12 +71,7 @@ public class FileService {
 
         Path fromPath = Paths.get(filePath);
         long fileSize = Files.size(fromPath);
-
         String mimeType = Files.probeContentType(fromPath);
-
-        logger.info("FileType is {}", fileType);
-        logger.info("filePath is {}", filePath);
-        logger.info("fileName is {}", fileName);
 
         switch (fileType) {
             case IMAGE:
@@ -186,9 +181,13 @@ public class FileService {
             return;
         }
 
+        logger.info("Deleting file: {}", urlPath);
+
         String[] parts = urlPath.split("/");
         final int length = parts.length;
         String objectKey = urlPath.split("/")[length - 1];
+
+        logger.info("Deleting file: {}", objectKey);
 
         try
         {
@@ -196,7 +195,7 @@ public class FileService {
                     .bucket(s3Bucket)
                     .key(objectKey)
                     .build();
-            s3Client.deleteObject(deleteObjectRequest );
+            s3Client.deleteObject(deleteObjectRequest);
         }
         catch (RuntimeException e) {
             logger.error("Illegal Statement: Error while deleting file to S3.");
