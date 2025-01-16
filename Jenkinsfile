@@ -80,7 +80,7 @@ pipeline {
                             "docker load < project2.tar",
                             "docker run -d -p 8080:8080 --name project2 project2:'${IMAGE_TAG}'"
                             "sudo rm -f /usr/bin/project2.tar || true",
-                            "sudo rm -f ./project2.tar || true",
+                            "sudo rm -f ./project2.tar || true"
                         ]}' \
                         --query "Command.CommandId")
 
