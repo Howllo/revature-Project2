@@ -16,12 +16,12 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false, isInPreview}) =>
         setOpen(false);
     };
 
-  const toggleMedia = (e) => {
-    if (isInBackdrop) return;
-    e.stopPropagation();
-    e.preventDefault();
-    setOpen((prev) => !prev);
-  };
+    const toggleMedia = (e) => {
+      if (isInBackdrop) return;
+      e.stopPropagation();
+      e.preventDefault();
+      setOpen((prev) => !prev);
+    };
 
     useEffect(() => {
         if (!media) return;
@@ -40,7 +40,7 @@ const MediaContainer = ({ media, isVideo, isInBackdrop = false, isInPreview}) =>
         } else {
             resetPost();
         }
-    }, [media, isVideo, resetPost]);
+    }, [media]);
 
     return (
         <Box className={'media-container'}>
