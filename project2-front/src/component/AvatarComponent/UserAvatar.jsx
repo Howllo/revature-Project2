@@ -6,13 +6,14 @@ import "./UserAvatar.css";
 const UserAvatar = ({ username, image, width = 42, height = 42, border = false }) => {
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.stopPropagation();
     navigate(`/profile/${username}`);
   };
 
   return (
     <Button className="UserAvatarButton" variant="contained" disableRipple={true}
-            onClick={handleSubmit} disableElevation={true}>
+            onClick={(e) => handleSubmit(e)} disableElevation={true}>
       <Avatar className={image ? "UserAvatarPic" : 'UserAvatarPicNoImg'} alt={name} src={image}
         sx={{
           width: width,

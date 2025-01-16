@@ -38,7 +38,7 @@ const PostText = ({display_name, username, post_date}) => {
             }}
         >
             <Box>
-                <Link to={`/profile/${username}`}>
+                <Link onClick={(e) => e.stopPropagation()} to={`/profile/${username}`}>
                   <Typography
                     variant="h6"
                     fontFamily="Inter, sans-serif"
