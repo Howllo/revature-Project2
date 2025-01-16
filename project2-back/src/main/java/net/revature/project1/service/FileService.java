@@ -143,21 +143,21 @@ public class FileService {
 
         String uniqueFileName = UUID.randomUUID() + extension;
         String contentType = file.getContentType();
-        FileType fileType;
         Path tempFile = Files.createTempFile(uniqueFileName, "." + extension);
 
-        try{
-            file.transferTo(tempFile.toFile());
-        } catch (IOException e) {
-            logger.error("Error while moving multipart file: ", e);
-        }
-
+        FileType fileType;
         if (allowedVideoTypes.contains(contentType)) {
             fileType = FileType.VIDEO;
         } else if (allowedImageTypes.contains(contentType)) {
             fileType = FileType.IMAGE;
         } else {
             throw new IllegalArgumentException("Unsupported file type: " + contentType);
+        }
+
+        try{
+            file.transferTo(tempFile.toFile());
+        } catch (IOException e) {
+            logger.error("Error while moving multipart file: ", e);
         }
 
         String mediaUrl = "";
