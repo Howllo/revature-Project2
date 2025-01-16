@@ -39,6 +39,7 @@ const PostDialog = ({post}) => {
 
     return (
         <Box
+          onClick={(e) => e.stopPropagation()}
             sx={{
                 display: "flex"
             }}

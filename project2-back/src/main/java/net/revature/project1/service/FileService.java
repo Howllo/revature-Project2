@@ -177,7 +177,7 @@ public class FileService {
      * @param urlPath Take in a file path to find to create an object key.
      */
     public void deleteFile(String urlPath) {
-        if(urlPath == null || urlPath.isEmpty()){
+        if(urlPath == null || urlPath.isEmpty() || "null".equals(urlPath)){
             return;
         }
 
@@ -187,7 +187,7 @@ public class FileService {
         } else if(urlPath.contains("images")){
             objectKey = urlPath.substring(urlPath.indexOf("images/"));
         } else {
-            logger.warn("Unsupported url path: {}", urlPath);
+            throw new IllegalArgumentException("Unsupported url path: " + urlPath);
         }
 
         try

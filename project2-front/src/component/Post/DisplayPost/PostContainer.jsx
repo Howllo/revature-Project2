@@ -85,7 +85,7 @@ const PostContainer = ({ key, post, isPostProfile = false }) => {
           <PostText comment={post.comment} />
         </Box>
 
-        {post.media && (
+        {post.media && !post.media.includes('null') && (
           <Box
             sx={{
               width: "100%",
