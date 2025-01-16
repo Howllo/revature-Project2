@@ -43,7 +43,7 @@ export const FollowingListProvider = ({ children }) => {
 
   useEffect(() => {
     handleGetFollowing();
-  }, [followingList, username]);
+  }, [username]);
 
   return (
     <FollowingListContext.Provider
@@ -52,6 +52,7 @@ export const FollowingListProvider = ({ children }) => {
         setFollowingList,
         handleDeleteFollowing,
         handleGetFollowing,
+        username
       }}
     >
       {children}

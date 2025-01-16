@@ -1,23 +1,23 @@
 ﻿import {Box} from "@mui/material";
-import { useUserProfile } from "./Context/UseUserProfile.jsx";
+// import { useUserProfile } from "./Context/UseUserProfile.jsx";
 import "./UserDisplay.css";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import UserAvatar from "../AvatarComponent/UserAvatar.jsx";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate} from "react-router-dom";
 
 const UserDisplay = ({ user }) => {
-  const [userData, setUserData] = useState(user);
-  const { getUserData } = useUserProfile();
+  // const [userData, setUserData] = useState(user);
+  // const { getUserData } = useUserProfile();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const y = getUserData(user.username);
-    y.then((value) => {
-      setUserData(value);
-    });
-  }), [user];
+  // useEffect(() => {
+  //   const y = getUserData(user.username);
+  //   y.then((value) => {
+  //     setUserData(value);
+  //   });
+  // }), [user];
 
   const handleBack = (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const UserDisplay = ({ user }) => {
     <Box className="UserDisplayContainer">
       <img
         className="BannerImg"
-        src={userData.bannerPic || "https://picsum.photos/1500/500"}
+        src={user.bannerPic || "https://picsum.photos/1500/500"}
         alt="Post Image"
         loading={"lazy"}
       />
@@ -43,7 +43,7 @@ const UserDisplay = ({ user }) => {
         <UserAvatar
           className="UserDisplayUserAvatar"
           username={user.username}
-          image={userData.profilePic}
+          image={user.profilePic}
           width={105}
           height={105}
           border={true}
