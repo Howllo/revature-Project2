@@ -272,11 +272,11 @@ public class UserService {
             logger.error("Error while creating profile file: ", e);
         }
 
-        if (!oldBanner.isEmpty() && user.getBannerPic().equals(oldBanner)) {
+        if (oldBanner != null && !oldBanner.isEmpty() && user.getBannerPic().equals(oldBanner)) {
             fileService.deleteFile(oldBanner);
         }
 
-        if (!oldProfilePicture.isEmpty() && !user.getProfilePic().equals(oldProfilePicture)) {
+        if (oldBanner != null && !oldProfilePicture.isEmpty() && !user.getProfilePic().equals(oldProfilePicture)) {
             fileService.deleteFile(oldProfilePicture);
         }
 

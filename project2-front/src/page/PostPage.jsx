@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import PostBackBar from "../component/UserPostPage/PostBackBar.jsx";
 import ParentPost from "../component/UserPostPage/ParentPost.jsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ChildPost from "../component/UserPostPage/ChildPost.jsx";
 import {useParams} from "react-router-dom";
 
