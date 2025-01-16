@@ -190,7 +190,7 @@ public class FileService {
         final int length = parts.length;
         String objectKey = urlPath.split("/")[length - 1];
 
-        try (s3Client)
+        try
         {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                     .bucket(s3Bucket)
