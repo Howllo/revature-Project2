@@ -74,9 +74,9 @@ pipeline {
                         --parameters '{"commands":[
                             "docker stop project2 || true",
                             "docker rm -f project2 || true",
-                            "sudo find / -name "project2.tar" -exec rm -f {} \\; 2>/dev/null",
                             "docker rmi -f project2 || true",
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
+                            "sudo find / -name "project2.tar" -exec rm -f {} \\; 2>/dev/null",
                         ]}' \
                         --query "Command.CommandId")
 
