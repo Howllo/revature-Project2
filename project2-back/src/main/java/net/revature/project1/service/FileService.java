@@ -187,7 +187,7 @@ public class FileService {
         } else if(urlPath.contains("images")){
             objectKey = urlPath.substring(urlPath.indexOf("images/"));
         } else {
-            throw new IllegalArgumentException("Unsupported url path: " + urlPath);
+            logger.warn("Unsupported url path: {}", urlPath);
         }
 
         try
