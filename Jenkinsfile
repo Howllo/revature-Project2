@@ -78,11 +78,10 @@ pipeline {
                             "docker rmi -f $(docker images -q)",
                             "aws s3 cp s3://'${S3_DEPLOY_BUCKET}'/temp/project2.tar ./project2.tar",
                             "docker load < project2.tar",
-                            "docker run -d -p 8080:8080 --name project2 project2:${IMAGE_TAG}"
+                            "docker run -d -p 8080:8080 --name project2 project2:'${IMAGE_TAG}'"
                         ]}' \
                         --query "Command.CommandId")
 
-                    # Wait for SSM command to complete
                     aws ssm wait command-executed --command-id "$COMMAND_ID" --instance-id "${INSTANCE_ID}"
                 '''
             }
