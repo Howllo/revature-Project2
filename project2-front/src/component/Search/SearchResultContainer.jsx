@@ -33,12 +33,13 @@ const SearchResultContainer = ({key, searchWord, children}) => {
                 <Typography
                     variant="body2"
                     sx={{
-                        fontSize: '14px',
-                        fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
-                        fontWeight: 600,
-                        width: '100%',
-                        wordWrap: 'break-word',
-                        overflow: 'hidden',
+                      color: 'black',
+                      fontSize: '14px',
+                      fontFamily: 'SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+                      fontWeight: 600,
+                      width: '100%',
+                      wordWrap: 'break-word',
+                      overflow: 'hidden',
                     }}
                 >
                     Search for &#34;{searchWord}&#34;

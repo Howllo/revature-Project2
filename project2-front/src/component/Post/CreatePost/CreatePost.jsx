@@ -13,7 +13,7 @@ import {useEffect, useState} from "react";
 
 const CreatePost = ({handleOpen, child, isReply = false, post}) => {
     const {resetPost, previewUrl, isVideo, submitPost, getPost, file, comment} = usePost();
-  const [enable, setEnable] = useState(true)
+  const [disable, setdisable] = useState(true)
     
     const cancelPost = () => {
       resetPost();
@@ -21,7 +21,7 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
     }
 
     useEffect(() => {
-      setEnable(comment.length > 0 || file != null || (previewUrl != null && previewUrl.length > 0))
+      setdisable(comment.length > 0 || file != null || (previewUrl != null && previewUrl.length > 0))
     }, [comment, previewUrl, file]);
 
     const handleSubmit = async () => {
@@ -79,7 +79,7 @@ const CreatePost = ({handleOpen, child, isReply = false, post}) => {
                     </Button>
 
                     <Button
-                      disabled={!enable}
+                      disabled={!disable}
                         variant="contained"
                         sx={{
                             borderRadius: '20px',
