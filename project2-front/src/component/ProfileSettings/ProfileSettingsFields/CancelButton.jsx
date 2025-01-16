@@ -16,15 +16,17 @@ const CancelButton = () => {
             resetSettingsData();
         }}
         sx={{
+          display: "flex",
           "&:hover": {
               opacity: 0.8,
           },
-        color: "black",
-        fontSize: '16',
-        fontWeight: 600,
-        textTransform: "capitalize",
-        borderRadius: '20px',
-        width: '100%',
+          color: "black",
+          fontSize: '16',
+          fontWeight: 600,
+          textTransform: "capitalize",
+          borderRadius: '20px',
+          alignItems: "center",
+          width: '93%',
         }}
     >
       Cancel

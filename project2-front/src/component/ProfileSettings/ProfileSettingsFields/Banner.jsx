@@ -21,46 +21,57 @@ const Banner = ({ user }) => {
         <Box
             onClick={handleClick}
             sx={{
-                display: "flex",
-                width: "100%",
-                height: "150px",
-                backgroundImage: `url(${
-                    settingsData.bannerPreviewURL
-                        ? settingsData.bannerPreviewURL
-                        : settingsData.bannerPic
-                })`,
-                borderRadius: "2px",
-                marginBottom: "10px",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundColor: 'rgb(239,241,243)',
-                justifyContent: "end",
-                alignItems: "end",
-                padding: "10px",
+              display: "flex",
+              width: "100%",
+              height: "175px",
+              backgroundImage: `url(${
+                  settingsData.bannerPreviewURL
+                      ? settingsData.bannerPreviewURL
+                      : settingsData.bannerPic
+              })`,
+              borderRadius: "2px",
+              marginBottom: "10px",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: 'rgb(239,241,243)',
             }}
         >
+
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              mt: "-10px",
+              mr: '10px',
+              justifyContent: "end",
+              alignItems: "end",
+            }}
+          >
+            {/* Camera Icon */}
             <Box onClick={handleClick}
-                sx={{
-                    display: "flex",
-                    cursor: "pointer",
-                    width: '27px',
-                    height: '27px',
-                    backgroundColor: "rgb(239,241,243)",
-                    borderRadius: '100%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
+                 sx={{
+                   display: "flex",
+                   cursor: "pointer",
+                   width: '27px',
+                   height: '27px',
+                   backgroundColor: "rgb(239,241,243)",
+                   borderRadius: '100%',
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                 }}
             >
-                <PhotoCameraIcon
-                    sx={{
-                        width: '16px',
-                        height: '16px',
-                        opacity: '1',
-                        color: 'black',
-                    }}
-                />
+              <PhotoCameraIcon
+                sx={{
+                  width: '16px',
+                  height: '16px',
+                  opacity: '1',
+                  color: 'black',
+                }}
+              />
             </Box>
+          </Box>
             <input
                 type="file"
                 style={{ display: "none" }}

@@ -32,7 +32,7 @@ const UserDisplay = ({ user }) => {
         className="BannerImg"
         src={userData.bannerPic || "https://picsum.photos/1500/500"}
         alt="Post Image"
-        loading="eager"
+        loading={"lazy"}
       />
 
       <Box className='BackButton' onClick={(e) => handleBack(e)}>
@@ -48,8 +48,6 @@ const UserDisplay = ({ user }) => {
           height={105}
           border={true}
         />
-
-
       </Box>
     </Box>
   );

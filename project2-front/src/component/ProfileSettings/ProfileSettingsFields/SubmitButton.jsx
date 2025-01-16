@@ -10,12 +10,14 @@ const SubmitButton = () => {
     <Button
       variant="contained"
       sx={{
+        display: "flex",
         background: "linear-gradient(45deg, rgb(0, 161, 242) 30%, rgb(29, 140, 242) 70%)",
         color: "white",
         fontWeight: 600,
         textTransform: "capitalize",
         borderRadius: '20px',
-        width: '100%',
+        alignItems: "center",
+        width: '94%',
       }}
       onClick={() => {
         handleSubmitSettings();

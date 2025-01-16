@@ -9,6 +9,7 @@
     object-fit: fill !important;
     width: 100% !important;
     height: 100% !important;
+    background-size: cover !important;
 }
 
 .BackButton{
