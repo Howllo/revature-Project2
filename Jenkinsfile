@@ -72,8 +72,7 @@ pipeline {
                         --document-name "AWS-RunShellScript" \
                         --output text \
                         --parameters '{"commands":[
-                            "docker stop project2 || true",
-
+                            "docker stop project2 || true"
                         ]}' \
                         --query "Command.CommandId")
 
