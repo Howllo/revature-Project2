@@ -113,7 +113,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/post/**").hasRole("USER")
                 .requestMatchers("/api/v1/search/**").permitAll()
                 .anyRequest().authenticated()
-
         );
         return http.build();
     }

@@ -1,6 +1,5 @@
 # Running Project 2
 
-
 ## Step One Jenkins
 The ability to interact with the overall system requires injection into the through several 
 
@@ -151,6 +150,44 @@ export const projectApi = axios.create({
 ### Docker
 You will also need set up a Docker EC2 instance on it own EC2. While Spring Boot backend is lightweight it is usually 
 best to keep it to its own instance. You will need take this instance and set the 
+
+## AWS RDS - PostgresSQL
+
+The application uses PostgreSQL for handling of data:
+
+Here is the standardized schema following the format (Number, PRIMARY / FOREIGN_KEY to post) and (text):
+
+Table: app_user
+
+    id (serial, PRIMARY KEY)
+    email (text, UNIQUE)
+    password (text)
+    username (text, UNIQUE)
+    display_name (text)
+    profile_pic (text)
+    banner_pic (text)
+    user_role (text, DEFAULT 'ROLE_USER')
+    created_at (timestamp, DEFAULT NOW())
+
+Table: follower_following
+
+    follower_id (number, PRIMARY / FOREIGN_KEY to app_user)
+    following_id (number, PRIMARY / FOREIGN_KEY to app_user)
+
+Table: post
+
+    id (serial, PRIMARY KEY)
+    parent_post (number, FOREIGN_KEY to post)
+    user_id (number, FOREIGN_KEY to app_user)
+    comment (text)
+    media (text)
+    post_edit (boolean)
+    post_at (timestamp, DEFAULT NOW())
+
+Table: post_like
+
+    post_id (number, PRIMARY / FOREIGN_KEY to post)
+    user_id (number, PRIMARY / FOREIGN_KEY to app_user)
 
 ## Frontend Setup
 

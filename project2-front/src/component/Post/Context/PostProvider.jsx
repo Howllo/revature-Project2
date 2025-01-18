@@ -223,6 +223,7 @@ export const PostProvider = ({ children }) => {
         }
     }
 
+    // This need to be reworked, but too bad! No time.
     const getUserPost = async (id) => {
         try {
             const response = await projectApi.get("/post/all", {
